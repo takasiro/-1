@@ -1,29 +1,30 @@
 #pragma once
 
 #include "BaseScene.h"
+#include "ISceneChanger.h"
 #include <iostream>
 #include <stack>
 
-class BaseMgr {
+class BaseMgr : public ISceneChanger {
 protected:
-	std::stack<BaseScene*> m_Scene;
+	std::stack<BaseScene*> mScene;
 public:
-	void AddScene(BaseScene* next) {
-		m_Scene.push(next);
+	void AddScene(BaseScene* _next) {
+		mScene.push(_next);
 	}
-	void ChangeScene(BaseScene* next) {
-		Close();
-		AddScene(next);
+	void ChangeScene(BaseScene* _next) {
+		SceneClose();
+		AddScene(_next);
 	}
 	void Update() {
-		m_Scene.top()->Update();
+		mScene.top()->Update();
 	}
 	void Draw() {
-		m_Scene.top()->Draw();
+		mScene.top()->Draw();
 	}
-	void Close() {
-		m_Scene.top()->Close();
-		delete m_Scene.top();
-		m_Scene.pop();
+	void SceneClose() {
+		mScene.top()->Close();
+		delete mScene.top();
+		mScene.pop();
 	}
 };

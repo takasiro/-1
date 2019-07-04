@@ -1,10 +1,11 @@
 #pragma once
 #include "BaseScene.h"
-
+#include "ISceneChanger.h"
 class TitleScene : public BaseScene {
 	
 public:
-	TitleScene();
+	//TitleScene();
+	//TitleScene(ISceneChanger*);
 	~TitleScene();
 	int Initialize();
 	int Update();

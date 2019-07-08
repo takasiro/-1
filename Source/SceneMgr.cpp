@@ -3,7 +3,8 @@
 
 
 SceneMgr::SceneMgr(){
-	//AddScene((BaseScene*)new TitleScene(this));
+	//‰ŠúƒV[ƒ“İ’è
+	AddScene((BaseScene*)new TitleScene(this));
 }
 
 

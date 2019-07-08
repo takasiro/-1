@@ -2,13 +2,13 @@
 
 
 
-//TitleScene::TitleScene() {
+TitleScene::TitleScene() {
 
-//}
+}
 
-//TitleScene::TitleScene(ISceneChanger* _Changer):BaseScene(_Changer) {
+TitleScene::TitleScene(ISceneChanger* _Changer):BaseScene(_Changer) {
 	
-//}
+}
 
 TitleScene::~TitleScene() {
 

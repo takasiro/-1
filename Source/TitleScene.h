@@ -4,8 +4,8 @@
 class TitleScene : public BaseScene {
 	
 public:
-	//TitleScene();
-	//TitleScene(ISceneChanger*);
+	TitleScene();
+	TitleScene(ISceneChanger*);
 	~TitleScene();
 	int Initialize();
 	int Update();

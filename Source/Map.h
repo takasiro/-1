@@ -11,5 +11,17 @@ private:
 	int mMapNum;//マップ番号
 
 public:
+	Map();
 	Map(Mass*,int,int);
+
+	//地形の種類を獲得出来る
+	//引数で欲しい場所のマスを指定
+	int GetMassType(int _x,int _y){
+		return mMap[_y][_x].GetType();
+	}
+	//地形の消費移動力を獲得できる
+	//引数で欲しい場所のマスを指定
+	int GetMoveCost(int _x, int _y) {
+		return mMap[_y][_x].GetMoveCost();
+	}
 };

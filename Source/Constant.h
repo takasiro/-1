@@ -1,5 +1,6 @@
 #pragma once
-
+#include <iostream>
+using namespace std;
 #define WINDOW_WIDTH 1280	//‰æ–Ê‚Ì•
 #define WINDOW_HEIGHT 960	//‰æ–Ê‚Ì‚‚³
 
@@ -12,3 +13,16 @@
 //vector‚Ìsize()ŠÖ”‚ğg‚Á‚½for•¶‚É‚¨‚¢‚Ä
 //size()‚Ì–ß‚è’l‚ªunsigned int‚É‚È‚èsigned intŒ^‚Æ”äŠr‚·‚é‚ÆŒx‚ªo‚é‚Ì‚Å—áŠOˆ—
 #pragma warning(disable: 4018)
+
+
+//E‹Æ”»’è‚æ‚¤‚Ìenum
+typedef enum {
+	eTank,
+	eCaster,
+	eRanger,
+	eFighter
+}eRole;
+
+
+
+

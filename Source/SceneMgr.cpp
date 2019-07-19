@@ -1,5 +1,5 @@
 #include "SceneMgr.h"
-
+#include"TitleScene.h"
 
 
 SceneMgr::SceneMgr(){

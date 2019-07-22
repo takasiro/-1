@@ -2,26 +2,28 @@
 #include<iostream>
 using namespace std;
 #include<vector>
-#include"BaseObj.h"
+#include"BaseTask.h"
 #include"Mass.h"
-class Map :public BaseObj {
+class Map :public BaseTask {
 private:
-	vector<vector<Mass>> mMap;
+	//マス地形の選択用
+	typedef enum terrain {
+		tmp
+	};
+	vector<vector<Mass*>> mMap;
 	vector<int> mConnect;//接続されているマップ番号を入れる
 	int mMapNum;//マップ番号
 
 public:
 	Map();
-	Map(Mass*,int,int);
+	//Map(Mass*,int,int);
 
-	//地形の種類を獲得出来る
-	//引数で欲しい場所のマスを指定
-	int GetMassType(int _x,int _y){
-		return mMap[_y][_x].GetType();
-	}
-	//地形の消費移動力を獲得できる
-	//引数で欲しい場所のマスを指定
-	int GetMoveCost(int _x, int _y) {
-		return mMap[_y][_x].GetMoveCost();
-	}
+	virtual int Initialize() { ; }	//初期化処理
+	virtual int Update() { ; }		//計算処理
+	virtual int Draw() { ; }			//描画処理
+	virtual int Close() { ; }		//終了処理
+	//マップデータの読み込み
+	int FileRead(string);
+
+	int GetMass(int _x,int _y) { mMap[_x][_y]->GetMass(); }
 };

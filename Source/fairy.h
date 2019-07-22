@@ -7,7 +7,7 @@ using namespace std;
 class Fairy :public BaseObj {
 protected:
 
-	string * mName;
+	string  mName;
 	int mDamage;//•Ší‚ÌUŒ‚—Í
 	int	mMagicDamage;//–‚–@UŒ‚—Í
 	int	mRange;//•Ší‚ÌUŒ‚”ÍˆÍ
@@ -22,15 +22,15 @@ protected:
 	int	mMove;		//ˆÚ“®—Í
 
 public:
-	
+
 	Fairy();
-	Fairy(Fairy&);
-	Fairy(string *_name, int _damage, int _range, int _weight, int _magicdamage);
+	Fairy(Fairy&) { ; }
+	Fairy(string _name, int _damage, int _range, int _magicdamage);
 	virtual ~Fairy();
 	Fairy* GetPlayer() { return this; }
 	int Initialize();
 	int Update();
 	int Draw();
 	int Close();
-	
+
 };

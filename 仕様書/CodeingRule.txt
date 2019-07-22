@@ -1,0 +1,64 @@
+・cpp,header
+頭文字と単語の接続部分を大文字で
+例)
+BaseObject
+
+・クラス名
+頭文字と単語の接続部分を大文字で
+例)
+BaseObject
+
+・変数名
+基本小文字。
+単語の接続部分を大文字で
+例)
+int hoge;
+int selectNumber;
+
+・引数
+_を付けてください
+例)
+void hoge(int _a,int _b);
+
+・関数名
+頭文字を大文字
+頭文字と単語の接続部分を大文字で
+例)
+int TimeCount();
+一関数100行を目指そう
+
+・マクロ
+全部大文字
+例)
+#define YESACTIVE true
+
+・その他
+enumにはe
+構造体にはsを付ける
+頭文字を大文字に
+例)
+enum eActive;
+struct sPos
+
+
+
+・sourceTree
+
+説明文の形式
+[したこと]簡易説明
+空行
+詳細説明
+
+[]の中身
+fix	バグ修正
+hotfix	クリティカルなバグ修正
+add	新規（ファイル）機能追加
+update	機能修正（バグではない）
+change	仕様変更
+clean	整理（リファクタリング等）
+disable	無効化（コメントアウト等）
+remove	消去（ファイル）
+upgrade	バージョンアップ
+revert	変更取り消し
+
+

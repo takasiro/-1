@@ -1,9 +1,13 @@
 #pragma once
-#include "BaseObj.h"
+
 #include "Constant.h"
+#include"BaseObj.h"
 #include <iostream>
 using namespace std;
+#include "Unit.h"
 //武器のステータスのクラス
+
+
 class Fairy :public BaseObj {
 protected:
 
@@ -11,6 +15,7 @@ protected:
 	int mDamage;//武器の攻撃力
 	int	mMagicDamage;//魔法攻撃力
 	int	mRange;//武器の攻撃範囲
+
 	//以下補正に使う
 	int	mHp;		//体力
 	int	mStr;		//力(物理用)
@@ -20,6 +25,16 @@ protected:
 	int	mDex;		//	命中補正
 	int	mAgi;		//回避補正
 	int	mMove;		//移動力
+
+	//以下成長値として使用
+	float GrowthHp;
+	float GrowthStr;
+	float GrowthDef;
+	float GrowthInt;
+	float GrowthMnd;
+	float GrowthDex;
+	float GrowthAgi;
+	float GrowthMove;
 
 public:
 

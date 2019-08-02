@@ -1,5 +1,11 @@
 #include "InGameScene.h"
+#include<iostream>
+using namespace std;
+#include<vector>
 #include"DxLib.h"
+#include"Enemy.h"
+#include"UnitMgr.h"
+
 
 
 InGameScene::InGameScene() {
@@ -15,6 +21,8 @@ InGameScene::~InGameScene() {
 }
 
 int InGameScene::Initialize() {
+	UnitMgr Unitmgr;
+
 	return 0;
 }
 int InGameScene::Update() {

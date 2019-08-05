@@ -18,6 +18,6 @@ void Load::LoadMap(char* _filePath, vector<Mass>& _mass) {
 				break;
 			}
 		}
-		_mass.emplace_back(atoi(input));  //Mass”z—ñ‚É‘ã“ü
+		_mass.emplace_back(Mass(0,atoi(input),0));  //Mass”z—ñ‚É‘ã“ü
 	}
 }		

@@ -25,4 +25,5 @@ public:
 	//マップデータの読み込み
 	int FileRead(string);
 
-	int GetMass(int _x,int _y) { mMap[_x][_y]->GetMass(); };
+	int GetMass(int _x, int _y) { mMap[_x][_y]->GetMass(); }
+};

@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "ISceneChanger.h"
+#include "Constant.h"
 class InGameScene : public BaseScene {
 
 public:

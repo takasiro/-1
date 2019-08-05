@@ -24,7 +24,7 @@ int TitleScene::Update() {
 	return 0;
 }
 int TitleScene::Draw() {
-	#ifndef DEBUG
+	#ifdef DEBUG
 	DrawFormatString(0,0,GetColor(255,255,255),"TitleScene");
 	DrawFormatString(600, 200, GetColor(255, 255, 255), "ƒNƒŠƒbƒN‚ÅInGame");
 	#endif

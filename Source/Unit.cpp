@@ -3,11 +3,11 @@
 Unit::Unit() {
 	Initialize();
 }
-Unit::Unit(eRole _role, string* _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+Unit::Unit(eRole _role, string _name, int _hp, int _str, int _def, int _mnd, int _mdef,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 	Initialize(_role, _name, _hp, _str, _def, _mnd, _mdef, _dex, _agi, _move, _exp, _lv);
 }
-int Unit::Initialize(eRole _role, string* _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+int Unit::Initialize(eRole _role, string _name, int _hp, int _str, int _def, int _mnd, int _mdef,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 	mRole = _role;
 	mName = _name;
@@ -44,6 +44,10 @@ int Unit::Close() {
 }
 
 int Unit::StatusUp(int _lv) {
+	return 0;
+}
+
+int Unit::LastStatus() {
 	return 0;
 }
 

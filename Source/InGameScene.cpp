@@ -29,7 +29,9 @@ int InGameScene::Update() {
 	return 0;
 }
 int InGameScene::Draw() {
-	DrawFormatString(100,100,GetColor(255,255,255),"InGame");
+	#ifdef DEBUG
+	DrawFormatString(0,0,GetColor(255,255,255),"InGame");
+	#endif
 	return 0;
 }
 int InGameScene::Close() {

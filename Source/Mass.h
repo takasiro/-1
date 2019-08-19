@@ -13,4 +13,6 @@ public:
 	Mass(int _grHandle, int _landtype, int _movecost);
 	virtual ~Mass() { ; }
 	Mass* GetMass() { return this; }
+	int GetLandType() { return mLandType; }
+	int GetMoveCost() { return mMoveCost; }
 };

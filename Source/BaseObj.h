@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseTask.h"
+#include "DxLib.h"
 class BaseObj : public BaseTask
 {
 public:

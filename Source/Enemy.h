@@ -9,6 +9,7 @@ protected:
 
 public:
 	Enemy();
+	Enemy(int _x, int _y);
 	Enemy(eRole _role, char* _name, int _hp, int _str, int _def, int _mnd, int _mdef,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 	virtual ~Enemy();

@@ -2,9 +2,11 @@
 #include "BaseScene.h"
 #include "ISceneChanger.h"
 #include"Chara.h"
+#include"Enemy.h"
 #include<vector>
 class TitleScene : public BaseScene {
 	vector<Chara*> chara;
+	vector<Enemy*>enemy;
 public:
 	TitleScene();
 	TitleScene(ISceneChanger*);

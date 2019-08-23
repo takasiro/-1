@@ -15,6 +15,8 @@ TitleScene::TitleScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	chara.emplace_back(new Chara(13, 14));
 	chara.emplace_back(new Chara(15, 14));
 	chara.emplace_back(new Chara(17, 14));
+
+	enemy.emplace_back(new Enemy(5, 5));
 }
 
 TitleScene::~TitleScene() {
@@ -28,11 +30,17 @@ int TitleScene::Update() {
 	for (int i = 0; i < chara.size(); i++) {
 		chara[i]->Update();
 	}
+	for (int i = 0; i < enemy.size(); i++) {
+		enemy[i]->Update();
+	}
 	return 0;
 }
 int TitleScene::Draw() {
 	for (int i = 0; i < chara.size(); i++) {
 		chara[i]->Draw();
+	}
+	for (int i = 0; i < enemy.size(); i++) {
+		enemy[i]->Draw();
 	}
 	return 0;
 }

@@ -16,7 +16,7 @@ void Load::LoadData(int _fileHandle,char* _data) {
 　　 vector<Mass>& _mass…マップの地形情報を格納する　
 *******************************************************/
 int Load::LoadMap(const char* _filePath, vector<Mass>& _mass) {
-	//二次元配列の代入　引数の型　
+	//ファイルオープン
 	int stageHandle=FileRead_open(_filePath); 
 	char *inputc;  //ファイル読み込み用(char)
 
@@ -27,6 +27,7 @@ int Load::LoadMap(const char* _filePath, vector<Mass>& _mass) {
 		_mass.emplace_back(Mass(0, atoi(inputc), 0));  //Mass配列に代入
 	}
 
+	FileRead_close(stageHandle);
 	return 0;
 }	
 

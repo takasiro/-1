@@ -27,7 +27,7 @@ int Load::LoadFile(int _fileHandle, char* _data) {
 　　 vector<Mass>& _mass…マップの地形情報を格納する　
 *******************************************************/
 int Load::LoadData(const char* _filePath, vector<Mass>& _mass) {
-	
+
 	int stageHandle = FileRead_open(_filePath);  //ファイルオープン
 
 	char input[256];
@@ -51,25 +51,25 @@ int Load::LoadData(char* _filePath, vector<Unit>& _unit) {
 
 	char input[256];
 
-	char* name;	//名前
+	char name[256];	//名前
 	eRole	role;	//そのキャラの職業(成長値に偏りを出させるため)
-	int hp;		//体力
-	int str;		//力(物理用)
-	int def;		//防御(物理用)
-	int intelli;		//魔力(魔法用)
-	int mnd;		//魔防(魔法用)
-	int dex;		//	命中
-	int agi;		//回避
-	int move;	//移動力
-	
-	int n=0;
+	int hp = 0;		//体力
+	int str = 0;		//力(物理用)
+	int def = 0;		//防御(物理用)
+	int intelli = 0;		//魔力(魔法用)
+	int mnd = 0;		//魔防(魔法用)
+	int dex = 0;		//	命中
+	int agi = 0;		//回避
+	int move = 0;	//移動力
+
+	int n = 0;
 
 
 	if (stageHandle == NULL)return -1;
 
 	while (FileRead_eof(stageHandle) == 0) {  //ファイルの終端まで
 		LoadFile(stageHandle, input);  //データ読み込み	
-		
+
 		switch (n) {
 		case 0:strcpy(name, input); break;
 		case 1:role = eRole(atoi(input)); break;
@@ -79,14 +79,15 @@ int Load::LoadData(char* _filePath, vector<Unit>& _unit) {
 		case 5:intelli = atoi(input); break;
 		case 6:mnd = atoi(input); break;
 		case 7:dex = atoi(input); break;
-		case 8:agi = atoi(input); break;		
-		case 9:move = atoi(input); break;		
+		case 8:agi = atoi(input); break;
+		case 9:move = atoi(input); break;
 		}
 
 		n++;
 
 		if (n == 10) {
 			_unit.emplace_back(Unit(name, role, hp, str, def, intelli, mnd, dex, agi, move, 0, 0));
+			n = 0;
 		}
 
 	}

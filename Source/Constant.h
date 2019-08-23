@@ -3,7 +3,7 @@
 using namespace std;
 #define WINDOW_WIDTH 1280	//画面の幅
 #define WINDOW_HEIGHT 960	//画面の高さ
-
+#define MASSSIZE 64 //マス一個のサイズ
 
 #define DEBUG
 
@@ -22,6 +22,8 @@ typedef enum {
 	eRanger,
 	eFighter
 }eRole;
+//eRole role;
+
 
 
 

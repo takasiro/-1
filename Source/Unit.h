@@ -9,8 +9,8 @@ class Fairy;
 class Unit : public BaseObj
 {
 protected:
-	eRole	mRole;	//そのキャラの職業(成長値に偏りを出させるため)
-	string mName;	//名前
+	eRole	 mRole;	//そのキャラの職業(成長値に偏りを出させるため)
+	char* mName;	//名前
 	int mHp;		//体力
 	int mStr;		//力(物理用)
 	int mDef;		//防御(物理用)
@@ -36,13 +36,13 @@ protected:
 
 public:
 	Unit();
-	Unit(eRole _role, string _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+	Unit(eRole _role, char* _name, int _hp, int _str, int _def, int _mnd, int _mdef,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 	virtual ~Unit();
 
 	Unit* GetUnit() { return this; }
 	int Initialize();//初期化処理
-	int Initialize(eRole _role, string _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+	int Initialize(eRole _role, char* _name, int _hp, int _str, int _def, int _mnd, int _mdef,
 		int _dex, int _agi, int _move, int _exp, int _lv);	//初期化処理(引数付き)
 	int Update();	//計算処理
 	int Draw();		//描画処理

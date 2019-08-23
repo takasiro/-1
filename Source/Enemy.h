@@ -9,13 +9,14 @@ protected:
 
 public:
 	Enemy();
-	Enemy(eRole _role, string _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+	Enemy(int _x, int _y);
+	Enemy(eRole _role, char* _name, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 	virtual ~Enemy();
 
 	Unit* GetEnemy() { GetUnit(); }
 	int Initialize();//‰Šú‰»ˆ—
-	int Initialize(eRole _role, string _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+	int Initialize(eRole _role, char* _name, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);	//‰Šú‰»ˆ—(ˆø”•t‚«)
 	int Update();	//ŒvZˆ—
 	int Draw();		//•`‰æˆ—

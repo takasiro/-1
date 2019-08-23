@@ -3,19 +3,19 @@
 Unit::Unit() {
 	Initialize();
 }
-Unit::Unit(eRole _role, string _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+Unit::Unit(eRole _role, char* _name, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
-	Initialize(_role, _name, _hp, _str, _def, _mnd, _mdef, _dex, _agi, _move, _exp, _lv);
+	Initialize(_role, _name, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv);
 }
-int Unit::Initialize(eRole _role, string _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+int Unit::Initialize(eRole _role, char* _name, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 	mRole = _role;
 	mName = _name;
 	mHp = _hp;
 	mStr = _str;
 	mDef = _def;
+	mInt = _int;
 	mMnd = _mnd;
-	mDef = _mdef;
 	mDex = _dex;
 	mAgi = _agi;
 	mMove = _move;

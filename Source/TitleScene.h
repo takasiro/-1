@@ -1,11 +1,12 @@
 #pragma once
 #include "BaseScene.h"
 #include "ISceneChanger.h"
-#include "DxLib.h"
-#include "Mouse.h"
-#include "InGameScene.h"
+#include"Chara.h"
+#include"Enemy.h"
+#include<vector>
 class TitleScene : public BaseScene {
-	
+	vector<Chara*> chara;
+	vector<Enemy*>enemy;
 public:
 	TitleScene();
 	TitleScene(ISceneChanger*);

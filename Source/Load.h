@@ -3,9 +3,10 @@
 using namespace std;
 #include<string>
 #include<vector>
-//#include"Map.h"
-#include"Mass.h"	
 #include"BaseTask.h"
+#include"Mass.h"	
+#include"Unit.h"
+
 
 
 class Load :public BaseTask {
@@ -19,7 +20,7 @@ public:
 
 	int LoadData(const char*, vector<Mass>&);  //マップロード関数 
 
-	//void PlayerBase(char*, vector<Unit>&);  //キャラクターステータスのロード関数 
+	int LoadData(char*, vector<Unit>&);  //キャラクターステータスのロード関数 
 	//void PlayerGrowth(char*, vector<Unit>&);  //キャラクター成長値のロード
 
 	void FairyBase();

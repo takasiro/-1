@@ -5,7 +5,15 @@ int Load::LoadFile(int _fileHandle, char* _data) {
 	for (int i = 0; i < 64; i++) {
 		DrawFormatString(100, (i + 1) * 20 + 250, GetColor(255, 255, 255), "Load%d", i);
 		_data[i] = FileRead_getc(_fileHandle);  //ファイル読み込み
-		if (_data[i] == EOF)return 0;
+
+		if (_data[i] == '/') {//スラッシュがあれば
+			while (FileRead_getc(_fileHandle) != '\n');//改行までループ
+			i = -1;//カウンタを最初に戻して
+			continue;
+		}
+
+		if (_data[i] == EOF)return 0;  //ファイル終端ならそこで終わる
+
 		if (_data[i] == ',' || _data[i] == '\n') {//カンマか改行の場合
 			_data[i] = '\0';  //そこまでを文字列とする
 			break;
@@ -19,9 +27,8 @@ int Load::LoadFile(int _fileHandle, char* _data) {
 　　 vector<Mass>& _mass…マップの地形情報を格納する　
 *******************************************************/
 int Load::LoadData(const char* _filePath, vector<Mass>& _mass) {
-	//ファイルオープン
-	int stageHandle = FileRead_open(_filePath);
-	DrawFormatString(20, 20, GetColor(255, 255, 255), "open");
+	
+	int stageHandle = FileRead_open(_filePath);  //ファイルオープン
 
 	char input[256];
 
@@ -32,35 +39,60 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass) {
 		_mass.emplace_back(Mass(0, atoi(input), 0));  //Mass配列に代入		
 	}
 
-	DrawFormatString(200, 100, GetColor(255, 255, 255), "%d", _mass.size());  //要素数確認
-
 	FileRead_close(stageHandle);
 
 	return 0;
 }
 
-/*
-void Load::PlayerBase(char* _filePath, vector<Unit>& _unit) {
-	int stageHandle = FileRead_open(_filePath);
-	int n=0,num=0;
-	//最初の二行　読み飛ばす　処理　
-	for (int i = 0; i < 2; i++)while (FileRead_getc(stageHandle) != '\n');
-	char input[64];
-	//ファイルの読み取り処理(breakでwhile文を抜ける処理なので条件式は1に設定されている)
-	while (FileRead_eof(stageHandle) == 0) {
 
-		for (int i = 0; i < 64; i++) {
-			input[i] = FileRead_getc(stageHandle);//1文字取得する
-			if (input[i] == '/') {//スラッシュがあれば
-				while (FileRead_getc(stageHandle) != '\n');//改行までループ
-				i = -1;//カウンタを最初に戻して
-				continue;
-			}
-			if (input[i] == ',' || input[i] == '\n') {//カンマか改行なら
-				input[i] = '\0';//そこまでを文字列とし
-				break;
-			}
+int Load::LoadData(char* _filePath, vector<Unit>& _unit) {
+	//ファイルオープン
+	int stageHandle = FileRead_open(_filePath);
+
+	char input[256];
+
+	char* name;	//名前
+	eRole	role;	//そのキャラの職業(成長値に偏りを出させるため)
+	int hp;		//体力
+	int str;		//力(物理用)
+	int def;		//防御(物理用)
+	int intelli;		//魔力(魔法用)
+	int mnd;		//魔防(魔法用)
+	int dex;		//	命中
+	int agi;		//回避
+	int move;	//移動力
+	
+	int n=0;
+
+
+	if (stageHandle == NULL)return -1;
+
+	while (FileRead_eof(stageHandle) == 0) {  //ファイルの終端まで
+		LoadFile(stageHandle, input);  //データ読み込み	
+		
+		switch (n) {
+		case 0:strcpy(name, input); break;
+		case 1:role = eRole(atoi(input)); break;
+		case 2:hp = atoi(input); break;
+		case 3:str = atoi(input); break;
+		case 4:def = atoi(input); break;
+		case 5:intelli = atoi(input); break;
+		case 6:mnd = atoi(input); break;
+		case 7:dex = atoi(input); break;
+		case 8:agi = atoi(input); break;		
+		case 9:move = atoi(input); break;		
 		}
+
+		n++;
+
+		if (n == 10) {
+			_unit.emplace_back(Unit(name, role, hp, str, def, intelli, mnd, dex, agi, move, 0, 0));
+		}
+
 	}
 
-}*/
+	FileRead_close(stageHandle);
+
+	return 0;
+
+}

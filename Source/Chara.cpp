@@ -29,7 +29,7 @@ Chara::Chara(Chara&) {
 int Chara::Chara::Initialize() {
 	return 0;
 }
-int Chara::Initialize(eRole _role, char* _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+int Chara::Initialize(eRole _role, char* _name, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 
 	return 0;

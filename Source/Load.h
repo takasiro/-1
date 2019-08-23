@@ -2,18 +2,29 @@
 #include<iostream>
 using namespace std;
 #include<string>
-#include"Map.h"
+#include<vector>
 #include"BaseTask.h"
+#include"Mass.h"	
+#include"Unit.h"
 
 
-class Load:public BaseTask {
+
+class Load :public BaseTask {
 private:
 
 public:
-	Load();
-	virtual ~Load();
+	Load() {};
+	virtual ~Load() {};
 
-	void LoadMap(char*, vector<Mass>&);  //マップロード関数 
+	int LoadFile(int, char*);
+
+	int LoadData(const char*, vector<Mass>&);  //マップロード関数 
+
+	int LoadData(char*, vector<Unit>&);  //キャラクターステータスのロード関数 
+	//void PlayerGrowth(char*, vector<Unit>&);  //キャラクター成長値のロード
+
+	void FairyBase();
+	void FairyGrowth();
 
 	int Initialize() { return 0; }	//初期化処理
 	int Update() { return 0; }		//計算処理

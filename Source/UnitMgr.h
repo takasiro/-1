@@ -5,10 +5,13 @@ using namespace std;
 #include "Unit.h"
 #include "BaseTask.h"
 #include"Singleton.h"
+#include "Fairy.h"
 //敵と味方の情報を保持するクラス
+//シングルトンです
 class UnitMgr :public BaseTask, public Singleton<UnitMgr> {
 public:
-	UnitMgr() { ; }
+	UnitMgr();
+	~UnitMgr();
 	friend Singleton<UnitMgr>;
 
 
@@ -16,6 +19,7 @@ private:
 
 	vector<Unit*> CharaDate;
 	vector<Unit*> EnemyDate;
+	vector<Fairy*>FairyDate;
 
 public:
 	//キャラデータの追加・生成
@@ -28,6 +32,11 @@ public:
 	//引数Unit型ポインタ
 	int SetEnemyData(Unit* _chara) {
 		EnemyDate.push_back(_chara);
+		return 0;
+	}
+
+	int SetFairyDate(Fairy* _fairy) {
+		FairyDate.push_back(_fairy);
 		return 0;
 	}
 	//int GetCharaData(Unit* _chara) {
@@ -50,8 +59,9 @@ public:
 	//}
 	vector<Unit*>& GetEnemyDate() { return EnemyDate; }
 	vector<Unit*>& GetCharaDate() { return CharaDate; }
-	virtual int Initialize() { return 0; }	//初期化処理
-	virtual int Update() { return 0; }	//計算処理
-	virtual int Draw() { return 0; }			//描画処理
-	virtual int Close() { return 0; }		//終了処理
+	vector<Fairy*>& GetFairyDate() { return FairyDate; }
+	virtual int Initialize();	//初期化処理
+	virtual int Update();	//計算処理
+	virtual int Draw();		//描画処理
+	virtual int Close();		//終了処理
 };

@@ -1,9 +1,8 @@
 #include "TitleScene.h"
-
-
+#include "Load.h"
+#include"Map.h"
 
 TitleScene::TitleScene() {
-
 }
 
 TitleScene::TitleScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
@@ -17,6 +16,9 @@ TitleScene::TitleScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	chara.emplace_back(new Chara(17, 14));
 
 	enemy.emplace_back(new Enemy(5, 5));
+	
+	Load load;
+	load.LoadData("C:/Users/takag/デスクトップ/slg/slg/Resource/Map/map1.csv",map.GetMap());
 }
 
 TitleScene::~TitleScene() {
@@ -36,6 +38,7 @@ int TitleScene::Update() {
 	return 0;
 }
 int TitleScene::Draw() {
+	map.Draw();
 	for (int i = 0; i < chara.size(); i++) {
 		chara[i]->Draw();
 	}

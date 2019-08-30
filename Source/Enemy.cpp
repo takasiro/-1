@@ -11,8 +11,8 @@ Enemy::Enemy(int _x, int _y) {
 	mHeight = 64;
 }
 
-Enemy::Enemy(eRole _role, char* _name, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) : Unit(_role, _name, _hp, _str, _def,  _int,  _mnd, _dex, _agi, _move, _exp, _lv) {
+Enemy::Enemy( char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv) : Unit( _name, _role, _hp, _str, _def,  _int,  _mnd, _dex, _agi, _move, _exp, _lv) {
 	;
 }
 
@@ -24,7 +24,7 @@ int Enemy::Initialize() {
 	return 0;
 }
 
-int Enemy::Initialize(eRole _role, char* _name, int _hp, int _str, int _def, int _int, int _mnd,
+int Enemy::Initialize( char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 	return 0;
 }

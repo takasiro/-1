@@ -14,7 +14,8 @@ using namespace std;
 //size()の戻り値がunsigned intになりsigned int型と比較すると警告が出るので例外処理
 #pragma warning(disable: 4018)
 
-
+//strcpyを使用すると非推奨としてエラーが出るので例外処理
+#pragma warning(disable : 4996)
 //職業判定ようのenum
 typedef enum {
 	eTank,

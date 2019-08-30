@@ -36,14 +36,15 @@ protected:
 
 public:
 	Unit();
-	Unit(eRole _role, char* _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+	Unit(char* _name, eRole _role, int _hp, int _str, int _def, int _mnd, int _mdef,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 	virtual ~Unit();
 
 	Unit* GetUnit() { return this; }
 	int Initialize();//初期化処理
-	int Initialize(eRole _role, char* _name, int _hp, int _str, int _def, int _mnd, int _mdef,
+	int Initialize( char* _name, eRole _role, int _hp, int _str, int _def, int _mnd, int _mdef,
 		int _dex, int _agi, int _move, int _exp, int _lv);	//初期化処理(引数付き)
+	int SetGrowth(int _hp, int _str, int _def, int _int, int _mnd, int _dex, int _agi);  //成長値
 	int Update();	//計算処理
 	int Draw();		//描画処理
 	int Close();	//終了処理

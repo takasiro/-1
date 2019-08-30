@@ -18,7 +18,7 @@ TitleScene::TitleScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	enemy.emplace_back(new Enemy(5, 5));
 	
 	Load load;
-	load.LoadData("C:/Users/takag/デスクトップ/slg/slg/Resource/Map/map1.csv",map.GetMap());
+	load.LoadData("../Resource/Map/map1.csv",map.GetMap());
 }
 
 TitleScene::~TitleScene() {

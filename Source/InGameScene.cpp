@@ -21,11 +21,11 @@ InGameScene::~InGameScene() {
 }
 
 int InGameScene::Initialize() {
-	UnitMgr Unitmgr;
-
+	
 	return 0;
 }
 int InGameScene::Update() {
+	UnitMgr::Instance()->Update();
 	return 0;
 }
 int InGameScene::Draw() {

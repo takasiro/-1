@@ -14,7 +14,8 @@ protected:
 	string  mName;
 	int mDamage;//•Ší‚ÌUŒ‚—Í
 	int	mMagicDamage;//–‚–@UŒ‚—Í
-	int	mRange;//•Ší‚ÌUŒ‚”ÍˆÍ
+	int	mMaxRange;//•Ší‚ÌÅ‘åUŒ‚”ÍˆÍ
+	int	mMinRange;//•Ší‚ÌÅ¬UŒ‚”ÍˆÍ
 
 	//ˆÈ‰º•â³‚Ég‚¤
 	int	mHp;		//‘Ì—Í
@@ -40,12 +41,14 @@ public:
 
 	Fairy();
 	Fairy(Fairy&) { ; }
-	Fairy(string _name, int _damage, int _range, int _magicdamage);
+	Fairy(string _name, int _damage, int _maxRange, int _minRange, int _magicdamage);
 	virtual ~Fairy();
 	Fairy* GetPlayer() { return this; }
 	int Initialize();
 	int Update();
 	int Draw();
 	int Close();
+
+
 
 };

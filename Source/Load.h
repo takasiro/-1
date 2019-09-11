@@ -11,33 +11,33 @@ using namespace std;
 
 class Load :public BaseTask {
 private:
-	int baseHandle;
-	int growthHandle;
-	int FairyHandle;
+	int mBaseHandle;
+	int mGrowthHandle;
+	int mFairyHandle;
 
 	char input[256];
 
 	char name[256];	//名前
-	eRole	role;	//そのキャラの職業(成長値に偏りを出させるため)
-	int hp;		//体力
-	int str;		//力(物理用)
-	int def;		//防御(物理用)
-	int intelli;		//魔力(魔法用)
-	int mnd;		//魔防(魔法用)
-	int dex;		//	命中
-	int agi;		//回避
-	int move;	//移動力
+	eRole	mRole;	//そのキャラの職業(成長値に偏りを出させるため)
+	int mHp;		//体力
+	int mStr;		//力(物理用)
+	int mDef;		//防御(物理用)
+	int mIntelli;		//魔力(魔法用)
+	int mMnd;		//魔防(魔法用)
+	int mDex;		//	命中
+	int mAgi;		//回避
+	int mMove;	//移動力
 
-	int rangeMin;  //最小攻撃範囲
-	int rangeMax;  //最大攻撃範囲
+	int mRangeMin;  //最小攻撃範囲
+	int mRangeMax;  //最大攻撃範囲
 
-	double gHp;
-	double gStr;
-	double gDef;
-	double gIntelli;
-	double gMnd;
-	double gDex;
-	double gAgi;
+	double mGrowthHp;
+	double mGrowthStr;
+	double mGrowthDef;
+	double mGrowthIntelli;
+	double mGrowthMnd;
+	double mGrowthDex;
+	double mGrowthAgi;
 
 public:
 	Load() { Initialize(); };

@@ -60,6 +60,7 @@ public:
 	vector<Unit*>& GetEnemyDate() { return EnemyDate; }
 	vector<Unit*>& GetCharaDate() { return CharaDate; }
 	vector<Fairy*>& GetFairyDate() { return FairyDate; }
+
 	virtual int Initialize();	//‰Šú‰»ˆ—
 	virtual int Update();	//ŒvZˆ—
 	virtual int Draw();		//•`‰æˆ—

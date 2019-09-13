@@ -4,12 +4,16 @@ using namespace std;
 Fairy::Fairy() {
 	Initialize();
 }
-Fairy::Fairy(string _name, int _damage, int _maxRange, int _minRange, int _magicdamage) {
+Fairy::Fairy(char* _name, int _damage, int _maxRange, int _minRange, int _magicdamage) {
 	mName = _name;
 	mDamage = _damage;
 	mMaxRange = _maxRange;
 	mMinRange = _minRange;
 	mMagicDamage = _magicdamage;
+}
+
+Fairy::Fairy(Fairy* _tmp) {
+	;
 }
 
 Fairy::~Fairy() {

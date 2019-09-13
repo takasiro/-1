@@ -4,7 +4,7 @@ using namespace std;
 #define WINDOW_WIDTH 1280	//画面の幅
 #define WINDOW_HEIGHT 960	//画面の高さ
 #define MASSSIZE 64 //マス一個のサイズ
-
+#define MAXEQUIPSIZE 4
 #define DEBUG
 
 //DxLibの表示系関数のxy座標は全て引数がintの為doubleで指定すると警告がでるので例外処理

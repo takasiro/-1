@@ -1,8 +1,5 @@
 #include"Chara.h"
-#include"Unit.h"
-
 Chara::Chara() {
-	;
 }
 
 Chara::~Chara() {
@@ -14,16 +11,16 @@ Chara::Chara(int _x, int _y) {
 	mPos.y = _y;
 	mWidth = 64;
 	mHeight = 64;
-	
-	
+
+
 }
 
 Chara::Chara(Unit) {
-	;
+	
 }
 
 Chara::Chara(Chara&) {
-	;
+	
 }
 
 int Chara::Chara::Initialize() {
@@ -35,13 +32,13 @@ int Chara::Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int
 	return 0;
 }
 int Chara::Update() {
-	mC.x = mPos.x * 64+64/2;
+	mC.x = mPos.x * 64 + 64 / 2;
 	mC.y = mPos.y * 64 + 64 / 2;
 	return 0;
 }
 int Chara::Draw() {
 
-	DrawCircle(mC.x,mC.y,32,GetColor(255,255,255));
+	DrawCircle(mC.x, mC.y, 32, GetColor(255, 255, 255));
 	return 0;
 }
 int Chara::Close() {
@@ -53,3 +50,4 @@ int Chara::StatusUp(int lv) {
 int Chara::LastStatus() {
 	return 0;
 }
+

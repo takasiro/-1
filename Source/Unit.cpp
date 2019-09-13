@@ -1,13 +1,13 @@
 #include "Unit.h"
-
+#include "Fairy.h"
 Unit::Unit() {
 	Initialize();
 }
-Unit::Unit( char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+Unit::Unit(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
-	Initialize( _name, _role, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv);
+	Initialize(_name, _role, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv);
 }
-int Unit::Initialize( char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+int Unit::Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 	mRole = _role;
 	mName = _name;
@@ -26,13 +26,13 @@ int Unit::Initialize( char* _name, eRole _role, int _hp, int _str, int _def, int
 }
 
 int Unit::SetGrowth(int _hp, int _str, int _def, int _int, int _mnd, int _dex, int _agi) {
-	GrowthHp = _hp;
-	GrowthStr = _str;
-	GrowthDef = _def;
-	GrowthInt = _int;
-	GrowthMnd = _mnd;
-	GrowthDex = _dex;
-	GrowthAgi = _agi;
+	mGrowthHp = _hp;
+	mGrowthStr = _str;
+	mGrowthDef = _def;
+	mGrowthInt = _int;
+	mGrowthMnd = _mnd;
+	mGrowthDex = _dex;
+	mGrowthAgi = _agi;
 	return 0;
 }
 
@@ -61,4 +61,7 @@ int Unit::StatusUp(int _lv) {
 int Unit::LastStatus() {
 	return 0;
 }
+
+
+
 

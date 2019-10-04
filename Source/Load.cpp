@@ -73,6 +73,7 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass) {
 	 const char* _growthFilePath…読み込むファイルのパス
 　　 vector<Mass>& _unit…基礎ステータスと成長後ステータスを格納する
 ***************************************************************************/
+//int LoadData(const char* _baseFilePath, const char* _growthFilePath){
 int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit) {
 	//ファイルオープン
 	mBaseHandle = FileRead_open(_baseFilePath);
@@ -93,6 +94,20 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vecto
 			else if (FileRead_eof(mBaseHandle) == 0) {
 				LoadChara(mBaseHandle, mGrowthHandle, _unit);
 			}
+
+			/*
+			最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
+			if (strstr(_baseFilePath, "Player") && FileRead_eof(mBaseHandle) == 0) {
+				LoadChara(mBaseHandle, mGrowthHandle,eChara;);
+			}
+			else if (strstr(_baseFilePath, "Enemy") && FileRead_eof(mBaseHandle) == 0) {
+				LoadChara(mBaseHandle, mGrowthHandle,eEnemy);
+			}
+			else if(strstr(_baseFilePath, "Fairy") && FileRead_eof(mBaseHandle) == 0){
+				LoadWeapon(int _baseHandle, int _growthHandle, eFairy);
+			}
+			
+			*/
 		}
 	}
 
@@ -110,6 +125,7 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vecto
 　　 vector<Mass>& _unit…基礎ステータスと成長後ステータスを格納する
 ***************************************************************************/
 int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
+//int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 	int n = 0;
 	int nn = 0;
 
@@ -134,6 +150,13 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			n++;
 			if (n == 10) {
 				_unit.emplace_back(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
+				/*最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
+				switch(_type){
+				case eChara:INSTANCE::SetCharadata(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				case eEnemy:INSTANCE::SetEnemydata(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				}
+				*/
+				
 				n = 0;
 				break;
 			}
@@ -168,6 +191,7 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 	 const char* _growthHandle…読み込むファイルのハンドル
 　　 vector<Mass>& _unit…基礎ステータスと成長後ステータスを格納する
 ***************************************************************************/
+//int Load::LoadWeapon(int _baseHandle, int _growthHandle, int type) {
 int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 	int n = 0, nn = 0;
 
@@ -194,6 +218,10 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 
 			if (n == 12) {
 				_unit.emplace_back(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
+
+				/*最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
+				INSTANCE::SetCharadata(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				*/
 				n = 0;
 				break;
 			}

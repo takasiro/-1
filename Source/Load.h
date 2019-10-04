@@ -4,7 +4,8 @@ using namespace std;
 #include<string>
 #include<vector>
 #include"BaseTask.h"
-#include"Mass.h"	
+#include"Mass.h"
+#include"UnitMgr.h"
 #include"Unit.h"
 #include"fairy.h"
 
@@ -15,6 +16,7 @@ private:
 	int mBaseHandle;
 	int mGrowthHandle;
 	int mFairyHandle;
+	int mLoadtype;
 
 	char input[256];
 
@@ -48,9 +50,13 @@ public:
 
 	int LoadData(const char*, vector<Mass>&);  //マップロード関数 
 	int LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit);  //キャラクターステータスのロード関数 
+	int LoadData(const char* _baseFilePath, const char* _growthFilePath);  //キャラクターステータスのロード関数 
 
 	int LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit);
+	int LoadChara(int _baseHandle, int _growthHandle, int _type);
+
 	int LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit);
+	int LoadWeapon(int _baseHandle, int _growthHandle,int _type);
 
 	int Initialize();	//初期化処理
 	int Update() { return 0; }		//計算処理

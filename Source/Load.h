@@ -6,6 +6,7 @@ using namespace std;
 #include"BaseTask.h"
 #include"Mass.h"	
 #include"Unit.h"
+#include"fairy.h"
 
 
 

@@ -10,8 +10,9 @@ Unit::Unit(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int 
 int Unit::Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 	mRole = _role;
-	mName = _name;
+	strcpy(mName, _name);
 	mHp = _hp;
+	mMaXHp = mHp;
 	mStr = _str;
 	mDef = _def;
 	mInt = _int;
@@ -21,7 +22,7 @@ int Unit::Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int 
 	mMove = _move;
 	mExp = _exp;
 	mLv = _lv;
-	mStay = false;
+	mStayFlg = false;
 	return 0;
 }
 

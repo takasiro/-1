@@ -13,20 +13,21 @@ class Unit : public BaseObj
 
 protected:
 
-	bool mStay;		//行動したかの判定
+	bool mStayFlg;		//行動したかの判定 true 行動済み　false　行動前
 	int mLv;		//レベル
 	int mExp;		//現在経験値
 
-	eRole	 mRole;	//そのキャラの職業(成長値に偏りを出させるため)
+	eRole	 mRole;		//そのキャラの職業(成長値に偏りを出させるため)
 	char* mName;	//名前
-	int mHp;		//体力
-	int mStr;		//力(物理用)
-	int mDef;		//防御(物理用)
-	int mInt;		//魔力(魔法用)
-	int mMnd;		//魔防(魔法用)
-	int mDex;		//	命中
-	int mAgi;		//回避
-	int mMove;	//移動力
+	int mMaXHp;		//最大体力
+	int mHp;			//体力
+	int mStr;			//力(物理用)
+	int mDef;			//防御(物理用)
+	int mInt;			//魔力(魔法用)
+	int mMnd;			//魔防(魔法用)
+	int mDex;			//	命中
+	int mAgi;			//回避
+	int mMove;		//移動力
 
 	//以下成長値として使用
 	float mGrowthHp;
@@ -55,6 +56,6 @@ public:
 	virtual int StatusUp(int lv);//レベルアップの能力変化
 	int LastStatus();//武器補正含めた最終ステータス
 
-	
+	bool GetStayFlg() { return mStayFlg; }
 
 };

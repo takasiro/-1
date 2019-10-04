@@ -25,6 +25,12 @@ typedef enum {
 }eRole;
 //eRole role;
 
+//Load.cpp“à‚Å‚ÌƒNƒ‰ƒXŽ¯•Ê—p
+typedef enum {
+	eChara,
+	eEnemy,
+	eFairy
+}eClass;
 
 
 

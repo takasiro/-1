@@ -20,16 +20,17 @@ private:
 
 	char input[256];
 
-	char name[256];	//名前
-	eRole	mRole;	//そのキャラの職業(成長値に偏りを出させるため)
-	int mHp;		//体力
-	int mStr;		//力(物理用)
-	int mDef;		//防御(物理用)
-	int mIntelli;		//魔力(魔法用)
-	int mMnd;		//魔防(魔法用)
-	int mDex;		//	命中
-	int mAgi;		//回避
-	int mMove;	//移動力
+	char name[256];		  //名前
+	eRole	mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
+	int mHp;			  //体力
+	int mStr;			  //力(物理用)
+	int mDef;			  //防御(物理用)
+	int mIntelli;		  //魔力(魔法用)
+	int mMnd;			  //魔防(魔法用)
+	int mDex;			  //命中
+	int mAgi;			  //回避
+	int mMove;			  //移動力
+	char mFilePath[256];  //画像のファイルパス
 
 	int mRangeMin;  //最小攻撃範囲
 	int mRangeMax;  //最大攻撃範囲

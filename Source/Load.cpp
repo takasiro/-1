@@ -29,10 +29,12 @@ int Load::LoadFile(int _fileHandle, char* _data) {
 		DrawFormatString(100, (i + 1) * 20 + 250, GetColor(255, 255, 255), "Load%d", i);
 		_data[i] = FileRead_getc(_fileHandle);  //ファイル読み込み
 
-		if (_data[i] == '/') {//スラッシュがあれば
-			while (FileRead_getc(_fileHandle) != '\n');//改行までループ
-			i = -1;//カウンタを最初に戻して
-			continue;
+		if (_data[i] == '/') { //スラッシュがあれば 
+			if (i > 0 && _data[i - 1] == '/') {
+				while (FileRead_getc(_fileHandle) != '\n');//改行までループ
+				i = -1;//カウンタを最初に戻して
+				continue;
+			}
 		}
 
 		if (_data[i] == EOF)return 0;  //ファイル終端ならそこで終わる
@@ -106,11 +108,9 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vecto
 			else if(strstr(_baseFilePath, "Fairy") && FileRead_eof(mBaseHandle) == 0){
 				LoadWeapon(int _baseHandle, int _growthHandle, eFairy);
 			}
-			
 			*/
 		}
 	}
-
 
 	FileRead_close(mBaseHandle);
 	FileRead_close(mGrowthHandle);
@@ -125,7 +125,7 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vecto
 　　 vector<Mass>& _unit…基礎ステータスと成長後ステータスを格納する
 ***************************************************************************/
 int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
-//int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
+	//int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 	int n = 0;
 	int nn = 0;
 
@@ -145,10 +145,11 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			case 7:mDex = atoi(input); break;
 			case 8:mAgi = atoi(input); break;
 			case 9:mMove = atoi(input); break;
+			case 10:strcpy(mFilePath, input); break;
 			}
 
 			n++;
-			if (n == 10) {
+			if (n == 11) {
 				_unit.emplace_back(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 				/*最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
 				switch(_type){
@@ -156,7 +157,6 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 				case eEnemy:INSTANCE::SetEnemydata(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
 				}
 				*/
-				
 				n = 0;
 				break;
 			}
@@ -220,7 +220,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 				_unit.emplace_back(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 
 				/*最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
-				INSTANCE::SetCharadata(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				INSTANCE::SetFairyDate(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
 				*/
 				n = 0;
 				break;

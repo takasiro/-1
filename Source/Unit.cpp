@@ -26,7 +26,7 @@ int Unit::Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int 
 	return 0;
 }
 
-int Unit::SetGrowth(int _hp, int _str, int _def, int _int, int _mnd, int _dex, int _agi) {
+int Unit::SetGrowth(float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
 	mGrowthHp = _hp;
 	mGrowthStr = _str;
 	mGrowthDef = _def;

@@ -37,7 +37,7 @@ protected:
 	float mGrowthMnd;
 	float mGrowthDex;
 	float mGrowthAgi;
-	float mGrowthMove;
+	int mGrowthMove;
 
 public:
 	Unit();
@@ -49,13 +49,13 @@ public:
 	int Initialize();//初期化処理
 	int Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);	//初期化処理(引数付き)
-	virtual int SetGrowth(int _hp, int _str, int _def, int _int, int _mnd, int _dex, int _agi);  //成長値
+	virtual int SetGrowth(float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi);  //成長値
 	int Update();	//計算処理
 	int Draw();		//描画処理
 	int Close();	//終了処理
 	virtual int StatusUp(int lv);//レベルアップの能力変化
 	int LastStatus();//武器補正含めた最終ステータス
-
+	//行動したか受け取る ture:行動済み false:行動前
 	bool GetStayFlg() { return mStayFlg; }
 
 };

@@ -5,8 +5,8 @@ Enemy::Enemy() {
 }
 
 Enemy::Enemy(int _x, int _y) {
-	mPos.x = _x;
-	mPos.y = _y;
+	mPos.x = _x * MASSSIZE;
+	mPos.y = _y * MASSSIZE;
 	mWidth = 64;
 	mHeight = 64;
 }
@@ -36,7 +36,7 @@ int Enemy::Update() {
 }
 
 int Enemy::Draw() {
-	DrawCircle(mC.x, mC.y, 32, GetColor(255, 0, 0));
+	DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, GetColor(255, 0, 0),true);
 	return 0;
 }
 

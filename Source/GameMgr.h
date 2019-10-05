@@ -1,11 +1,15 @@
 #pragma once
 #include"BaseTask.h"
 #include"UnitMgr.h"
+#include"BaseObj.h"
+#include"Mouse.h"
 
 class GameMgr: public BaseTask{
 private:
+
 	int mNowTurn;
 	int mTurnCount;
+	int mStayCount;
 public:
 	GameMgr();
 	virtual ~GameMgr();

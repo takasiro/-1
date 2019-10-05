@@ -2,13 +2,15 @@
 
 #include "BaseTask.h"
 #include "ISceneChanger.h"
+#include "UnitMgr.h"
 
 class BaseScene:public BaseTask {
 	
 protected:
+	
 	ISceneChanger* mISceneChanger;
 public:
-	BaseScene(){}
+	BaseScene() { ; }
 	BaseScene(ISceneChanger* _Changer) {
 		mISceneChanger = _Changer;
 	}

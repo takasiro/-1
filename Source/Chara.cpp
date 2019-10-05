@@ -7,21 +7,20 @@ Chara::~Chara() {
 }
 
 Chara::Chara(int _x, int _y) {
-	mPos.x = _x;
-	mPos.y = _y;
-	mWidth = 64;
-	mHeight = 64;
+	mPos.x = _x*MASSSIZE;
+	mPos.y = _y* MASSSIZE;
+	mStayFlg = false;
 
 
 }
 
-Chara::Chara(Unit) {
-	
-}
-
-Chara::Chara(Chara&) {
-	
-}
+//Chara::Chara(Unit) {
+//	
+//}
+//
+//Chara::Chara(Chara&) {
+//	
+//}
 
 int Chara::Chara::Initialize() {
 	return 0;
@@ -34,11 +33,12 @@ int Chara::Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int
 int Chara::Update() {
 	mC.x = mPos.x * 64 + 64 / 2;
 	mC.y = mPos.y * 64 + 64 / 2;
-	return 0;
+	if (mStayFlg == true) return 1;
+	else return 0;
 }
 int Chara::Draw() {
 
-	DrawCircle(mC.x, mC.y, 32, GetColor(255, 255, 255));
+	DrawBox(mPos.x, mPos.y, mPos.x+MASSSIZE,mPos.y+MASSSIZE, GetColor(0, 0, 255),true);
 	return 0;
 }
 int Chara::Close() {

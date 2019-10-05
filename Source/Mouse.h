@@ -5,10 +5,10 @@
 
 #define GET_BUTTON Mouse::Instance()->GetMouseButton	//キー獲得簡易化
 #define GET_WHEEL Mouse::Instance()->GetMouseWheel	//キー獲得簡易化
-
+#define GET_POSITION Mouse::Instance()->GetMouse_Pos	//キー獲得簡易化
 
 class Mouse :public Singleton<Mouse> , public BaseObj{
-	Mouse() {}
+	Mouse() { mButton=0, mWheel=0; }
 	friend Singleton<Mouse>;
 //protected:
 	int mButton, mWheel;

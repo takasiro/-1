@@ -17,9 +17,9 @@ public:
 	}
 	Chara(int x, int y);
 
-	Chara(Unit);
+	//Chara(Unit);
 	~Chara();
-	Chara(Chara&);
+	//Chara(Chara&);
 
 	int Initialize();//‰Šú‰»ˆ—
 	int Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,

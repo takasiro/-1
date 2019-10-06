@@ -20,8 +20,8 @@ private:
 
 	char input[256];
 
-	char name[256];		  //名前
-	eRole	mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
+	char mName[256];	  //名前
+	eRole mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
 	int mHp;			  //体力
 	int mStr;			  //力(物理用)
 	int mDef;			  //防御(物理用)

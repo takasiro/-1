@@ -135,7 +135,7 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:strcpy(name, input); break;
+			case 0:strcpy(mName, input); break;
 			case 1:mRole = eRole(atoi(input)); break;
 			case 2:mHp = atoi(input); break;
 			case 3:mStr = atoi(input); break;
@@ -145,12 +145,18 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			case 7:mDex = atoi(input); break;
 			case 8:mAgi = atoi(input); break;
 			case 9:mMove = atoi(input); break;
-			case 10:strcpy(mFilePath, input); break;
+			case 10:
+				if (strstr(input, "/") == NULL) {
+					break;
+				}
+				else {
+					strcpy(mFilePath, input); break;
+				}
 			}
 
 			n++;
 			if (n == 11) {
-				_unit.emplace_back(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
+				_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 				/*最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
 				switch(_type){
 				case eChara:INSTANCE::SetCharadata(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
@@ -200,7 +206,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:strcpy(name, input); break;
+			case 0:strcpy(mName, input); break;
 			case 1:mRangeMin = atoi(input); break;
 			case 2:mRangeMax = atoi(input); break;
 			case 3:mRole = eRole(atoi(input)); break;
@@ -217,7 +223,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			n++;
 
 			if (n == 12) {
-				_unit.emplace_back(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
+				_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 
 				/*最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
 				INSTANCE::SetFairyDate(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;

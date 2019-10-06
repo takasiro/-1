@@ -62,6 +62,9 @@ int Unit::StatusUp(int _lv) {
 int Unit::LastStatus() {
 	return 0;
 }
+int Unit::Move(int _x, int _y) {
+	return 0;
+}
 
 
 

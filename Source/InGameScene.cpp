@@ -27,6 +27,7 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 
 	Load load;
 	load.LoadData("../Resource/Map/map1.csv", map.GetMap());
+	INSTANCE->SetMapData(map);
 }
 
 InGameScene::~InGameScene() {
@@ -38,7 +39,7 @@ int InGameScene::Initialize() {
 	return 0;
 }
 int InGameScene::Update() {
-	gameMgr.Update();
+	gameMgr.Update(gameMgr.Update());
 	
 	return 0;
 }
@@ -51,6 +52,7 @@ int InGameScene::Draw() {
 	return 0;
 }
 int InGameScene::Close() {
+	map.Close();
 	return 0;
 }
 

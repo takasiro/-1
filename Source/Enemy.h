@@ -22,6 +22,7 @@ public:
 	int Update();	//計算処理
 	int Draw();		//描画処理
 	int Close();	//終了処理
+	int Move(int, int);//移動処理
 	int StatusUp(int lv);//レベルアップの能力変化
 
 

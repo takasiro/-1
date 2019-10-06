@@ -18,26 +18,34 @@ int GameMgr::Initialize() {
 
 int  GameMgr::Update() {
 	BaseObj::sPos  tmp;
-	int num = 0;
-	if (Mouse::GET_BUTTON() == MOUSE_INPUT_LEFT) {
-		num = INSTANCE->CulNum(tmp = Mouse::GET_POSITION(), PLAYER);
+	static int num = -1;
+
+
+
+	if ((GET_BUTTON() & MOUSE_INPUT_LEFT) && num == -1) {
+		num = INSTANCE->CulNum(tmp = GET_POSITION(), PLAYER);
 	}
-	if(num!=-1)INSTANCE->Update(num);
-	INSTANCE->Update();
-	INSTANCE->SetCharaData(Chara(10, 10));
-	return 0;
+	if (num != -1)num = INSTANCE->Update(num);
+	return INSTANCE->CheckStay(mNowTurn);
+
+	
 }
 
 
 void  GameMgr::Update(int _turn) {
 	//player.update‚Æenemy.update‚Ì–ß‚è’l‚ðŽó‚¯Žæ‚é—\’è
-	if (_turn == 1)mNowTurn * -1;
-	INSTANCE->Update();
+	if (_turn == 1)mNowTurn *= -1;
+	if (mNowTurn == ENEMY_TURN&& LEFTCLICK==0) {
+		mNowTurn *= -1;
+		INSTANCE->InitCharaStayFlg();
+	}
+
 }
 
 
 int GameMgr::Draw() {
 	INSTANCE->Draw();
+	DrawFormatString(0, 50, GetColor(255, 255, 255), "turn %d", mNowTurn);
 	return 0;
 }
 

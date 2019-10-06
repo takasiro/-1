@@ -53,9 +53,12 @@ public:
 	int Update();	//計算処理
 	int Draw();		//描画処理
 	int Close();	//終了処理
+	virtual int Move(int,int);
 	virtual int StatusUp(int lv);//レベルアップの能力変化
 	int LastStatus();//武器補正含めた最終ステータス
 	//行動したか受け取る ture:行動済み false:行動前
 	bool GetStayFlg() { return mStayFlg; }
+	void SetStayFlg(bool _flg) {  mStayFlg = _flg; }
+	int GetMoveRange() { return mMove; }
 
 };

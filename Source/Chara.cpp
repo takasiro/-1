@@ -1,17 +1,23 @@
 #include"Chara.h"
 Chara::Chara() {
 }
-
+Chara::Chara(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv) :Unit(_name, _role, _hp, _str, _def, _int, _mnd,
+		_dex, _agi, _move, _exp, _lv) {
+	mColor = GetColor(0, 0, 255);
+}
 Chara::~Chara() {
 	;
 }
 
 Chara::Chara(int _x, int _y) {
-	mPos.x = _x*MASSSIZE;
-	mPos.y = _y* MASSSIZE;
+	mPos.x = _x * MASSSIZE;
+	mPos.y = _y * MASSSIZE;
+	mMove = 4;
 	mStayFlg = false;
+	mOnActive = true;
 
-
+	mColor = GetColor(0, 0, 255);
 }
 
 //Chara::Chara(Unit) {
@@ -22,7 +28,7 @@ Chara::Chara(int _x, int _y) {
 //	
 //}
 
-int Chara::Chara::Initialize() {
+int Chara::Initialize() {
 	return 0;
 }
 int Chara::Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
@@ -37,8 +43,9 @@ int Chara::Update() {
 	else return 0;
 }
 int Chara::Draw() {
-
-	DrawBox(mPos.x, mPos.y, mPos.x+MASSSIZE,mPos.y+MASSSIZE, GetColor(0, 0, 255),true);
+	if (mStayFlg == false)mColor = GetColor(0, 0, 255);
+		else mColor = GetColor(150, 150, 150);
+	DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE,mColor, true);
 	return 0;
 }
 int Chara::Close() {
@@ -50,4 +57,20 @@ int Chara::StatusUp(int lv) {
 int Chara::LastStatus() {
 	return 0;
 }
+
+int Chara::Move(int _x, int _y) {
+	mPos.x = _x;
+	mPos.y = _y;
+	//ステイフラグは一時的な処理
+	if (mStayFlg == false) {
+		mStayFlg = true;
+		mColor = GetColor(150, 150, 150);
+	}
+	else {
+		mStayFlg = false;
+		mColor = GetColor(0, 0, 255);
+	}
+	return 0;
+}
+
 

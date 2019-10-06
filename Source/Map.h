@@ -43,6 +43,7 @@ public:
 
 	int GetMass(int _x) { mMap[_x].GetMass(); }
 	vector<Mass>& GetMap() { return mMap; }
+	vector<Mass>* GetMapAdress() { return &mMap; }
 	
 	void MassDraw(int _landType);
 };

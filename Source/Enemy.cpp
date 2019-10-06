@@ -51,3 +51,6 @@ int Enemy::StatusUp(int lv) {
 int Enemy::LastStatus() {
 	return 0;
 }
+int Enemy:: Move(int, int) {
+	return 0;
+}

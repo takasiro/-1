@@ -23,7 +23,7 @@ int Map::Draw() {
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 20; j++) {
 			MassDraw(mMap[i * 20 + j].GetLandType());
-			DrawBox(j * 64, i * 64, j * 64 + 64, i * 64 + 64, color, true);
+			DrawBox(j * 64, i * 64, j * 64 + 63, i * 64 + 63, color, true);
 		}
 	}
 	return 0;
@@ -49,5 +49,7 @@ void Map::MassDraw(int _landType) {
 }
 
 int Map::Close() {
+	mMap.clear();
+	mMap.shrink_to_fit();
 	return 0;
 }

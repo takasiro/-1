@@ -1,4 +1,5 @@
 #pragma once
+#include"Constant.h"
 class BaseTask
 {
 public:

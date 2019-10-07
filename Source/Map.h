@@ -5,9 +5,9 @@ using namespace std;
 #include"BaseTask.h"
 #include"Mass.h"
 class Map :public BaseTask {
-private:
+public:
 	//マス地形の選択用
-	typedef enum Terrain {
+	typedef enum eTerrain {
 		eGrassland = 1,
 		eGrass,
 		eRock,
@@ -24,10 +24,11 @@ private:
 		eDemonKingPillars,
 		eDemonKingCarpet
 	};
+private:
 	vector<Mass> mMap;
 	vector<int> mConnect;//接続されているマップ番号を入れる
 	int mMapNum;//マップ番号
-	Terrain terrain;
+	eTerrain terrain;
 	unsigned int color;
 public:
 	Map();
@@ -42,6 +43,7 @@ public:
 
 	int GetMass(int _x) { mMap[_x].GetMass(); }
 	vector<Mass>& GetMap() { return mMap; }
+	vector<Mass>* GetMapAdress() { return &mMap; }
 	
 	void MassDraw(int _landType);
 };

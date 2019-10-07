@@ -34,7 +34,19 @@ protected:
 	}
 
 public:
-
+	BaseObj() {
+		mPos.x = 0;
+		mPos.y = 0;
+		mWidth = 64;
+		mHeight = 64;
+		RUpdate();
+		CUpdate();
+		mV.x = 0;
+		mV.y = 0;
+		mSpeed = 0;
+		mAngle = 0;
+		mOnActive = true;
+	}
 	//’l‚ÌŠl“¾
 	double GetPosX() { return mPos.x; }
 	double GetPosY() { return mPos.y; }
@@ -73,9 +85,9 @@ public:
 	void SetAngle(double angle) { mAngle = angle; }
 	void SetSpeed(double speed) { mSpeed = speed; }
 	void SetR(double r) { mR = r; }
-	void SetOnActive(int onactive) { mOnActive = onactive; }
+	void SetOnActive(int onactive) { mOnActive = onactive; }*/
 	void SetGrHandle(int grhandle) { mGrHandle = grhandle; }
 	void SetGrHandles(int* grhandles) { mGrHandles = grhandles; }
 	void SetGrHandleCount(int grhandlescount) { mGrHandlesCount = grhandlescount; }
-	*/
+
 };

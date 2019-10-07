@@ -27,6 +27,7 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 
 	Load load;
 	load.LoadData("../Resource/Map/map1.csv", map.GetMap());
+//	load.LoadData("../Resource/Status/PlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
 	INSTANCE->SetMapData(map);
 }
 

@@ -77,8 +77,9 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass) {
 　　 vector<Mass>& _unit…基礎ステータスと成長後ステータスを格納する
 ***************************************************************************/
 //int LoadData(const char* _baseFilePath, const char* _growthFilePath){
-int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit) {
-	//ファイルオープン
+//int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit) {
+int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath/*, vector<Unit>& _unit*/) {
+//ファイルオープン
 	mBaseHandle = FileRead_open(_baseFilePath);
 	mGrowthHandle = FileRead_open(_growthFilePath);
 
@@ -160,8 +161,10 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 				_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 				*/
 				switch(_type){
-				case eChara:INSTANCE::SetCharadata(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				case eEnemy:INSTANCE::SetEnemydata(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				/*case eChara:INSTANCE::SetCharadata(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				case eEnemy:INSTANCE::SetEnemydata(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;*/
+				case eChara:INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				case eEnemy:INSTANCE->SetEnemyData(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
 				}
 				
 				n = 0;
@@ -232,7 +235,8 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandle, int type) {
 
 			if (n == 13) {
 				//_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
-				INSTANCE::SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+			/*	INSTANCE::SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;*/
+				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
 			
 				n = 0;
 				break;

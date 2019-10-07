@@ -5,16 +5,22 @@ Fairy::Fairy() {
 	Initialize();
 }
 Fairy::Fairy(char* _name, int _damage, int _maxRange, int _minRange, int _magicdamage) {
-	mName = _name;
+	strcpy(mName, _name);
 	mDamage = _damage;
 	mMaxRange = _maxRange;
 	mMinRange = _minRange;
 	mMagicDamage = _magicdamage;
 }
 
-Fairy::Fairy(Fairy* _tmp) {
-	;
+Fairy::Fairy(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv) :Unit(_name, _role, _hp, _str, _def, _int, _mnd,
+		_dex, _agi, _move, _exp, _lv) {
+
 }
+
+//Fairy::Fairy(Fairy* _tmp) {
+//	;
+//}
 
 Fairy::~Fairy() {
 	;

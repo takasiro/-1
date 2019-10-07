@@ -5,6 +5,9 @@ using namespace std;
 #define WINDOW_HEIGHT 960	//画面の高さ
 #define MASSSIZE 64 //マス一個のサイズ
 
+#define PLAYER_TURN 1//プレイヤーのターンか判定するためのもの
+#define ENEMY_TURN -1//敵のターンか判定するもの
+
 #define DEBUG
 
 //DxLibの表示系関数のxy座標は全て引数がintの為doubleで指定すると警告がでるので例外処理

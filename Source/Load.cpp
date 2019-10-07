@@ -61,7 +61,8 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass) {
 
 	while (FileRead_eof(stageHandle) == 0) {  //ファイルの終端まで
 		LoadFile(stageHandle, input);  //データ読み込み	
-		_mass.emplace_back(Mass(0, atoi(input), 0));  //Mass配列に代入		
+		//_mass.emplace_back(Mass(0, atoi(input), 0));  //Mass配列に代入		
+		_mass.emplace_back(Mass(0, atoi(input), INSTANCE->cul.SetCost(atoi(input))));
 	}
 
 	FileRead_close(stageHandle);
@@ -89,26 +90,25 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vecto
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
-
+/*
 			if (strstr(_baseFilePath, "Fairy") && FileRead_eof(mBaseHandle) == 0) {
 				LoadWeapon(mBaseHandle, mGrowthHandle, _unit);
 			}
 			else if (FileRead_eof(mBaseHandle) == 0) {
 				LoadChara(mBaseHandle, mGrowthHandle, _unit);
 			}
-
-			/*
-			最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
+*/
+			
 			if (strstr(_baseFilePath, "Player") && FileRead_eof(mBaseHandle) == 0) {
-				LoadChara(mBaseHandle, mGrowthHandle,eChara;);
+				LoadChara(mBaseHandle, mGrowthHandle,eChara);
 			}
 			else if (strstr(_baseFilePath, "Enemy") && FileRead_eof(mBaseHandle) == 0) {
 				LoadChara(mBaseHandle, mGrowthHandle,eEnemy);
 			}
 			else if(strstr(_baseFilePath, "Fairy") && FileRead_eof(mBaseHandle) == 0){
-				LoadWeapon(int _baseHandle, int _growthHandle, eFairy);
+				LoadWeapon(mBaseHandle, mGrowthHandle, eFairy);
 			}
-			*/
+			
 		}
 	}
 
@@ -124,8 +124,8 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vecto
 	 const char* _growthHandle…読み込むファイルのハンドル
 　　 vector<Mass>& _unit…基礎ステータスと成長後ステータスを格納する
 ***************************************************************************/
-int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
-	//int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
+//int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
+int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 	int n = 0;
 	int nn = 0;
 
@@ -156,13 +156,14 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 
 			n++;
 			if (n == 11) {
+				/*
 				_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
-				/*最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
-				switch(_type){
-				case eChara:INSTANCE::SetCharadata(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				case eEnemy:INSTANCE::SetEnemydata(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				}
 				*/
+				switch(_type){
+				case eChara:INSTANCE::SetCharadata(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				case eEnemy:INSTANCE::SetEnemydata(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				}
+				
 				n = 0;
 				break;
 			}
@@ -182,7 +183,7 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			}
 			nn++;
 			if (nn == 7) {
-				_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}
@@ -197,8 +198,8 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 	 const char* _growthHandle…読み込むファイルのハンドル
 　　 vector<Mass>& _unit…基礎ステータスと成長後ステータスを格納する
 ***************************************************************************/
-//int Load::LoadWeapon(int _baseHandle, int _growthHandle, int type) {
-int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
+int Load::LoadWeapon(int _baseHandle, int _growthHandle, int type) {
+//int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 	int n = 0, nn = 0;
 
 	while (FileRead_eof(mBaseHandle) == 0) {
@@ -218,16 +219,21 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			case 9:mDex = atoi(input); break;
 			case 10:mAgi = atoi(input); break;
 			case 11:mMove = atoi(input); break;
+			case 12:
+				if (strstr(input, "/") == NULL) {
+					break;
+				}
+				else {
+					strcpy(mFilePath, input); break;
+				}
 			}
 
 			n++;
 
-			if (n == 12) {
-				_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
-
-				/*最新版更新時の処理　まだ最新版が上がってないのでコメントアウト中です
-				INSTANCE::SetFairyDate(Unit(name, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				*/
+			if (n == 13) {
+				//_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
+				INSTANCE::SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+			
 				n = 0;
 				break;
 			}
@@ -246,7 +252,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 			}
 			nn++;
 			if (nn == 7) {
-				_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}

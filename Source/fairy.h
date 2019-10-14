@@ -9,8 +9,6 @@ class Fairy :public  Unit {
 protected:
 
 	//char* mName;
-	int mDamage;//•Ší‚ÌUŒ‚—Í
-	int	mMagicDamage;//–‚–@UŒ‚—Í
 	int	mMaxRange;//•Ší‚ÌÅ‘åUŒ‚”ÍˆÍ
 	int	mMinRange;//•Ší‚ÌÅ¬UŒ‚”ÍˆÍ
 
@@ -25,13 +23,13 @@ protected:
 	int	mMove;		//ˆÚ“®—Í
 
 	////ˆÈ‰º¬’·’l‚Æ‚µ‚Äg—p
-	//float GrowthHp;
-	//float GrowthStr;
-	//float GrowthDef;
-	//float GrowthInt;
-	//float GrowthMnd;
-	//float GrowthDex;
-	//float GrowthAgi;
+	float GrowthHp;
+	float GrowthStr;
+	float GrowthDef;
+	float GrowthInt;
+	float GrowthMnd;
+	float GrowthDex;
+	float GrowthAgi;
 	//float GrowthMove;
 
 public:
@@ -39,8 +37,8 @@ public:
 	Fairy();
 	//Fairy(Fairy* _tmp);
 	Fairy(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
-		int _dex, int _agi, int _move, int _exp, int _lv);
-	Fairy(char* _name, int _damage, int _minRange, int _maxRange, int _magicdamage);
+		int _dex, int _agi, int _move, int _exp, int _lv, int _minRange, int _maxRange);
+	void SetRange(int _minRange, int _maxRange) { mMinRange = _minRange; mMaxRange = _maxRange; }
 	virtual ~Fairy();
 	//Fairy& GetFairy() { return 0; }
 	int Initialize();

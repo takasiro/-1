@@ -41,11 +41,14 @@ public:
 		mHeight = 64;
 		RUpdate();
 		CUpdate();
-		mV.x = 0;
-		mV.y = 0;
+		mV.x = mPos.x;
+		mV.y = mPos.y;
 		mSpeed = 0;
 		mAngle = 0;
 		mOnActive = true;
+		mGrHandle = 0;
+		mGrHandles = NULL;
+		mGrHandlesCount = 0;
 	}
 	//’l‚ÌŠl“¾
 	double GetPosX() { return mPos.x; }

@@ -37,8 +37,7 @@ protected:
 	float mGrowthMnd;
 	float mGrowthDex;
 	float mGrowthAgi;
-	int mGrowthMove;
-
+	
 public:
 	Unit();
 	Unit(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
@@ -61,4 +60,33 @@ public:
 	void SetStayFlg(bool _flg) {  mStayFlg = _flg; }
 	int GetMoveRange() { return mMove; }
 
+	int GetLv() { return mLv; }
+
+	int GetStr() { return mStr; }
+	float GetGrowthStr() { return mGrowthStr; }
+
+	int GetDef() { return mDef; }
+	float GetGrowthDef() { return mGrowthDef; }
+
+	int GetInt() { return mInt; }
+	float GetGrowthInt() { return mGrowthInt; }
+
+	int GetMnd() { return mMnd; }
+	float GetGrowthMnd() { return mGrowthMnd; }
+
+	int GetDex() { return mDex; }
+	float GetGrowthDex() { return mGrowthDex; }
+
+	int GetRole() { return mRole; }
+	
+	//ÇòÇ∆ÇôÇ…ë„ì¸Ç∑ÇÈä÷êîÇ«ÇøÇÁÇégÇ¡ÇƒÇ‡â¬î\
+	virtual void SetPos(sPos _pos) {
+		mPos.x = _pos.x*MASSSIZE;
+		mPos.y = _pos.y*MASSSIZE;
+	}
+
+	virtual void SetPos(int _x,int _y) {
+		mPos.x = _x * MASSSIZE;
+		mPos.y = _y * MASSSIZE;
+	}
 };

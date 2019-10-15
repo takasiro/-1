@@ -13,6 +13,21 @@ public:
 	Enemy(int _x, int _y);
 	Enemy(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);
+	Enemy(Enemy& _e) {
+		strcpy(mName,_e.mName);
+		mHp = _e.mHp;
+		mStr = _e.mStr;
+		mDef = _e.mDef;
+		mInt = _e.mInt;
+		mMnd = _e.mMnd;
+		mDex = _e.mDex;
+		mAgi = _e.mAgi;
+		mMove = _e.mMove;
+		mExp = _e.mExp;
+		mLv = _e.mLv;
+
+
+	}
 	virtual ~Enemy();
 
 	Unit* GetEnemy() { GetUnit(); }

@@ -303,8 +303,8 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 
 			if (n == 13) {
 				//_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
-			/*	INSTANCE::SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;*/
-				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+			//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0,1,1)); break;
 			
 				n = 0;
 				break;

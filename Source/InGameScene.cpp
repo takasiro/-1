@@ -47,6 +47,10 @@ int InGameScene::Update() {
 int InGameScene::Draw() {
 	map.Draw();
 	gameMgr.Draw();
+
+	//å„Ç≈UIÇ…à⁄êA
+	DrawBox(0, 0, 1280, 300,GetColor(50,255,50),true);
+
 	#ifdef DEBUG
 	DrawFormatString(0,0,GetColor(255,255,255),"InGame");
 	#endif

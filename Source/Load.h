@@ -8,11 +8,13 @@ using namespace std;
 #include"UnitMgr.h"
 #include"Unit.h"
 #include"fairy.h"
+#include"Enemy.h"
 
 
 
 class Load :public BaseTask {
 private:
+	//ファイルハンドル
 	int mBaseHandle;
 	int mGrowthHandle;
 	int mFairyHandle;
@@ -20,6 +22,7 @@ private:
 
 	char input[256];
 
+	//ステータス情報
 	char mName[256];	  //名前
 	eRole mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
 	int mHp;			  //体力
@@ -43,21 +46,27 @@ private:
 	double mGrowthDex;
 	double mGrowthAgi;
 
+	vector<Enemy> mEnemyData;  //Enemyのマスターデータ
+
+
 public:
 	Load() { Initialize(); };
 	virtual ~Load() {};
 
 	int LoadFile(int, char*);
 
-	int LoadData(const char*, vector<Mass>&);  //マップロード関数 
-	int LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit);  //キャラクターステータスのロード関数 
+	int LoadData(const char*, vector<Mass>&);  //マップロード関数
+
+	//int LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit);  //キャラクターステータスのロード関数 
 	int LoadData(const char* _baseFilePath, const char* _growthFilePath);  //キャラクターステータスのロード関数 
 
-	int LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit);
+	//int LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit);
 	int LoadChara(int _baseHandle, int _growthHandle, int _type);
 
-	int LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit);
-	int LoadWeapon(int _baseHandle, int _growthHandle,int _type);
+	int LoadEnemy(int _baseHandle,int _growthHandle);
+
+	//int LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit);
+	int LoadWeapon(int _baseHandle, int _growthHandle);
 
 	int Initialize();	//初期化処理
 	int Update() { return 0; }		//計算処理

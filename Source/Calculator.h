@@ -7,6 +7,7 @@ using namespace std;
 #include"Constant.h"
 #include"Chara.h"
 #include "Enemy.h"
+#include "Unit.h"
 #include"DxLib.h"	
 
 /*計算を行うクラス
@@ -49,4 +50,27 @@ public:
 	第一引数 int x軸
 	第二引数 int y軸*/
 	int GetMoveArea(int _x, int _y) { return mTmpMap[_y * 20+_x]; }
+
+
+	/************************************************
+	int PhysicalDamageCalculate(Unit 攻撃側ユニット,Unit 防御側ユニット);
+	物理ダメージ計算関数
+	引数：
+	第一引数　攻撃側ユニット
+	第二引数　防御側ユニット
+	戻り値：ダメージ量
+	ダメージはマイナスにはならない
+	*************************************************/
+	int PhysicalDamageCalculate(Unit _Atk,Unit _def);
+
+	/************************************************
+	int MagicDamageCalculate(Unit 攻撃側ユニット,Unit 防御側ユニット);
+	魔法ダメージ計算関数
+	引数：
+	第一引数　攻撃側ユニット
+	第二引数　防御側ユニット
+	戻り値：ダメージ量
+	ダメージはマイナスにはならない
+	*************************************************/
+	int MagicDamageCalculate(Unit _Atk,Unit _def);
 };

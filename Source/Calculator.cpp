@@ -68,3 +68,20 @@ int Calculator::MoveJudg(vector<Chara*>* _chara, vector<Enemy*>*_enemy, int _num
 
 	return 0;
 }
+
+
+int Calculator::PhysicalDamageCalculate(Unit _Atk, Unit _def) {
+	//int tmp = UŒ‚.str + (UŒ‚.level * UŒ‚.str¬’·) + UŒ‚.•Šístr ( UŒ‚.•Šílevel * UŒ‚.•Šístr¬’·) -
+	//			–hŒä.def + (–hŒä.level * –hŒä.def¬’·) + –hŒä.•Šídef ( –hŒä.•Šílevel * –hŒä.•Šídef¬’·)
+	//if(tmp < 0) tmp = 0;
+	//return tmp;
+	return 0;
+}
+int Calculator::MagicDamageCalculate(Unit _Atk, Unit _def) {
+	//int tmp = UŒ‚.mgc + (UŒ‚.level * UŒ‚.mgc¬’·) + UŒ‚.•Šímgc ( UŒ‚.•Šílevel * UŒ‚.•Šímgc¬’·) -
+	//			–hŒä.mnd + (–hŒä.level * –hŒä.mnd¬’·) + –hŒä.•Šímnd ( –hŒä.•Šílevel * –hŒä.•Šímnd¬’·)
+	//if(tmp < 0) tmp = 0;
+	//return tmp;
+
+	return 0;
+}

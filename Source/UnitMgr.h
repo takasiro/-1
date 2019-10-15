@@ -32,6 +32,9 @@ private:
 	vector<Chara*> CharaDate;
 	vector<Enemy*> EnemyDate;
 	vector<Fairy*>FairyDate;
+	
+	vector<Enemy*> EnemyMasterDate;//ロードしたエネミーデータをここに入れて、二回目以降はここからコピーする
+	vector<Fairy*>FairyMasterDate;//ロードしたフェアリーデータをここに入れて、二回目以降はここからコピーする
 
 public:
 	/*キャラデータの生成
@@ -53,9 +56,27 @@ public:
 		return 0;
 	}
 
+	/*エネミーデータ生成
+	引数 Enemy型　オブジェクト*/
+	int SetEnemyMasterData(Enemy _chara) {
+		EnemyMasterDate.emplace_back(new Enemy(_chara));
+		return 0;
+	}
+	/*フェアリーデータ生成
+		引数 Fairy型　オブジェクト*/
+	int SetFairyMastarDate(Fairy _fairy) {
+		FairyMasterDate.emplace_back(new Fairy(_fairy));
+		return 0;
+	}
 
+	int GetCharaDataSize() { return CharaDate.size(); }
+	int GetEnemyDataSize() { return EnemyDate.size(); }
+	int GetFairyDataSize() { return FairyDate.size(); }
 
-
+	/*int SetGrowth();
+	int SetGrowth();
+	int SetGrowth();*/
+	
 	//int GetCharaData(Unit* _chara) {
 	//	for (auto itr = CharaDate.begin; itr < CharaDate.end(); itr++) {
 	//		if (CharaDate+itr==_chara) {

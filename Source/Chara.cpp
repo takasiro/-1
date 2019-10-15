@@ -7,16 +7,18 @@ Chara::Chara(char* _name, eRole _role, int _hp, int _str, int _def, int _int, in
 	mColor = GetColor(0, 0, 255);
 }
 Chara::~Chara() {
-	;
+	DeleteGraph(mGrHandle);
 }
 
 Chara::Chara(int _x, int _y) {
-	mPos.x = _x * MASSSIZE;
-	mPos.y = _y * MASSSIZE;
+	mPos.x = _x ;
+	mPos.y = _y ;
+	SetPos(mPos);
+
 	mMove = 4;
 	mStayFlg = false;
-	mOnActive = true;
-
+	mOnActive = true; 
+	mGrHandle = LoadGraph("../Resource/Image/Map/map1.png") ;
 	mColor = GetColor(0, 0, 255);
 }
 
@@ -45,7 +47,9 @@ int Chara::Update() {
 int Chara::Draw() {
 	if (mStayFlg == false)mColor = GetColor(0, 0, 255);
 		else mColor = GetColor(150, 150, 150);
-	DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE,mColor, true);
+	//if(mGrHandle == -1)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, mColor, true);
+	 //else LoadGraphScreen(mPos.x, mPos.y,"../Resource/Image/Map/map1.png",false);
+	 DrawGraph(mPos.x, mPos.y, mGrHandle,FALSE);
 	return 0;
 }
 int Chara::Close() {

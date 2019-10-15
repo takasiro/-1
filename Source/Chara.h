@@ -8,7 +8,7 @@ using namespace std;
 class Chara :public Unit {
 private:
 	vector<Fairy*> mEquipSlot;//‘•”õ˜g
-	unsigned int mColor;
+	unsigned int mColor;//F
 public:
 	Chara();
 	Chara(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,

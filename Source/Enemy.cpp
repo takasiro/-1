@@ -5,8 +5,9 @@ Enemy::Enemy() {
 }
 
 Enemy::Enemy(int _x, int _y) {
-	mPos.x = _x * MASSSIZE;
-	mPos.y = _y * MASSSIZE;
+	mPos.x = _x ;
+	mPos.y = _y ;
+	SetPos(mPos);
 	mWidth = 64;
 	mHeight = 64;
 }

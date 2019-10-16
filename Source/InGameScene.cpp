@@ -26,7 +26,7 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	INSTANCE->SetEnemyData(Enemy(5, 5));
 
 	Load load;
-	load.LoadData("../Resource/Map/map1.csv", map.GetMap());
+	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/PlayerPos01.csv");
 //	load.LoadData("../Resource/Status/PlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
 	INSTANCE->SetMapData(map);
 }

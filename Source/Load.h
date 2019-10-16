@@ -3,6 +3,7 @@
 using namespace std;
 #include<string>
 #include<vector>
+#include"BaseObj.h"
 #include"BaseTask.h"
 #include"Mass.h"
 #include"UnitMgr.h"
@@ -48,6 +49,8 @@ private:
 
 	vector<Enemy> mEnemyData;  //Enemyのマスターデータ
 
+	BaseObj::sPos mInitPlayerPos[8];
+	BaseObj::sPos mInitEnemyPos[8];
 
 public:
 	Load() { Initialize(); };
@@ -55,17 +58,11 @@ public:
 
 	int LoadFile(int, char*);
 
-	int LoadData(const char*, vector<Mass>&);  //マップロード関数
-
-	//int LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit);  //キャラクターステータスのロード関数 
+	int LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosFilePath);  //マップロード関数
 	int LoadData(const char* _baseFilePath, const char* _growthFilePath);  //キャラクターステータスのロード関数 
 
-	//int LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit);
 	int LoadChara(int _baseHandle, int _growthHandle, int _type);
-
 	int LoadEnemy(int _baseHandle,int _growthHandle);
-
-	//int LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit);
 	int LoadWeapon(int _baseHandle, int _growthHandle);
 
 	int Initialize();	//初期化処理

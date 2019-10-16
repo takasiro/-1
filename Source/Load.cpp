@@ -20,6 +20,7 @@ int Load::Initialize() {
 	mGrowthMnd = 0;
 	mGrowthDex = 0;
 	mGrowthAgi = 0;
+
 	return 0;
 }
 
@@ -51,21 +52,40 @@ int Load::LoadFile(int _fileHandle, char* _data) {
 引数:const char* _filePath…読み込むファイルのパス
 　　 vector<Mass>& _mass…マップの地形情報を格納する　
 *******************************************************/
-int Load::LoadData(const char* _filePath, vector<Mass>& _mass) {
+int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosFilePath) {
 
 	int stageHandle = FileRead_open(_filePath);  //ファイルオープン
+	int posHandle = FileRead_open(_PosFilePath);
+
+	int n = 0, nn = 0;
 
 	char input[256];
 
 	if (stageHandle == NULL)return -1;
+	if (posHandle == NULL)return -1;
 
 	while (FileRead_eof(stageHandle) == 0) {  //ファイルの終端まで
 		LoadFile(stageHandle, input);  //データ読み込み	
-		//_mass.emplace_back(Mass(0, atoi(input), 0));  //Mass配列に代入		
 		_mass.emplace_back(Mass(0, atoi(input), INSTANCE->cul.SetCost(atoi(input))));
 	}
 
+	while (FileRead_eof(posHandle) == 0) {  //ファイルの終端まで
+		LoadFile(posHandle, input);  //データ読み込み	
+
+		switch (n) {
+		case 0: strstr(_PosFilePath, "Player") ? mInitPlayerPos[nn].x = atoi(input):mInitEnemyPos[nn].x = atoi(input); break;
+		case 1: strstr(_PosFilePath, "Player") ? mInitPlayerPos[nn].y = atoi(input) : mInitEnemyPos[nn].y = atoi(input); break;
+		}
+		n++;
+		if (n==2) {
+			n = 0;
+			nn++;
+			if(nn==8)break;
+		}
+	}
+
 	FileRead_close(stageHandle);
+	FileRead_close(posHandle);
 
 	return 0;
 }
@@ -78,7 +98,7 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass) {
 ***************************************************************************/
 //int LoadData(const char* _baseFilePath, const char* _growthFilePath){
 //int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit) {
-int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath/*, vector<Unit>& _unit*/) {
+int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath) {
 //ファイルオープン
 	mBaseHandle = FileRead_open(_baseFilePath);
 	mGrowthHandle = FileRead_open(_growthFilePath);
@@ -91,14 +111,6 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath/*, vec
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
-/*
-			if (strstr(_baseFilePath, "Fairy") && FileRead_eof(mBaseHandle) == 0) {
-				LoadWeapon(mBaseHandle, mGrowthHandle, _unit);
-			}
-			else if (FileRead_eof(mBaseHandle) == 0) {
-				LoadChara(mBaseHandle, mGrowthHandle, _unit);
-			}
-*/
 			
 			if (strstr(_baseFilePath, "Player") && FileRead_eof(mBaseHandle) == 0) {
 				LoadChara(mBaseHandle, mGrowthHandle,eChara);
@@ -129,6 +141,7 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath/*, vec
 int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 	int n = 0;
 	int nn = 0;
+	int dataSize = INSTANCE->GetCharaDataSize();
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
@@ -157,14 +170,12 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 
 			n++;
 			if (n == 11) {
-				/*
-				_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
-				*/
 				switch(_type){
-				/*case eChara:INSTANCE::SetCharadata(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				case eEnemy:INSTANCE::SetEnemydata(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;*/
-				case eChara:INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				case eEnemy:INSTANCE->SetEnemyData(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				case eChara:
+					INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); 
+					
+					break;
+				//case eEnemy:INSTANCE->SetEnemyData(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
 				}
 				
 				n = 0;
@@ -232,7 +243,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 
 			n++;
 			if (n == 11) {
-				mEnemyData.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
+				mEnemyData.emplace_back(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 				n = 0;
 				break;
 			}
@@ -302,9 +313,8 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			n++;
 
 			if (n == 13) {
-				//_unit.emplace_back(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 			//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0,1,1)); break;
+				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax)); break;
 			
 				n = 0;
 				break;

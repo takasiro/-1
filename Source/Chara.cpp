@@ -4,8 +4,11 @@ Chara::Chara() {
 Chara::Chara(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) :Unit(_name, _role, _hp, _str, _def, _int, _mnd,
 		_dex, _agi, _move, _exp, _lv) {
-	mColor = GetColor(0, 0, 255);
-}
+	/*mColor = GetColor(0, 0, 255);
+	mGrHandlesCount = 12;
+	mGrHandles = new int[mGrHandlesCount];
+	LoadDivGraph("../Resource/Image/Player/Chara00.png", 12, 3, 4, 64, 64, mGrHandles);
+*/}
 Chara::~Chara() {
 	DeleteGraph(mGrHandle);
 }
@@ -18,8 +21,10 @@ Chara::Chara(int _x, int _y) {
 	mMove = 4;
 	mStayFlg = false;
 	mOnActive = true; 
-	mGrHandle = LoadGraph("../Resource/Image/Map/map1.png") ;
 	mColor = GetColor(0, 0, 255);
+	mGrHandlesCount = 12;
+	mGrHandles = new int[mGrHandlesCount];
+	LoadDivGraph("../Resource/Image/Player/Chara00.png", 12, 3, 4, 64, 64, mGrHandles);
 }
 
 //Chara::Chara(Unit) {
@@ -49,7 +54,7 @@ int Chara::Draw() {
 		else mColor = GetColor(150, 150, 150);
 	//if(mGrHandle == -1)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, mColor, true);
 	 //else LoadGraphScreen(mPos.x, mPos.y,"../Resource/Image/Map/map1.png",false);
-	 DrawGraph(mPos.x, mPos.y, mGrHandle,FALSE);
+	 DrawGraph(mPos.x, mPos.y, mGrHandles[3],FALSE);
 	return 0;
 }
 int Chara::Close() {

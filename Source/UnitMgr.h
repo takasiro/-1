@@ -32,7 +32,7 @@ private:
 	vector<Chara*> CharaDate;
 	vector<Enemy*> EnemyDate;
 	vector<Fairy*>FairyDate;
-	
+
 	vector<Enemy*> EnemyMasterDate;//ロードしたエネミーデータをここに入れて、二回目以降はここからコピーする
 	vector<Fairy*>FairyMasterDate;//ロードしたフェアリーデータをここに入れて、二回目以降はここからコピーする
 
@@ -76,7 +76,7 @@ public:
 	/*int SetGrowth();
 	int SetGrowth();
 	int SetGrowth();*/
-	
+
 	//int GetCharaData(Unit* _chara) {
 	//	for (auto itr = CharaDate.begin; itr < CharaDate.end(); itr++) {
 	//		if (CharaDate+itr==_chara) {
@@ -101,7 +101,7 @@ public:
 	/*マウスの位置からどれをクリックしたか判定する
 	第一引数 sPos マウス座標
 	第二引数　int 検索する種類 0 プレイヤー　1エネミー　2フェアリー*/
-	int CulNum(BaseObj::sPos _arg,int _type);
+	int CulNum(BaseObj::sPos _arg, int _type);
 	void SetMapData(Map& _map) { cul.SetMap(_map); }
 	virtual int Initialize();	//初期化処理
 	virtual int Update();	//計算処理
@@ -113,9 +113,9 @@ public:
 	1:プレイヤーのターン
 	-1:敵のターン
 	戻り値 0 未行動
-	         1　行動済み*/
+			 1　行動済み*/
 	int CheckStay(int _turn);
-	void InitCharaStayFlg(){
+	void InitCharaStayFlg() {
 		for (int i = 0; i < CharaDate.size(); i++) {
 			CharaDate[i]->SetStayFlg(false);
 		}
@@ -124,5 +124,21 @@ public:
 		for (int i = 0; i < EnemyDate.size(); i++) {
 			EnemyDate[i]->SetStayFlg(false);
 		}
+	}
+/**************************************************************************
+型:void
+引数 : int _num, …セットしたい敵の要素数
+sPos _pos....セットしたい座標構造体
+***************************************************************************/
+	void SetCharaPos(int _num, Unit::sPos _pos) {
+		CharaDate[_num]->SetPos(_pos);
+	}
+	/**************************************************************************
+型:void
+引数: int _num,…セットしたい敵の要素数
+	 sPos _pos....セットしたい座標構造体
+***************************************************************************/
+	void SetEnemyPos(int _num, Unit::sPos _pos) {
+		EnemyDate[_num]->SetPos(_pos);
 	}
 };

@@ -30,10 +30,12 @@ private:
 	int mMapNum;//マップ番号
 	eTerrain terrain;
 	unsigned int color;
+	int* mGrHandles;	//グラフィックハンドル複数ある場合
+	int mGrHandlesCount;	//複数ある場合の個数
 public:
 	Map();
 	//Map(Mass*,int,int);
-
+	virtual ~Map();
 	virtual int Initialize();	//初期化処理
 	virtual int Update();		//計算処理
 	virtual int Draw();			//描画処理
@@ -45,5 +47,5 @@ public:
 	vector<Mass>& GetMap() { return mMap; }
 	vector<Mass>* GetMapAdress() { return &mMap; }
 	
-	void MassDraw(int _landType);
+	int MassDraw(int _landType);
 };

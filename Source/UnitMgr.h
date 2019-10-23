@@ -68,6 +68,48 @@ public:
 		FairyMasterDate.emplace_back(new Fairy(_fairy));
 		return 0;
 	}
+	/**************************************************************************
+	フェアリ－を装備させる関数
+	型:int
+
+	引数:Fairy _fairy...セットするFairyの情報
+			int _index セットするキャラの要素数
+	　 　int _num,…セットしたい装備欄場所    
+	***************************************************************************/
+	int SetFairyChara(Fairy _fairy, int _index, int _num ) {
+		CharaDate[_index]->SetFairy(_fairy, _num);
+	}
+
+	/**************************************************************************
+	成長値取得関数(chara)
+	型:int
+
+	引数:int _index セットするキャラの要素数
+	***************************************************************************/
+	int SetCharaGrowth(int _index,float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
+		(*CharaDate[_index]).SetGrowth(_hp,_str,_def,_int,_mnd,_dex,_agi);
+		return 0;
+	}
+	/**************************************************************************
+	成長値取得関数(enemy)
+	型:int
+
+	引数:int _index セットするキャラの要素数
+	***************************************************************************/
+	int SetEnemyGrowth(int _index, float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
+		(*EnemyDate[_index]).SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
+		return 0;
+	}
+	/**************************************************************************
+	成長値取得関数(fairy)
+	型:int
+
+	引数:int _index セットするキャラの要素数
+	***************************************************************************/
+	int SetFairyGrowth(int _index, float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
+		(*FairyDate[_index]).SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
+		return 0;
+	}
 
 	int GetCharaDataSize() { return CharaDate.size(); }
 	int GetEnemyDataSize() { return EnemyDate.size(); }
@@ -95,9 +137,13 @@ public:
 	//		return 0;
 	//	}
 	//}
-	vector<Enemy*>* GetEnemyDate() { return &EnemyDate; }
-	vector<Chara*>* GetCharaDate() { return &CharaDate; }
-	vector<Fairy*>* GetFairyDate() { return &FairyDate; }
+	vector<Enemy*>& GetEnemyDate() { return EnemyDate; }
+	vector<Chara*>&GetCharaDate() { return CharaDate; }
+	vector<Fairy*>& GetFairyDate() { return FairyDate; }
+
+	Enemy& GetEnemyDate(int _num) { return *EnemyDate[_num]; }
+	Chara& GetCharaDate(int _num) { return *CharaDate[_num]; }
+	Fairy& GetFairyDate(int _num) { return *FairyDate[_num]; }
 	/*マウスの位置からどれをクリックしたか判定する
 	第一引数 sPos マウス座標
 	第二引数　int 検索する種類 0 プレイヤー　1エネミー　2フェアリー*/

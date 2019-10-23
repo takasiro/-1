@@ -46,6 +46,8 @@ public:
 	int Draw();
 	int Close();
 
-
+	int GetRange() {
+		return mMaxRange - mMinRange;
+	}
 
 };

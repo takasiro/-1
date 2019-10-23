@@ -39,17 +39,17 @@ public:
 		  　第一　vector<Chara>&		キャラデータ
 			第二  vector<Enemy>&	エネミーデータ
 			第三　 int						自分の要素数*/
-	int MoveJudg( vector<Chara*>* _chara,  vector<Enemy*>* _enemy ,int _num);
+	int MoveJudg(vector<Chara*>& _chara, vector<Enemy*>& _enemy, int _num);
 
 	void SetMap(Map& _map) {
-		mCopyMap= _map.GetMapAdress();
-		mTmpMap = vector<int>(mCopyMap->size(),-1);
-		printf("%d",mTmpMap.size());
+		mCopyMap = _map.GetMapAdress();
+		mTmpMap = vector<int>(mCopyMap->size(), -1);
+		printf("%d", mTmpMap.size());
 	}
 	/*そのマスが移動できるかを取得する関数
 	第一引数 int x軸
 	第二引数 int y軸*/
-	int GetMoveArea(int _x, int _y) { return mTmpMap[_y * 20+_x]; }
+	int GetMoveArea(int _x, int _y) { return mTmpMap[_y * 20 + _x]; }
 
 
 	/************************************************
@@ -61,7 +61,7 @@ public:
 	戻り値：ダメージ量
 	ダメージはマイナスにはならない
 	*************************************************/
-	int PhysicalDamageCalculate(Unit _Atk,Unit _def);
+	int PhysicalDamageCalculate(Unit _Atk, Unit _def);
 
 	/************************************************
 	int MagicDamageCalculate(Unit 攻撃側ユニット,Unit 防御側ユニット);
@@ -72,5 +72,5 @@ public:
 	戻り値：ダメージ量
 	ダメージはマイナスにはならない
 	*************************************************/
-	int MagicDamageCalculate(Unit _Atk,Unit _def);
+	int MagicDamageCalculate(Unit _Atk, Unit _def);
 };

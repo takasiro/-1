@@ -3,6 +3,7 @@
 using namespace std;
 Fairy::Fairy() {
 	Initialize();
+	SetRange(1,2);
 }
 
 

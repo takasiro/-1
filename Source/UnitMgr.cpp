@@ -21,7 +21,12 @@ int UnitMgr::Update() {
 }
 
 int UnitMgr::Update(int _a) {
-
+	typedef enum {
+		eMoveJudg = -1,
+		eMove,
+		eAttackJudg,
+		eAttack
+	};
 	static int state = -1;
 	static Unit::sPos prevPos = { 0,0 };
 	Unit::sPos mousePos;
@@ -33,20 +38,20 @@ int UnitMgr::Update(int _a) {
 	if (_a == -1)return state;
 	mouseButton = GET_BUTTON();
 
-	if (state == -1) {
+	if (state == eMoveJudg) {
 		cul.CulMoveRange(prevPos.x = CharaDate[_a]->GetPosX() / MASSSIZE, prevPos.y = CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetMoveRange());
-		cul.MoveJudg(GetCharaDate(),GetEnemyDate(),_a);
+		cul.MoveJudg(GetCharaDate(), GetEnemyDate(), _a);
 		state++;
 	}
-	else if (state == 0) {
+	else if (state == eMove) {
 
-		if (RIGHTCLICK != 0) {
+		if (RIGHTCLICK != FALSE) {
 			INSTANCE->cul.Initialize();
-			state = -1;
+			state -= 1;
 			lastMouseButton = 0;
 			return state;
 		}
-		if (LEFTCLICK != 0 && mouseButton != lastMouseButton) {
+		if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
 			mousePos = GET_POSITION();
 			mapPos = GET_POSITION();
 			mapPos.x /= MASSSIZE;
@@ -55,17 +60,24 @@ int UnitMgr::Update(int _a) {
 				CharaDate[_a]->Move((int)mapPos.x * MASSSIZE, (int)mapPos.y * MASSSIZE);
 				CharaDate[_a]->Update();
 				INSTANCE->cul.Initialize();
-				//ˆêŽž“I‚Èˆ—
-				mouseButton = 0;
-				lastMouseButton = 0;
-				mousePos = { 0,0 };
-				mapPos = { 0,0 };
-				state = -1;
-				return state;
-				//state++;
+				state++;
 			}
 		}
 	}
+	else	if (state == eAttackJudg) {	//ˆêŽž“I‚Èˆ—
+		INSTANCE->cul.CulMoveRange(CharaDate[_a]->GetPosX(), CharaDate[_a]->GetPosY(), CharaDate[_a]->GetFairy(0).GetRange());
+		state++;
+	}
+	else if (state == eAttack) {
+		mouseButton = 0;
+		lastMouseButton = 0;
+		mousePos = { 0,0 };
+		mapPos = { 0,0 };
+		state = -1;
+		return state;
+		//state++;
+	}
+
 	/*else if () {
 	if (RIGHTCLICK != 0) {
 	CharaDate[_a]->Move(prevPos.x , prevPos.y );
@@ -84,6 +96,7 @@ int UnitMgr::Update(int _a) {
 	lastMouseButton = mouseButton;
 	return _a;
 }
+
 int UnitMgr::Draw() {
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 20; j++) {

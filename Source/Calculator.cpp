@@ -56,14 +56,14 @@ int Calculator::CulMoveRange(int _x, int _y, int _moveRange) {
 
 }
 
-int Calculator::MoveJudg(vector<Chara*>* _chara, vector<Enemy*>*_enemy, int _num) {
+int Calculator::MoveJudg(vector<Chara*>& _chara, vector<Enemy*>&_enemy, int _num) {
 
-	for (int i = 0; i < _chara->size(); i++) {
+	for (int i = 0; i < _chara.size(); i++) {
 		if (i == _num) continue;
-		if ((*_chara)[i]->GetOnActive() != false)mTmpMap[(*_chara)[i]->GetPosY()/MASSSIZE * 20 + (*_chara)[i]->GetPosX()/ MASSSIZE] = -1;
+		if (_chara[i]->GetOnActive() != false)mTmpMap[_chara[i]->GetPosY()/MASSSIZE * 20 + _chara[i]->GetPosX()/ MASSSIZE] = -1;
 	}
-	for (int i = 0; i < _enemy->size(); i++) {
-		if ((*_enemy)[i]->GetOnActive() != false)mTmpMap[(*_enemy)[i]->GetPosY()/ MASSSIZE * 20 + (*_enemy)[i]->GetPosX()/ MASSSIZE] = -1;
+	for (int i = 0; i < _enemy.size(); i++) {
+		if (_enemy[i]->GetOnActive() != false)mTmpMap[_enemy[i]->GetPosY()/ MASSSIZE * 20 + _enemy[i]->GetPosX()/ MASSSIZE] = -1;
 	}
 
 	return 0;

@@ -8,7 +8,9 @@ Chara::Chara(char* _name, eRole _role, int _hp, int _str, int _def, int _int, in
 	mGrHandlesCount = 12;
 	mGrHandles = new int[mGrHandlesCount];
 	LoadDivGraph("../Resource/Image/Player/Chara00.png", 12, 3, 4, 64, 64, mGrHandles);
-*/}
+*/
+	SetFairy(Fairy(), 0);
+}
 Chara::~Chara() {
 	DeleteGraph(mGrHandle);
 }
@@ -17,7 +19,7 @@ Chara::Chara(int _x, int _y) {
 	mPos.x = _x ;
 	mPos.y = _y ;
 	SetPos(mPos);
-
+	SetFairy(Fairy(), 0);//フェアリー適当に生成
 	mMove = 4;
 	mStayFlg = false;
 	mOnActive = true; 
@@ -40,12 +42,13 @@ int Chara::Initialize() {
 }
 int Chara::Initialize(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
-
+	
 	return 0;
 }
 int Chara::Update() {
 	mC.x = mPos.x * 64 + 64 / 2;
 	mC.y = mPos.y * 64 + 64 / 2;
+
 	if (mStayFlg == true) return 1;
 	else return 0;
 }

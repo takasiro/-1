@@ -6,6 +6,7 @@ using namespace std;
 #include<vector>
 #include"BaseObj.h"
 #include"BaseTask.h"
+#include"Mouse.h"
 #include"Mass.h"
 #include"UnitMgr.h"
 #include"Unit.h"
@@ -14,13 +15,17 @@ using namespace std;
 
 class UI :public BaseTask {
 private:
+	int num;
+	vector<Chara*>* charaStatus;
 
 public:
 	UI() { Initialize(); };
 	virtual ~UI() {};
 
-	int Initialize();	//‰Šú‰»ˆ—
-	int Update() { return 0; }		//ŒvZˆ—
-	int Draw() { return 0; }		//•`‰æˆ—
+	int DrawStatus();
+
+	int Initialize() { return 0; }	//‰Šú‰»ˆ—
+	int Update();	//ŒvZˆ—
+	int Draw();		//•`‰æˆ—
 	int Close() { return 0; }		//I—¹ˆ—
 };

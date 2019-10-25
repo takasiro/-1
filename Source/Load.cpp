@@ -79,8 +79,11 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 		n++;
 		if (n == 2) {
 			n = 0;
+			if (strstr(_PosFilePath, "Player"))	INSTANCE->SetCharaPos(nn, mInitPlayerPos[nn]);
+			else INSTANCE->SetEnemyPos(nn, mInitEnemyPos[nn]);
 			nn++;
-			if (nn == 8)break;
+			if (strstr(_PosFilePath, "Player") && nn == INSTANCE->GetCharaDataSize() ||
+				strstr(_PosFilePath, "Enemy") && nn == INSTANCE->GetEnemyDataSize())break;
 		}
 	}
 
@@ -141,7 +144,8 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath) {
 int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 	int n = 0;
 	int nn = 0;
-	int dataSize = INSTANCE->GetCharaDataSize();
+	static int count = 0;
+	//	int dataSize = INSTANCE->GetCharaDataSize();
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
@@ -149,7 +153,7 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:strcpy(mName, input); break;
+			case 0:mName = input; break;
 			case 1:mRole = eRole(atoi(input)); break;
 			case 2:mHp = atoi(input); break;
 			case 3:mStr = atoi(input); break;
@@ -170,7 +174,8 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 
 			n++;
 			if (n == 11) {  //newしないといけないとかそんなことあります？
-				INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
+				INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+				count++;
 				n = 0;
 				break;
 			}
@@ -178,7 +183,8 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 		while (FileRead_eof(mGrowthHandle) == 0) {  //ファイルの終端まで
 
 			LoadFile(mGrowthHandle, input);  //データ読み込み	
-
+			int tmp;
+			//for (int i = 0;   tmp = INSTANCE->GetCharaDataSize(); i++) {
 			switch (nn) {
 			case 0:mGrowthHp = atof(input); break;
 			case 1:mGrowthStr = atof(input); break;
@@ -187,16 +193,18 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 			case 4:mGrowthMnd = atof(input); break;
 			case 5:mGrowthDex = atof(input); break;
 			case 6:mGrowthAgi = atof(input); break;
+
 			}
 			nn++;
 			if (nn == 7) {
-				INSTANCE->SetCharaGrowth(dataSize - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				INSTANCE->SetCharaGrowth(count-1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}
 		}
 	}
+	count = 0;
 	return 0;
 }
 
@@ -216,7 +224,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:strcpy(mName, input); break;
+			case 0:mName = input; break;
 			case 1:mRole = eRole(atoi(input)); break;
 			case 2:mHp = atoi(input); break;
 			case 3:mStr = atoi(input); break;
@@ -237,7 +245,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 
 			n++;
 			if (n == 11) {
-				mEnemyData.emplace_back(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
+				mEnemyData.emplace_back(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				n = 0;
 				break;
 			}
@@ -247,7 +255,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			LoadFile(mGrowthHandle, input);  //データ読み込み	
 
 			switch (nn) {
-			case 0:mGrowthHp = atof(input); break;
+			case 0:mName = input; break;
 			case 1:mGrowthStr = atof(input); break;
 			case 2:mGrowthDef = atof(input); break;
 			case 3:mGrowthIntelli = atof(input); break;
@@ -283,7 +291,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:strcpy(mName, input); break;
+			case 0:mName = input; break;
 			case 1:mRangeMin = atoi(input); break;
 			case 2:mRangeMax = atoi(input); break;
 			case 3:mRole = eRole(atoi(input)); break;

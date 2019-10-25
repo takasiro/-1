@@ -24,7 +24,7 @@ private:
 	char input[256];
 
 	//ステータス情報
-	char mName[256];	  //名前
+	string mName;	  //名前
 	eRole mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
 	int mHp;			  //体力
 	int mStr;			  //力(物理用)

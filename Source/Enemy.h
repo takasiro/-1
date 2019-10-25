@@ -11,7 +11,7 @@ private:
 public:
 	Enemy();
 	Enemy(int _x, int _y);
-	Enemy(char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	Enemy(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 
 	virtual ~Enemy();

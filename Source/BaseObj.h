@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseTask.h"
+#include "DxLib.h"
 class BaseObj : public BaseTask
 {
 public:
@@ -33,7 +34,22 @@ protected:
 	}
 
 public:
-
+	BaseObj() {
+		mPos.x = 0;
+		mPos.y = 0;
+		mWidth = 64;
+		mHeight = 64;
+		RUpdate();
+		CUpdate();
+		mV.x = mPos.x;
+		mV.y = mPos.y;
+		mSpeed = 0;
+		mAngle = 0;
+		mOnActive = true;
+		mGrHandle = 0;
+		mGrHandles = NULL;
+		mGrHandlesCount = 0;
+	}
 	//’l‚ÌŠl“¾
 	double GetPosX() { return mPos.x; }
 	double GetPosY() { return mPos.y; }
@@ -71,10 +87,10 @@ public:
 	void SetHight(double hight) { mHeight = hight; }
 	void SetAngle(double angle) { mAngle = angle; }
 	void SetSpeed(double speed) { mSpeed = speed; }
-	void SetR(double r) { mR = r; }
+	void SetR(double r) { mR = r; }*/
 	void SetOnActive(int onactive) { mOnActive = onactive; }
 	void SetGrHandle(int grhandle) { mGrHandle = grhandle; }
 	void SetGrHandles(int* grhandles) { mGrHandles = grhandles; }
 	void SetGrHandleCount(int grhandlescount) { mGrHandlesCount = grhandlescount; }
-	*/
+
 };

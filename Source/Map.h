@@ -2,26 +2,49 @@
 #include<iostream>
 using namespace std;
 #include<vector>
-#include"BaseObj.h"
+#include"BaseTask.h"
 #include"Mass.h"
-class Map :public BaseObj {
+class Map :public BaseTask {
+public:
+	//マス地形の選択用
+	typedef enum eTerrain {
+		eGrassland = 1,
+		eGrass,
+		eRock,
+		eRiver,
+		eHill,
+		eVillage,
+		eForest,
+		eVolcanoSoil,
+		eMagma,
+		eVolcanoRock,
+		eCaveSoil,
+		eCaveRock,
+		eDemonKingFloor,
+		eDemonKingPillars,
+		eDemonKingCarpet
+	};
 private:
-	vector<vector<Mass>> mMap;
+	vector<Mass> mMap;
 	vector<int> mConnect;//接続されているマップ番号を入れる
 	int mMapNum;//マップ番号
-
+	eTerrain terrain;
+	unsigned int color;
+	int* mGrHandles;	//グラフィックハンドル複数ある場合
+	int mGrHandlesCount;	//複数ある場合の個数
 public:
 	Map();
-	Map(Mass*,int,int);
+	//Map(Mass*,int,int);
+	virtual ~Map();
+	virtual int Initialize();	//初期化処理
+	virtual int Update();		//計算処理
+	virtual int Draw();			//描画処理
+	virtual int Close();		//終了処理
 
-	//地形の種類を獲得出来る
-	//引数で欲しい場所のマスを指定
-	int GetMassType(int _x,int _y){
-		return mMap[_y][_x].GetType();
-	}
-	//地形の消費移動力を獲得できる
-	//引数で欲しい場所のマスを指定
-	int GetMoveCost(int _x, int _y) {
-		return mMap[_y][_x].GetMoveCost();
-	}
+
+	int GetMass(int _x) { mMap[_x].GetMass(); }
+	vector<Mass>& GetMap() { return mMap; }
+	vector<Mass>* GetMapAdress() { return &mMap; }
+	int GetMapSize() { return mMap.size(); }
+	int MassDraw(int _landType);
 };

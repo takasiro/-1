@@ -1,29 +1,40 @@
 #include "Unit.h"
-
+#include "Fairy.h"
 Unit::Unit() {
 	Initialize();
 }
-Unit::Unit(eRole _role, string* _name, int _hp, int _str, int _def, int _ma, int _mdef,
-	int _dex, int _agi, int _move, int _faction, int _nextexp, int _exp, int _lv) {
-	Initialize(_role, _name, _hp, _str, _def, _ma, _mdef,_dex, _agi, _move, _faction, _nextexp, _exp, _lv);
+Unit::Unit(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv) {
+	Initialize(_name, _role, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv);
 }
-int Unit::Initialize(eRole _role, string* _name, int _hp, int _str, int _def, int _ma, int _mdef,
-	int _dex, int _agi, int _move, int _faction, int _nextexp, int _exp, int _lv) {
+int Unit::Initialize(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv) {
 	mRole = _role;
 	mName = _name;
 	mHp = _hp;
+	mMaXHp = mHp;
 	mStr = _str;
 	mDef = _def;
-	mMa = _ma;
-	mDef = _mdef;
+	mInt = _int;
+	mMnd = _mnd;
 	mDex = _dex;
 	mAgi = _agi;
 	mMove = _move;
-	mFaction = _faction;
-	mNextExp = _nextexp;
 	mExp = _exp;
 	mLv = _lv;
-	mStay = false;
+	mStayFlg = false;
+	return 0;
+}
+
+int Unit::SetGrowth(float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
+	mGrowthHp = _hp;
+	mGrowthStr = _str;
+	mGrowthDef = _def;
+	mGrowthInt = _int;
+	mGrowthMnd = _mnd;
+	mGrowthDex = _dex;
+	mGrowthAgi = _agi;
+	return 0;
 }
 
 Unit::~Unit() {
@@ -47,4 +58,14 @@ int Unit::Close() {
 int Unit::StatusUp(int _lv) {
 	return 0;
 }
+
+int Unit::LastStatus() {
+	return 0;
+}
+int Unit::Move(int _x, int _y) {
+	return 0;
+}
+
+
+
 

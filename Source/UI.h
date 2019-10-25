@@ -30,7 +30,6 @@ private:
 	}sStatus;
 
 	int num;
-	vector<Chara*> charaStatus;
 
 public:
 	UI() { Initialize(); };

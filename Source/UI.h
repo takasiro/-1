@@ -15,8 +15,22 @@ using namespace std;
 
 class UI :public BaseTask {
 private:
+	typedef struct {
+		char* _name; 
+		eRole _role; 
+		int _hp;
+		int _str; 
+		int _def;
+		int _int;
+		int _mnd;
+		int _dex; 
+		int _agi; 
+		int _exp;
+		int _lv;
+	}sStatus;
+
 	int num;
-	vector<Chara*>* charaStatus;
+	vector<Chara*> charaStatus;
 
 public:
 	UI() { Initialize(); };

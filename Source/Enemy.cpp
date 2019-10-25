@@ -10,11 +10,17 @@ Enemy::Enemy(int _x, int _y) {
 	SetPos(mPos);
 	mWidth = 64;
 	mHeight = 64;
+	mOnActive = true;
+	mGrHandlesCount = 12;
+	mGrHandles = new int[mGrHandlesCount];
+	LoadDivGraph("../Resource/Image/Enemy/Enemy00.png", 12, 3, 4, 64, 64, mGrHandles);
 }
 
-Enemy::Enemy( char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+Enemy::Enemy( string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) : Unit( _name, _role, _hp, _str, _def,  _int,  _mnd, _dex, _agi, _move, _exp, _lv) {
-	;
+	mGrHandlesCount = 12;
+	mGrHandles = new int[mGrHandlesCount];
+	LoadDivGraph("../Resource/Image/Enemy/Enemy00.png", 12, 3, 4, 64, 64, mGrHandles);
 }
 
 Enemy:: ~Enemy() {
@@ -37,7 +43,7 @@ int Enemy::Update() {
 }
 
 int Enemy::Draw() {
-	DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, GetColor(255, 0, 0),true);
+	if(mOnActive == true) DrawGraph(mPos.x, mPos.y, mGrHandles[1], TRUE); //DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, GetColor(255, 0, 0),true);
 	return 0;
 }
 

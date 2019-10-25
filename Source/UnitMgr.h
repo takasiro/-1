@@ -42,6 +42,8 @@ private:
 	int mState;
 	int mouseButton;
 	int lastMouseButton;
+
+	int (UnitMgr::*Fanctions[10])(int _a);
 public:
 	/*キャラデータの生成
 	引数 Chara型　オブジェクト*/
@@ -80,9 +82,9 @@ public:
 
 	引数:Fairy _fairy...セットするFairyの情報
 			int _index セットするキャラの要素数
-	　 　int _num,…セットしたい装備欄場所    
+	　 　int _num,…セットしたい装備欄場所
 	***************************************************************************/
-	int SetFairyChara(Fairy _fairy, int _index, int _num ) {
+	int SetFairyChara(Fairy _fairy, int _index, int _num) {
 		CharaDate[_index]->SetFairy(_fairy, _num);
 	}
 
@@ -92,8 +94,8 @@ public:
 
 	引数:int _index setしたいキャラの要素数
 	***************************************************************************/
-	int SetCharaGrowth(int _index,float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
-		CharaDate[_index]->SetGrowth(_hp,_str,_def,_int,_mnd,_dex,_agi);
+	int SetCharaGrowth(int _index, float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
+		CharaDate[_index]->SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
 		return 0;
 	}
 	/**************************************************************************
@@ -144,7 +146,7 @@ public:
 	//	}
 	//}
 	vector<Enemy*>& GetEnemyDate() { return EnemyDate; }
-	vector<Chara*>&GetCharaDate() { return CharaDate; }
+	vector<Chara*>& GetCharaDate() { return CharaDate; }
 	vector<Fairy*>& GetFairyDate() { return FairyDate; }
 
 	Enemy& GetEnemyDate(int _num) { return *EnemyDate[_num]; }
@@ -177,11 +179,11 @@ public:
 			EnemyDate[i]->SetStayFlg(false);
 		}
 	}
-/**************************************************************************
-型:void
-引数 : int _num, …セットしたい敵の要素数
-sPos _pos....セットしたい座標構造体
-***************************************************************************/
+	/**************************************************************************
+	型:void
+	引数 : int _num, …セットしたい敵の要素数
+	sPos _pos....セットしたい座標構造体
+	***************************************************************************/
 	void SetCharaPos(int _num, Unit::sPos _pos) {
 		CharaDate[_num]->SetPos(_pos);
 	}
@@ -194,9 +196,9 @@ sPos _pos....セットしたい座標構造体
 		EnemyDate[_num]->SetPos(_pos);
 	}
 
-	int MoveJudgeState(int );
-	int MoveState(int);
-	int AttackJudgeState(int);
-	int AttackState(int);
+	 int MoveJudgeState(int);
+	 int MoveState(int);
+	 int AttackJudgeState(int);
+	 int AttackState(int);
 
 };

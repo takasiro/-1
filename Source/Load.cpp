@@ -78,8 +78,7 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 		}
 		n++;
 		if (n == 2) {
-			strstr(_PosFilePath, "Player") ? INSTANCE->SetCharaPos(nn, mInitPlayerPos[nn]) : INSTANCE->SetEnemyPos(nn, mInitEnemyPos[nn]);
-				n = 0;
+			n = 0;
 			nn++;
 			if (nn == 8)break;
 		}
@@ -170,15 +169,8 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 			}
 
 			n++;
-			if (n == 11) {
-				switch (_type) {
-				case eChara:
-					INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
-
-					break;
-					//case eEnemy:INSTANCE->SetEnemyData(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				}
-
+			if (n == 11) {  //new‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢‚Æ‚©‚»‚ñ‚È‚±‚Æ‚ ‚è‚Ü‚·H
+				INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 				n = 0;
 				break;
 			}
@@ -198,6 +190,7 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 			}
 			nn++;
 			if (nn == 7) {
+				INSTANCE->SetCharaGrowth(dataSize - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
@@ -264,7 +257,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			}
 			nn++;
 			if (nn == 7) {
-				mEnemyData[mEnemyData.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				//mEnemyData[mEnemyData.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}

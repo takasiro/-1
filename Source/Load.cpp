@@ -73,14 +73,14 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 		LoadFile(posHandle, input);  //データ読み込み	
 
 		switch (n) {
-		case 0: strstr(_PosFilePath, "Player") ? mInitPlayerPos[nn].x = atoi(input):mInitEnemyPos[nn].x = atoi(input); break;
+		case 0: strstr(_PosFilePath, "Player") ? mInitPlayerPos[nn].x = atoi(input) : mInitEnemyPos[nn].x = atoi(input); break;
 		case 1: strstr(_PosFilePath, "Player") ? mInitPlayerPos[nn].y = atoi(input) : mInitEnemyPos[nn].y = atoi(input); break;
 		}
 		n++;
-		if (n==2) {
+		if (n == 2) {
 			n = 0;
 			nn++;
-			if(nn==8)break;
+			if (nn == 8)break;
 		}
 	}
 
@@ -99,7 +99,7 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 //int LoadData(const char* _baseFilePath, const char* _growthFilePath){
 //int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath, vector<Unit>& _unit) {
 int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath) {
-//ファイルオープン
+	//ファイルオープン
 	mBaseHandle = FileRead_open(_baseFilePath);
 	mGrowthHandle = FileRead_open(_growthFilePath);
 
@@ -111,17 +111,17 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath) {
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
-			
+
 			if (strstr(_baseFilePath, "Player") && FileRead_eof(mBaseHandle) == 0) {
-				LoadChara(mBaseHandle, mGrowthHandle,eChara);
+				LoadChara(mBaseHandle, mGrowthHandle, eChara);
 			}
 			else if (strstr(_baseFilePath, "Enemy") && FileRead_eof(mBaseHandle) == 0) {
-				LoadChara(mBaseHandle, mGrowthHandle,eEnemy);
+				LoadChara(mBaseHandle, mGrowthHandle, eEnemy);
 			}
-			else if(strstr(_baseFilePath, "Fairy") && FileRead_eof(mBaseHandle) == 0){
+			else if (strstr(_baseFilePath, "Fairy") && FileRead_eof(mBaseHandle) == 0) {
 				LoadWeapon(mBaseHandle, mGrowthHandle);
 			}
-			
+
 		}
 	}
 
@@ -169,15 +169,8 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 			}
 
 			n++;
-			if (n == 11) {
-				switch(_type){
-				case eChara:
-					INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); 
-					
-					break;
-				//case eEnemy:INSTANCE->SetEnemyData(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				}
-				
+			if (n == 11) {  //newしないといけないとかそんなことあります？
+				INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0));
 				n = 0;
 				break;
 			}
@@ -197,6 +190,7 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 			}
 			nn++;
 			if (nn == 7) {
+				INSTANCE->SetCharaGrowth(dataSize - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
@@ -263,7 +257,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			}
 			nn++;
 			if (nn == 7) {
-				mEnemyData[mEnemyData.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				//mEnemyData[mEnemyData.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}
@@ -281,7 +275,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 　　 int type…読み込むデータタイプ
 ***************************************************************************/
 int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
-//int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
+	//int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 	int n = 0, nn = 0;
 
 	while (FileRead_eof(mBaseHandle) == 0) {
@@ -313,9 +307,9 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			n++;
 
 			if (n == 13) {
-			//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin,mRangeMax)); break;
-			
+				//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
+				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax)); break;
+
 				n = 0;
 				break;
 			}

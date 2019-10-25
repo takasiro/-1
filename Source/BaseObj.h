@@ -87,8 +87,8 @@ public:
 	void SetHight(double hight) { mHeight = hight; }
 	void SetAngle(double angle) { mAngle = angle; }
 	void SetSpeed(double speed) { mSpeed = speed; }
-	void SetR(double r) { mR = r; }
-	void SetOnActive(int onactive) { mOnActive = onactive; }*/
+	void SetR(double r) { mR = r; }*/
+	void SetOnActive(int onactive) { mOnActive = onactive; }
 	void SetGrHandle(int grhandle) { mGrHandle = grhandle; }
 	void SetGrHandles(int* grhandles) { mGrHandles = grhandles; }
 	void SetGrHandleCount(int grhandlescount) { mGrHandlesCount = grhandlescount; }

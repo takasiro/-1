@@ -13,7 +13,7 @@ InGameScene::InGameScene() {
 }
 
 InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
-	INSTANCE->SetCharaData(Chara(14, 12));
+	INSTANCE->SetCharaData(Chara(5, 6));
 	INSTANCE->SetCharaData(Chara(16, 12));
 	INSTANCE->SetCharaData(Chara(13, 13));
 	INSTANCE->SetCharaData(Chara(15, 13));
@@ -27,7 +27,7 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 
 	Load load;
 	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/PlayerPos01.csv");
-//	load.LoadData("../Resource/Status/PlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
+	//load.LoadData("../Resource/Status/PlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
 	INSTANCE->SetMapData(map);
 }
 

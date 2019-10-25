@@ -74,14 +74,14 @@ int Chara::Move(int _x, int _y) {
 	mPos.x = _x;
 	mPos.y = _y;
 	//ステイフラグは一時的な処理
-	if (mStayFlg == false) {
+	/*if (mStayFlg == false) {
 		mStayFlg = true;
 		mColor = GetColor(150, 150, 150);
 	}
 	else {
 		mStayFlg = false;
 		mColor = GetColor(0, 0, 255);
-	}
+	}*/
 	return 0;
 }
 

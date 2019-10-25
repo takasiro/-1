@@ -10,6 +10,7 @@ Enemy::Enemy(int _x, int _y) {
 	SetPos(mPos);
 	mWidth = 64;
 	mHeight = 64;
+	mOnActive = true;
 }
 
 Enemy::Enemy( char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
@@ -37,7 +38,7 @@ int Enemy::Update() {
 }
 
 int Enemy::Draw() {
-	DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, GetColor(255, 0, 0),true);
+	if(mOnActive == true)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, GetColor(255, 0, 0),true);
 	return 0;
 }
 

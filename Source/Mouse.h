@@ -24,7 +24,7 @@ public:
 		mPos.y = tmpy;
 		return 0;
 	}
-	int Draw() { return 0; }
+	int Draw() { return 0; }	
 	sPos GetMouse_Pos() { return mPos; }
 	int GetMouseButton() { return mButton; }
 	int GetMouseWheel(){ return mWheel; }

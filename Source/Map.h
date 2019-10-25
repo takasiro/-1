@@ -40,12 +40,11 @@ public:
 	virtual int Update();		//計算処理
 	virtual int Draw();			//描画処理
 	virtual int Close();		//終了処理
-	//マップデータの読み込み
-	int FileRead(string);
+
 
 	int GetMass(int _x) { mMap[_x].GetMass(); }
 	vector<Mass>& GetMap() { return mMap; }
 	vector<Mass>* GetMapAdress() { return &mMap; }
-	
+	int GetMapSize() { return mMap.size(); }
 	int MassDraw(int _landType);
 };

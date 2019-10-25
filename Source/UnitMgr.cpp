@@ -1,12 +1,23 @@
 #include "UnitMgr.h"
 
 UnitMgr::UnitMgr() {
-	;
+	prevPos = { 0 };
+	mousePos = { 0 };
+	mapPos = { 0 };
+	mState = 0;
+	mouseButton = 0;
+	lastMouseButton = 0;
+	color = GetColor(255, 255, 225);
+	
 }
 UnitMgr::~UnitMgr() {
 	;
 }
 int UnitMgr::Initialize() {
+	INSTANCE->cul.Initialize();
+	lastMouseButton = 0;
+	mouseButton = 0;
+	mState = 0;
 	return 0;
 }
 int UnitMgr::Update() {
@@ -19,7 +30,53 @@ int UnitMgr::Update() {
 	}
 	return 0;
 }
+int UnitMgr::MoveJudgeState(int _a) {
+	if (_a == -1)return _a;
+	if (mState < -1)return mState = -1;
+	Initialize();
+	cul.CulMoveRange(prevPos.x = CharaDate[_a]->GetPosX() / MASSSIZE, prevPos.y = CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetMoveRange());
+	cul.MoveJudg(GetCharaDate(), GetEnemyDate(), _a);
+	color = GetColor(0, 0, 255);
+	mState+=1;
+}
+int UnitMgr::MoveState(int _a) {
+	if (RIGHTCLICK != FALSE) {
+		CharaDate[_a]->Move((int)prevPos.x * MASSSIZE, (int)prevPos.y * MASSSIZE);
+		CharaDate[_a]->SetStayFlg(false);
+		Initialize();
+		mState -= 2;
+	}
+	if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
+		mousePos = GET_POSITION();
+		mapPos = GET_POSITION();
+		mapPos.x /= MASSSIZE;
+		mapPos.y /= MASSSIZE;
+		if (cul.GetMoveArea(mapPos.x, mapPos.y) == 1) {
+			CharaDate[_a]->Move((int)mapPos.x * MASSSIZE, (int)mapPos.y * MASSSIZE);
+			CharaDate[_a]->Update();
+			INSTANCE->cul.Initialize();
+			return mState++;
+		}
+	}
+}
 
+int UnitMgr::AttackJudgeState(int _a) {
+	INSTANCE->cul.CulMoveRange(CharaDate[_a]->GetPosX() / MASSSIZE, CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetFairy(0).GetRange());
+	color = GetColor(255, 0, 0);
+	if (RIGHTCLICK != FALSE) {
+		Initialize();
+	}
+	//	state++;
+	return mState;
+}
+
+int UnitMgr::AttackState(int _a) {
+	mouseButton = 0;
+	lastMouseButton = 0;
+	mousePos = { 0,0 };
+	mapPos = { 0,0 };
+	return mState = -1;
+}
 int UnitMgr::Update(int _a) {
 	typedef enum {
 		eMoveJudg = -1,
@@ -27,56 +84,42 @@ int UnitMgr::Update(int _a) {
 		eAttackJudg,
 		eAttack
 	};
-	static int state = -1;
-	static Unit::sPos prevPos = { 0,0 };
-	Unit::sPos mousePos;
-	Unit::sPos mapPos;
-	int mouseButton = 0;
-	static int lastMouseButton = 0;
+static	int (UnitMgr:: *ActionFanction[10])(int _a) = 
+{ &UnitMgr::MoveJudgeState,  &UnitMgr::MoveState ,
+& UnitMgr::AttackJudgeState ,& UnitMgr::AttackState };
+mState = (int)(this->*ActionFanction[mState])(_a);
+lastMouseButton = mouseButton;
+return mState;
+	////static int state = -1;
+	////static Unit::sPos prevPos = { 0,0 };
+	////Unit::sPos mousePos;
+	////Unit::sPos mapPos;
+	////int mouseButton = 0;
+	////static int lastMouseButton = 0;
 
-	//エラー処理 何も触れていなかったら
-	if (_a == -1)return state;
-	mouseButton = GET_BUTTON();
+	////エラー処理 何も触れていなかったら
 
-	if (state == eMoveJudg) {
-		cul.CulMoveRange(prevPos.x = CharaDate[_a]->GetPosX() / MASSSIZE, prevPos.y = CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetMoveRange());
-		cul.MoveJudg(GetCharaDate(), GetEnemyDate(), _a);
-		state++;
-	}
-	else if (state == eMove) {
+	//mouseButton = GET_BUTTON();
 
-		if (RIGHTCLICK != FALSE) {
-			INSTANCE->cul.Initialize();
-			state -= 1;
-			lastMouseButton = 0;
-			return state;
-		}
-		if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
-			mousePos = GET_POSITION();
-			mapPos = GET_POSITION();
-			mapPos.x /= MASSSIZE;
-			mapPos.y /= MASSSIZE;
-			if (cul.GetMoveArea(mapPos.x, mapPos.y) == 1) {
-				CharaDate[_a]->Move((int)mapPos.x * MASSSIZE, (int)mapPos.y * MASSSIZE);
-				CharaDate[_a]->Update();
-				INSTANCE->cul.Initialize();
-				state++;
-			}
-		}
-	}
-	else	if (state == eAttackJudg) {	//一時的な処理
-		INSTANCE->cul.CulMoveRange(CharaDate[_a]->GetPosX(), CharaDate[_a]->GetPosY(), CharaDate[_a]->GetFairy(0).GetRange());
-		state++;
-	}
-	else if (state == eAttack) {
-		mouseButton = 0;
-		lastMouseButton = 0;
-		mousePos = { 0,0 };
-		mapPos = { 0,0 };
-		state = -1;
-		return state;
-		//state++;
-	}
+	//if (RIGHTCLICK != FALSE) {
+	//	if (state < -1)state = -1;
+	//	INSTANCE->cul.Initialize();
+	//	return state;
+	//}
+
+	//if (state == eMoveJudg) {
+
+	//	state++;
+	//}
+	//else if (state == eMove) {
+
+	//}
+	//else	if (state == eAttackJudg) {	//一時的な処理
+
+	//else if (state == eAttack) {
+
+	//	//state++;
+	//}
 
 	/*else if () {
 	if (RIGHTCLICK != 0) {
@@ -93,15 +136,17 @@ int UnitMgr::Update(int _a) {
 	//for (int i = 0; i < EnemyDate.size(); i++) {
 	//	EnemyDate[i]->Update();
 	//}
-	lastMouseButton = mouseButton;
+	//DrawFormatString(0, 0, color, "state =  %d", state);
+	
 	return _a;
-}
+	}
+
 
 int UnitMgr::Draw() {
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 20; j++) {
 			if (cul.GetMoveArea(j, i) != -1) {
-				DrawBox(j * MASSSIZE, i * MASSSIZE, j * MASSSIZE + MASSSIZE - 1, i * MASSSIZE + MASSSIZE - 1, GetColor(255, 255, 255), true);
+				DrawBox(j * MASSSIZE, i * MASSSIZE, j * MASSSIZE + MASSSIZE - 1, i * MASSSIZE + MASSSIZE - 1, color, true);
 			}
 		}
 	}
@@ -163,3 +208,4 @@ int UnitMgr::CheckStay(int _turn) {
 	}
 	return 1;
 }
+

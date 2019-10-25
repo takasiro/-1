@@ -24,6 +24,8 @@ private:
 		DOWN,
 		LEFT
 	};
+	/*テスト　マップサイズの読み込み*/
+	int mMapSize;
 public:
 	Calculator();
 
@@ -43,7 +45,8 @@ public:
 
 	void SetMap(Map& _map) {
 		mCopyMap = _map.GetMapAdress();
-		mTmpMap = vector<int>(mCopyMap->size(), -1);
+		mMapSize = _map.GetMapSize();
+		mTmpMap = vector<int>(mMapSize, -1);
 		printf("%d", mTmpMap.size());
 	}
 	/*そのマスが移動できるかを取得する関数

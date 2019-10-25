@@ -5,7 +5,7 @@ Calculator::Calculator() {
 }
 
 void Calculator::Initialize() {
-	mTmpMap = vector<int>(mCopyMap->size(), -1);
+	mTmpMap = vector<int>(mMapSize, -1);
 }
 int Calculator::SetCost(int _terrain) {
 	int tmpCost = 0;

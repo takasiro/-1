@@ -28,7 +28,6 @@ public:
 	Calculator cul;
 
 private:
-
 	vector<Chara*> CharaDate;
 	vector<Enemy*> EnemyDate;
 	vector<Fairy*>FairyDate;
@@ -36,6 +35,13 @@ private:
 	vector<Enemy*> EnemyMasterDate;//ロードしたエネミーデータをここに入れて、二回目以降はここからコピーする
 	vector<Fairy*>FairyMasterDate;//ロードしたフェアリーデータをここに入れて、二回目以降はここからコピーする
 
+	int color;
+	Unit::sPos prevPos;
+	Unit::sPos mousePos;
+	Unit::sPos mapPos;
+	int mState;
+	int mouseButton;
+	int lastMouseButton;
 public:
 	/*キャラデータの生成
 	引数 Chara型　オブジェクト*/
@@ -84,30 +90,30 @@ public:
 	成長値取得関数(chara)
 	型:int
 
-	引数:int _index セットするキャラの要素数
+	引数:int _index setしたいキャラの要素数
 	***************************************************************************/
 	int SetCharaGrowth(int _index,float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
-		(*CharaDate[_index]).SetGrowth(_hp,_str,_def,_int,_mnd,_dex,_agi);
+		CharaDate[_index]->SetGrowth(_hp,_str,_def,_int,_mnd,_dex,_agi);
 		return 0;
 	}
 	/**************************************************************************
 	成長値取得関数(enemy)
 	型:int
 
-	引数:int _index セットするキャラの要素数
+	引数:int _index  setしたいエネミーの要素数
 	***************************************************************************/
 	int SetEnemyGrowth(int _index, float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
-		(*EnemyDate[_index]).SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
+		EnemyDate[_index]->SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
 		return 0;
 	}
 	/**************************************************************************
 	成長値取得関数(fairy)
 	型:int
 
-	引数:int _index セットするキャラの要素数
+	引数:int _index  setしたいフェアリーの要素数
 	***************************************************************************/
 	int SetFairyGrowth(int _index, float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
-		(*FairyDate[_index]).SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
+		FairyDate[_index]->SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
 		return 0;
 	}
 
@@ -187,4 +193,10 @@ sPos _pos....セットしたい座標構造体
 	void SetEnemyPos(int _num, Unit::sPos _pos) {
 		EnemyDate[_num]->SetPos(_pos);
 	}
+
+	int MoveJudgeState(int );
+	int MoveState(int);
+	int AttackJudgeState(int);
+	int AttackState(int);
+
 };

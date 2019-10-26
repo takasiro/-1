@@ -26,14 +26,18 @@ public:
 	~UnitMgr();
 	friend Singleton<UnitMgr>;
 	Calculator cul;
-
+	void DataInit() {
+		CharaDate.clear();
+		EnemyDate.clear();
+		FairyDate.clear();
+		CharaDate.shrink_to_fit();
+		EnemyDate.shrink_to_fit();
+		FairyDate.shrink_to_fit();
+	}
 private:
 	vector<Chara*> CharaDate;
 	vector<Enemy*> EnemyDate;
 	vector<Fairy*>FairyDate;
-
-	vector<Enemy*> EnemyMasterDate;//ロードしたエネミーデータをここに入れて、二回目以降はここからコピーする
-	vector<Fairy*>FairyMasterDate;//ロードしたフェアリーデータをここに入れて、二回目以降はここからコピーする
 
 	int color;
 	Unit::sPos prevPos;
@@ -43,7 +47,7 @@ private:
 	int mouseButton;
 	int lastMouseButton;
 
-	int (UnitMgr::*Fanctions[10])(int _a);
+	int (UnitMgr::* Fanctions[10])(int _a);
 public:
 	/*キャラデータの生成
 	引数 Chara型　オブジェクト*/
@@ -64,18 +68,6 @@ public:
 		return 0;
 	}
 
-	/*エネミーデータ生成
-	引数 Enemy型　オブジェクト*/
-	int SetEnemyMasterData(Enemy _chara) {
-		EnemyMasterDate.emplace_back(new Enemy(_chara));
-		return 0;
-	}
-	/*フェアリーデータ生成
-		引数 Fairy型　オブジェクト*/
-	int SetFairyMastarDate(Fairy _fairy) {
-		FairyMasterDate.emplace_back(new Fairy(_fairy));
-		return 0;
-	}
 	/**************************************************************************
 	フェアリ－を装備させる関数
 	型:int
@@ -123,28 +115,6 @@ public:
 	int GetEnemyDataSize() { return EnemyDate.size(); }
 	int GetFairyDataSize() { return FairyDate.size(); }
 
-	/*int SetGrowth();
-	int SetGrowth();
-	int SetGrowth();*/
-
-	//int GetCharaData(Unit* _chara) {
-	//	for (auto itr = CharaDate.begin; itr < CharaDate.end(); itr++) {
-	//		if (CharaDate+itr==_chara) {
-	//			return CharaDate + itr;
-	//		}
-	//	}
-	//	return 0;
-	//}
-	////エネミーデータの取得
-	////引数Unit型ポインタ
-	//int GetEnemyData(Unit* _chara) {
-	//	for (auto itr = EnemyDate.begin; itr < EnemyDate.end(); itr++) {
-	//		if (EnemyDate + itr == _chara) {
-	//			return EnemyDate + itr;
-	//		}
-	//		return 0;
-	//	}
-	//}
 	vector<Enemy*>& GetEnemyDate() { return EnemyDate; }
 	vector<Chara*>& GetCharaDate() { return CharaDate; }
 	vector<Fairy*>& GetFairyDate() { return FairyDate; }
@@ -152,6 +122,7 @@ public:
 	Enemy& GetEnemyDate(int _num) { return *EnemyDate[_num]; }
 	Chara& GetCharaDate(int _num) { return *CharaDate[_num]; }
 	Fairy& GetFairyDate(int _num) { return *FairyDate[_num]; }
+
 	/*マウスの位置からどれをクリックしたか判定する
 	第一引数 sPos マウス座標
 	第二引数　int 検索する種類 0 プレイヤー　1エネミー　2フェアリー*/
@@ -179,6 +150,12 @@ public:
 			EnemyDate[i]->SetStayFlg(false);
 		}
 	}
+
+	void SetEnemyStayFlg() {
+		for (int i = 0; i < EnemyDate.size(); i++) {
+			EnemyDate[i]->SetStayFlg(true);
+		}
+	}
 	/**************************************************************************
 	型:void
 	引数 : int _num, …セットしたい敵の要素数
@@ -196,9 +173,35 @@ public:
 		EnemyDate[_num]->SetPos(_pos);
 	}
 
-	 int MoveJudgeState(int);
-	 int MoveState(int);
-	 int AttackJudgeState(int);
-	 int AttackState(int);
+	/**************************************************************************
+型:int 0全員撃破していない　1全員撃破済み
+引数: int _type 検索したいUnitの種類
+***************************************************************************/
+	int GetOnActive(int _type) {
+		if(_type == eChara)	for (int i = 0; i < GetEnemyDataSize(); i++) {
+			if (CharaDate[i]->GetOnActive() == true)return 0;
+		}
+		else if (_type == eEnemy) 	for (int i = 0; i < GetEnemyDataSize(); i++) {
+			if (EnemyDate[i]->GetOnActive() == true)return 0;
+		}
+		return 1;
+	}
+	/**************************************************************************
+型:int 0全員行動していない　1全員行動済み
+引数: int _type 検索したいUnitの種類
+***************************************************************************/
+	int GetStayFlg(int _type) {
+		if (_type == eChara)	for (int i = 0; i < GetCharaDataSize(); i++) {
+			if (CharaDate[i]->GetStayFlg() == false)return 0;
+		}
+		else if (_type == eEnemy) 	for (int i = 0; i < GetEnemyDataSize(); i++) {
+			if (EnemyDate[i]->GetStayFlg() == false)return 0;
+		}
+		return 1;
+	}
+	int MoveJudgeState(int);
+	int MoveState(int);
+	int AttackJudgeState(int);
+	int AttackState(int);
 
 };

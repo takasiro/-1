@@ -1,4 +1,6 @@
 #include "InGameScene.h"
+#include"TitleScene.h"
+#include"ResultScene.h"
 #include<iostream>
 using namespace std;
 #include<vector>
@@ -9,7 +11,12 @@ using namespace std;
 
 
 InGameScene::InGameScene() {
-
+	Load load;
+	load.LoadData("../Resource/Status/PlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
+	load.LoadData("../Resource/Status/EnemyBaseStatus.csv", "../Resource/Status/EnemyGrowthStatus.csv");
+	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/PlayerPos01.csv");
+	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/EnemyPos01.csv");
+	INSTANCE->SetMapData(map);
 }
 
 InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
@@ -27,7 +34,9 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 
 	Load load;
 	load.LoadData("../Resource/Status/PlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
+	load.LoadData("../Resource/Status/EnemyBaseStatus.csv", "../Resource/Status/EnemyGrowthStatus.csv");
 	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/PlayerPos01.csv");
+	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/EnemyPos01.csv");
 	INSTANCE->SetMapData(map);
 }
 
@@ -40,8 +49,17 @@ int InGameScene::Initialize() {
 	return 0;
 }
 int InGameScene::Update() {
-	gameMgr.Update(gameMgr.Update());
+	if (gameMgr.Update(gameMgr.Update()) == 1) {
+		mISceneChanger->ChangeScene((BaseScene)ResultScene(mISceneChanger));
+		return 0;
+	}
+	if (Keyboard::Instance()->Get(KEY_INPUT_R)==true) {
+		INSTANCE->DataInit();
+		mISceneChanger->AddScene((BaseScene*)new InGameScene(mISceneChanger));
+		return 0;
+	}
 	
+
 	return 0;
 }
 int InGameScene::Draw() {
@@ -49,7 +67,7 @@ int InGameScene::Draw() {
 	gameMgr.Draw();
 
 	//å„Ç≈UIÇ…à⁄êA
-	DrawBox(0, 0, 1280, 300,GetColor(50,255,50),true);
+	//DrawBox(0, 0, 1280, 300,GetColor(50,255,50),true);
 
 	#ifdef DEBUG
 	DrawFormatString(0,0,GetColor(255,255,255),"InGame");
@@ -57,7 +75,8 @@ int InGameScene::Draw() {
 	return 0;
 }
 int InGameScene::Close() {
-	map.Close();
+	/*gameMgr.Close();
+	map.Close();*/
 	return 0;
 }
 

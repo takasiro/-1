@@ -21,25 +21,39 @@ int  GameMgr::Update() {
 	static int num = -1;
 
 
-
-	if ((GET_BUTTON() & MOUSE_INPUT_LEFT) && num == -1) {
-		num = INSTANCE->CulNum(tmp = GET_POSITION(), PLAYER);
+	if (mNowTurn == PLAYER_TURN) {
+		if ((GET_BUTTON() & MOUSE_INPUT_LEFT) && num == -1) {
+			num = INSTANCE->CulNum(tmp = GET_POSITION(), PLAYER);
+		}
+		if (num != -1)num = INSTANCE->Update(num);
+		return INSTANCE->GetStayFlg(eChara);
 	}
-	if (num != -1)num = INSTANCE->Update(num);
-	return INSTANCE->CheckStay(mNowTurn);
+	else {
+		INSTANCE->SetEnemyStayFlg();
+		return INSTANCE->GetStayFlg(eEnemy);
+	}
 
-	
 }
 
 
-void  GameMgr::Update(int _turn) {
+int  GameMgr::Update(int _turn) {
 	//player.update‚Æenemy.update‚Ì–ß‚è’l‚ðŽó‚¯Žæ‚é—\’è
-	if (_turn == 1)mNowTurn *= -1;
-	if (mNowTurn == ENEMY_TURN&& LEFTCLICK==0) {
-		mNowTurn *= -1;
-		INSTANCE->InitCharaStayFlg();
-	}
 
+	if (INSTANCE->GetOnActive(eEnemy) != 0) {
+		return 1;
+	}
+	if (mNowTurn == ENEMY_TURN && LEFTCLICK == 0) {
+
+
+		if (INSTANCE->GetStayFlg(eEnemy) != 0) {
+			mNowTurn *= -1;
+			INSTANCE->InitCharaStayFlg();
+			INSTANCE->InitEnemyStayFlg();
+			return 0;
+		}
+
+	}
+	if (_turn == 1)mNowTurn *= -1;
 }
 
 
@@ -50,5 +64,7 @@ int GameMgr::Draw() {
 }
 
 int GameMgr::Close() {
+	Initialize();
+//	INSTANCE->Close();
 	return 0;
 }

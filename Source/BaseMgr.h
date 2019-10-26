@@ -1,5 +1,4 @@
 #pragma once
-
 #include "BaseScene.h"
 #include "ISceneChanger.h"
 #include <iostream>
@@ -12,9 +11,16 @@ public:
 	void AddScene(BaseScene* _next) {
 		mScene.push(_next);
 	}
+	void AddScene(BaseScene _next) {
+		mScene.push(new BaseScene(_next));
+	}
 	void ChangeScene(BaseScene* _next) {
 		SceneClose();
 		AddScene(_next);
+	}
+	void ChangeScene(BaseScene _next) {
+		SceneClose();
+		AddScene(new BaseScene(_next));
 	}
 	void Update() {
 		mScene.top()->Update();

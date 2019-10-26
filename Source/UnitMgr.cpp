@@ -15,7 +15,10 @@ UnitMgr::UnitMgr() {
 
 }
 UnitMgr::~UnitMgr() {
-	;
+	Initialize();
+	CharaDate.shrink_to_fit();
+	EnemyDate.shrink_to_fit();
+	FairyDate.shrink_to_fit();
 }
 int UnitMgr::Initialize() {
 	INSTANCE->cul.Initialize();
@@ -194,6 +197,10 @@ int UnitMgr::Draw() {
 	return 0;
 }
 int UnitMgr::Close() {
+	Initialize();
+	CharaDate.shrink_to_fit();
+	EnemyDate.shrink_to_fit();
+	FairyDate.shrink_to_fit();
 	return 0;
 }
 

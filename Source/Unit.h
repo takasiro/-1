@@ -60,7 +60,12 @@ public:
 	void SetStayFlg(bool _flg) {  mStayFlg = _flg; }
 	int GetMoveRange() { return mMove; }
 
+	string GetName() { return mName; }
+
 	int GetLv() { return mLv; }
+	
+	int GetHp() { return mHp; }
+	int GetGrowthHp() { return mGrowthHp; }
 
 	int GetStr() { return mStr; }
 	float GetGrowthStr() { return mGrowthStr; }

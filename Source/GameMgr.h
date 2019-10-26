@@ -15,7 +15,7 @@ public:
 	virtual ~GameMgr();
 	virtual int Initialize();	//‰Šú‰»ˆ—
 	virtual int Update();		//ŒvZˆ—
-	virtual void Update(int _turn);		//ŒvZˆ—
+	virtual int Update(int _turn);		//ŒvZˆ—
 	virtual int Draw();			//•`‰æˆ—
 	virtual int Close();		//I—¹ˆ—
 

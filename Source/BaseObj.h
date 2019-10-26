@@ -20,6 +20,7 @@ protected:
 	bool mOnActive;	//アクティブ
 	int mGrHandle;	//グラフィックハンドル
 	int* mGrHandles;	//グラフィックハンドル複数ある場合
+	int* mGrHandles2;	//グラフィックハンドル複数ある場合
 	int mGrHandlesCount;	//複数ある場合の個数
 
 	//幅高さから半径を生成

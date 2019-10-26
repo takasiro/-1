@@ -11,7 +11,9 @@ Chara::Chara(string _name, eRole _role, int _hp, int _str, int _def, int _int, i
 */
 	mGrHandlesCount = 12;
 	mGrHandles = new int[mGrHandlesCount];
+	mGrHandles2 = new int[mGrHandlesCount];
 	LoadDivGraph("../Resource/Image/Player/Chara00.png", 12, 3, 4, 64, 64, mGrHandles);
+	LoadDivGraph("../Resource/Image/Player/Chara02.png", 12, 3, 4, 64, 64, mGrHandles2);
 	SetFairy(Fairy(), 0);
 }
 Chara::~Chara() {
@@ -60,7 +62,8 @@ int Chara::Draw() {
 		else mColor = GetColor(150, 150, 150);
 	//if(mGrHandle == -1)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, mColor, true);
 	 //else LoadGraphScreen(mPos.x, mPos.y,"../Resource/Image/Map/map1.png",false);
-	 DrawGraph(mPos.x, mPos.y, mGrHandles[3],TRUE);
+	if(mStayFlg == false) DrawGraph(mPos.x, mPos.y, mGrHandles[7],TRUE);
+	else DrawGraph(mPos.x, mPos.y, mGrHandles2[7], TRUE);
 	return 0;
 }
 int Chara::Close() {

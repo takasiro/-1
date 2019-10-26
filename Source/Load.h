@@ -61,7 +61,7 @@ public:
 	int LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosFilePath);  //マップロード関数
 	int LoadData(const char* _baseFilePath, const char* _growthFilePath);  //キャラクターステータスのロード関数 
 
-	int LoadChara(int _baseHandle, int _growthHandle, int _type);
+	int LoadChara(int _baseHandle, int _growthHandle);
 	int LoadEnemy(int _baseHandle,int _growthHandle);
 	int LoadWeapon(int _baseHandle, int _growthHandle);
 

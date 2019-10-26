@@ -16,29 +16,25 @@ using namespace std;
 class UI :public BaseTask {
 private:
 	typedef struct {
-		char* _name; 
-		eRole _role; 
-		int _hp;
-		int _str; 
-		int _def;
-		int _int;
-		int _mnd;
-		int _dex; 
-		int _agi; 
-		int _exp;
-		int _lv;
-	}sStatus;
+		string tank = "タンク";
+		string caster = "タンク";
+		string ranger = "レンジャー";
+		string fighter = "ファイター";
+	}sRole;
 
-	int num;
-	vector<Chara*> charaStatus;
+	int playerNumber, enemyNumber;
+	string role;
+	sRole roleType;
+	int NameFontHandle,DataFontHandle,StatusFontHandle;
 
 public:
 	UI() { Initialize(); };
 	virtual ~UI() {};
 
-	int DrawStatus();
+	int DrawStatus(int _num);
+	string RoleType(int _type);
 
-	int Initialize() { return 0; }	//初期化処理
+	int Initialize();	//初期化処理
 	int Update();	//計算処理
 	int Draw();		//描画処理
 	int Close() { return 0; }		//終了処理

@@ -79,13 +79,14 @@ int UnitMgr::AttackJudgeState(int _a) {
 		Initialize();
 	}
 	if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
-
+		Button bottan(mapPos.x - mapPos.x / 2, mapPos.y + mapPos.y / 2);
 		mousePos = GET_POSITION();
 		mapPos = mousePos;
 		mapPos.x /= MASSSIZE;
 		mapPos.y /= MASSSIZE;
 		if (cul.GetMoveArea(mapPos.x, mapPos.y) == 1) {
 			int tmp = INSTANCE->CulNum(mousePos, ENEMY);
+			
 			if (tmp == -1) {
 				CharaDate[_a]->SetStayFlg(true);
 				Initialize();
@@ -95,8 +96,11 @@ int UnitMgr::AttackJudgeState(int _a) {
 				mState++;
 			}
 		}
+		bottan.Update();
+		bottan.Draw();
 	}
 	//	state++;
+	
 	return mState;
 }
 

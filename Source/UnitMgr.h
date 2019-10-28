@@ -10,6 +10,7 @@ using namespace std;
 #include "Enemy.h"
 #include"Calculator.h"
 #include "Mouse.h"
+#include "Button.h"
 
 //シングルトンマクロ　UnitMgr::Instance()
 #define INSTANCE UnitMgr::Instance()

@@ -49,8 +49,9 @@ int InGameScene::Initialize() {
 	return 0;
 }
 int InGameScene::Update() {
+	ui.Update();
 	if (gameMgr.Update(gameMgr.Update()) == 1) {
-		mISceneChanger->ChangeScene((BaseScene)ResultScene(mISceneChanger));
+		mISceneChanger->AddScene((BaseScene*)new ResultScene(mISceneChanger));
 		return 0;
 	}
 	if (Keyboard::Instance()->Get(KEY_INPUT_R)==true) {
@@ -65,7 +66,7 @@ int InGameScene::Update() {
 int InGameScene::Draw() {
 	map.Draw();
 	gameMgr.Draw();
-
+	ui.Draw();
 	//å„Ç≈UIÇ…à⁄êA
 	//DrawBox(0, 0, 1280, 300,GetColor(50,255,50),true);
 

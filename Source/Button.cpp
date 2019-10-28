@@ -14,6 +14,19 @@ Button::Button() :BaseObj()
 	mPos.y = 50;
 }
 
+Button::Button(int _x,int _y) :BaseObj()
+{
+	mGrHandlesCount = 3;
+	mGrHandles = new int[mGrHandlesCount];
+
+	mGrHandles[0] = LoadGraph("../button1.png");
+	mGrHandles[1] = LoadGraph("../button2.png");
+	mGrHandles[2] = LoadGraph("../button3.png");
+	GetGraphSize(mGrHandles[0], &imgw, &imgh);
+	mPos.x = _x;
+	mPos.y = _y;
+}
+
 Button::~Button()
 {
 }

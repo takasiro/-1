@@ -249,7 +249,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 
 			n++;
 			if (n == 11) {
-				mEnemyData.emplace_back(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+				mEnemyMasterData.emplace_back(new Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				INSTANCE->SetEnemyData(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				count++;
 				n = 0;
@@ -271,7 +271,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			}
 			nn++;
 			if (nn == 7) {
-				mEnemyData[count - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				mEnemyMasterData.at( count - 1)->SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				INSTANCE->SetEnemyGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;

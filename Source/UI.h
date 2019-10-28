@@ -17,7 +17,7 @@ class UI :public BaseTask {
 private:
 	typedef struct {
 		string tank = "タンク";
-		string caster = "タンク";
+		string caster = "キャスター";
 		string ranger = "レンジャー";
 		string fighter = "ファイター";
 	}sRole;

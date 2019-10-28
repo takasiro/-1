@@ -1,5 +1,6 @@
 #include"ResultScene.h"
-
+#include"InGameScene.h"
+#include"UnitMgr.h"
 ResultScene::ResultScene() {
 
 }
@@ -13,6 +14,11 @@ int ResultScene::Initialize() {
 	return 0;
 }
 int ResultScene::Update() {
+	/*if (Keyboard::Instance()->Get(KEY_INPUT_R) == true) {
+		INSTANCE->DataInit();
+		mISceneChanger->ChangeScene((BaseScene*)new InGameScene(mISceneChanger));
+		return 0;
+	}*/
 	return 0;
 }
 int ResultScene::Draw() {

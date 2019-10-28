@@ -1,0 +1,6 @@
+//キャラ名,ロール,体力,力,防御,魔法,魔防,器用さ,素早さ,移動,画像
+//name,role,hp,str,def,int,mnd,dex,agi,move,src
+タンク,0,20,4,10,2,4,4,3,4,../Image/Player/Enemy00.png
+キャス,1,12,2,3,7,6,5,4,4,../Image/Player/Enemy01.png
+レン,2,15,5,3,5,4,6,5,5,../Image/Player/Enemy02.png
+ファイ,3,18,7,5,3,4,5,4,4,../Image/Player/Enemy03.png

@@ -12,6 +12,7 @@ private:
 	int clickFlag = 0;
 public:
 	Button();
+	Button(int ,int);
 	virtual ~Button();
 	int Initialize();
 	int Update();

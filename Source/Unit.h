@@ -65,6 +65,7 @@ public:
 	int GetLv() { return mLv; }
 	
 	int GetHp() { return mHp; }
+	int GetMaxHp() { return mMaXHp; }
 	int GetGrowthHp() { return mGrowthHp; }
 
 	int GetStr() { return mStr; }
@@ -81,6 +82,9 @@ public:
 
 	int GetDex() { return mDex; }
 	float GetGrowthDex() { return mGrowthDex; }
+
+	int GetAgi() { return mAgi; }
+	float GetGrowthAgi() { return mGrowthAgi; }
 
 	int GetRole() { return mRole; }
 	

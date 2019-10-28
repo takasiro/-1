@@ -38,7 +38,7 @@ int UI::DrawStatus(int _num) {
 	DrawFormatStringToHandle(10, 60, GetColor(255, 255, 255),DataFontHandle, "%s",role.c_str(),TRUE);
 	DrawFormatStringToHandle(15, 90, GetColor(255, 255, 255),StatusFontHandle, "EXP:%d",00, TRUE);
 	DrawFormatStringToHandle(15, 120, GetColor(255, 255, 255),DataFontHandle, "Lv.%d", charaStatus[_num]->GetLv(), TRUE);
-	DrawFormatStringToHandle(100, 120, GetColor(255, 255, 255), DataFontHandle,"HP:%d/%d", charaStatus[_num]->GetStr(), charaStatus[_num]->GetStr(), TRUE);
+	DrawFormatStringToHandle(100, 120, GetColor(255, 255, 255), DataFontHandle,"HP:%d/%d", charaStatus[_num]->GetMaxHp(), charaStatus[_num]->GetHp(), TRUE);
 	DrawFormatStringToHandle(15, 150, GetColor(255, 255, 255), StatusFontHandle,"UŒ‚:%d", charaStatus[_num]->GetStr(), TRUE);
 	DrawFormatStringToHandle(120, 150, GetColor(255, 255, 255), StatusFontHandle, "–hŒä:%d", charaStatus[_num]->GetDef(), TRUE);
 	DrawFormatStringToHandle(15,  180, GetColor(255, 255, 255), StatusFontHandle, "–‚–@:%d", charaStatus[_num]->GetInt(), TRUE);

@@ -39,13 +39,13 @@ private:
 	int mRangeMin;  //最小攻撃範囲
 	int mRangeMax;  //最大攻撃範囲
 
-	double mGrowthHp;
-	double mGrowthStr;
-	double mGrowthDef;
-	double mGrowthIntelli;
-	double mGrowthMnd;
-	double mGrowthDex;
-	double mGrowthAgi;
+	float mGrowthHp;
+	float mGrowthStr;
+	float mGrowthDef;
+	float mGrowthIntelli;
+	float mGrowthMnd;
+	float mGrowthDex;
+	float mGrowthAgi;
 
 	vector<Enemy*> mEnemyMasterData;  //Enemyのマスターデータ
 

@@ -8,7 +8,7 @@
 #define GET_POSITION Mouse::Instance()->GetMouse_Pos	//キー獲得簡易化
 #define RIGHTCLICK (Mouse::GET_BUTTON() & MOUSE_INPUT_RIGHT)//右クリックがされたか
 #define LEFTCLICK (Mouse::GET_BUTTON() & MOUSE_INPUT_LEFT)//左クリックがされたか
-
+#define MIDDLECLICK  (Mouse::GET_BUTTON() & MOUSE_INPUT_MIDDLE)//中央ボタンが押されたか      
 class Mouse :public Singleton<Mouse> , public BaseObj{
 	Mouse() { mButton=0, mWheel=0; }
 	friend Singleton<Mouse>;

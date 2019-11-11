@@ -145,12 +145,10 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath) {
 	 const char* _growthHandle…読み込むファイルのハンドル
 　　 int _type…読み込むデータタイプ
 ***************************************************************************/
-//int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 int Load::LoadChara(int _baseHandle, int _growthHandle) {
 	int n = 0;
 	int nn = 0;
 	static int count = 0;
-	//	int dataSize = INSTANCE->GetCharaDataSize();
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
@@ -188,7 +186,6 @@ int Load::LoadChara(int _baseHandle, int _growthHandle) {
 		while (FileRead_eof(mGrowthHandle) == 0) {  //ファイルの終端まで
 
 			LoadFile(mGrowthHandle, input);  //データ読み込み	
-			//for (int i = 0;   tmp = INSTANCE->GetCharaDataSize(); i++) {
 			switch (nn) {
 			case 0:mGrowthHp = atof(input); break;
 			case 1:mGrowthStr = atof(input); break;
@@ -202,7 +199,6 @@ int Load::LoadChara(int _baseHandle, int _growthHandle) {
 			nn++;
 			if (nn == 7) {
 				INSTANCE->SetCharaGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
-				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}
@@ -293,6 +289,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 	//int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 	int n = 0, nn = 0;
+	static	int count = 0;
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
@@ -324,8 +321,8 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 
 			if (n == 13) {
 				//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax)); break;
-
+				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax));
+				count++;
 				n = 0;
 				break;
 			}
@@ -344,7 +341,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			}
 			nn++;
 			if (nn == 7) {
-				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				INSTANCE->SetFairyGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}

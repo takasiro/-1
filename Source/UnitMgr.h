@@ -18,23 +18,9 @@ using namespace std;
 #define ENEMY 1
 #define FAIRY 2
 
-
 /*Chara Enemy Fairyデータを一括管理するクラス
 情報の取得などはこのクラスで行う*/
 class UnitMgr :public BaseTask, public Singleton<UnitMgr> {
-public:
-	UnitMgr();
-	~UnitMgr();
-	friend Singleton<UnitMgr>;
-	Calculator cul;
-	void DataInit() {
-		CharaDate.clear();
-		EnemyDate.clear();
-		FairyDate.clear();
-		CharaDate.shrink_to_fit();
-		EnemyDate.shrink_to_fit();
-		FairyDate.shrink_to_fit();
-	}
 private:
 	vector<Chara*> CharaDate;
 	vector<Enemy*> EnemyDate;
@@ -48,8 +34,38 @@ private:
 	int mouseButton;
 	int lastMouseButton;
 
-	int (UnitMgr::* Fanctions[10])(int _a);
+
 public:
+	void	operator+(BaseObj::sPos _pos) {
+		for (int i = 0; i < CharaDate.size(); i++) {
+			*CharaDate[i] + _pos;
+		}
+		for (int i = 0; i < EnemyDate.size(); i++) {
+			*EnemyDate[i] + _pos;
+		}
+	}
+
+	typedef enum {
+		eMoveJudge,
+		eMove,
+		eAttackJudge,
+		eAttack
+	}eState;
+	UnitMgr();
+	~UnitMgr();
+	friend Singleton<UnitMgr>;
+	//Calculator cul;
+	void DataInit() {
+		CharaDate.clear();
+		EnemyDate.clear();
+		FairyDate.clear();
+		CharaDate.shrink_to_fit();
+		EnemyDate.shrink_to_fit();
+		FairyDate.shrink_to_fit();
+	}
+
+	int (UnitMgr::* Fanctions[10])(int _a);
+
 	/*キャラデータの生成
 	引数 Chara型　オブジェクト*/
 	int SetCharaData(Chara _chara) {
@@ -128,7 +144,7 @@ public:
 	第一引数 sPos マウス座標
 	第二引数　int 検索する種類 0 プレイヤー　1エネミー　2フェアリー*/
 	int CulNum(BaseObj::sPos _arg, int _type);
-	void SetMapData(Map& _map) { cul.SetMap(_map); }
+	void SetMapData(Map& _map);
 	virtual int Initialize();	//初期化処理
 	virtual int Update();	//計算処理
 	virtual int Update(int _a);	//計算処理
@@ -179,7 +195,7 @@ public:
 引数: int _type 検索したいUnitの種類
 ***************************************************************************/
 	int GetOnActive(int _type) {
-		if(_type == eChara)	for (int i = 0; i < GetEnemyDataSize(); i++) {
+		if (_type == eChara)	for (int i = 0; i < GetEnemyDataSize(); i++) {
 			if (CharaDate[i]->GetOnActive() == true)return 0;
 		}
 		else if (_type == eEnemy) 	for (int i = 0; i < GetEnemyDataSize(); i++) {
@@ -200,6 +216,25 @@ public:
 		}
 		return 1;
 	}
+
+	/**************************************************************************
+型:int
+引数: 検索した要素数
+戻り値:1行動済み 0行動していない
+***************************************************************************/
+	int GetCharaStayFlg(int _num) {
+
+		if (CharaDate[_num]->GetStayFlg() == false)return 0;
+
+		return 1;
+	}
+	int GetEnemyStayFlg(int _num) {
+
+		if (EnemyDate[_num]->GetStayFlg() == false)return 0;
+
+		return 1;
+	}
+
 	int MoveJudgeState(int);
 	int MoveState(int);
 	int AttackJudgeState(int);

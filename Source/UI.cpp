@@ -11,15 +11,19 @@ int UI::Initialize() {
 int UI::Update() {
 	BaseObj::sPos  tmp;
 	playerNumber = INSTANCE->CulNum(tmp = GET_POSITION(), PLAYER);
+	enemyNumber = INSTANCE->CulNum(tmp = GET_POSITION(), ENEMY);
 
 	return 0;
 }
 
 int UI::Draw() {
 	if (playerNumber != -1)DrawStatus(playerNumber);
+	if (enemyNumber != -1)DrawStatus(enemyNumber);
+
 
 	#ifdef DEBUG
 	DrawFormatString(0, 300, GetColor(255, 255, 255), "num:%d", playerNumber, TRUE);
+	DrawFormatString(0, 320, GetColor(255, 255, 255), "num:%d", enemyNumber, TRUE);
 	#endif
 
 	return 0;
@@ -33,7 +37,10 @@ int UI::DrawStatus(int _num) {
 
 
 	//ステータス表示
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 	DrawBox(0, 0, 400, 250, GetColor(180, 140, 220), true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 	DrawFormatStringToHandle(10, 20, GetColor(255, 255, 255),NameFontHandle, "%s", tmpName.c_str());
 	DrawFormatStringToHandle(10, 60, GetColor(255, 255, 255),DataFontHandle, "%s",role.c_str(),TRUE);
 	DrawFormatStringToHandle(15, 90, GetColor(255, 255, 255),StatusFontHandle, "EXP:%d",00, TRUE);

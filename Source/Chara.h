@@ -7,6 +7,7 @@ using namespace std;
 #include"DxLib.h"
 class Chara :public Unit {
 private:
+	//—v‰ü‘¢
 	vector<Fairy*> mEquipSlot;//‘•”õ˜g
 	unsigned int mColor;//F
 public:
@@ -48,4 +49,9 @@ public:
 		}
 		else return *mEquipSlot[_num];
 	}
+
+	/*void operator + (sPos _pos) {
+		mPos.x += _pos.x;
+		mPos.y += _pos.y;
+	}*/
 };

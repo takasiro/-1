@@ -21,7 +21,7 @@ UnitMgr::~UnitMgr() {
 	FairyDate.shrink_to_fit();
 }
 int UnitMgr::Initialize() {
-	INSTANCE->cul.Initialize();
+	Calculator::Initialize();
 	lastMouseButton = 0;
 	mouseButton = 0;
 	mState = 0;
@@ -30,6 +30,7 @@ int UnitMgr::Initialize() {
 	return 0;
 }
 int UnitMgr::Update() {
+
 	for (int i = 0; i < CharaDate.size(); i++) {
 		if (CharaDate[i]->GetStayFlg() == true)continue;
 		CharaDate[i]->Update();
@@ -37,17 +38,21 @@ int UnitMgr::Update() {
 	for (int i = 0; i < EnemyDate.size(); i++) {
 		EnemyDate[i]->Update();
 	}
+
+
+
+
 	return 0;
 }
 int UnitMgr::MoveJudgeState(int _a) {
 	if (_a == -1)return _a;
 	if (mState < -1)return mState = -1;
 	//Initialize();
-	cul.CulMoveRange(prevPos.x = CharaDate[_a]->GetPosX() / MASSSIZE, prevPos.y = CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetMoveRange());
-	cul.MoveJudg(GetCharaDate(), GetEnemyDate(), _a);
+	Calculator::CulMoveRange(prevPos.x = CharaDate[_a]->GetPosX() / MASSSIZE, prevPos.y = CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetMoveRange());
+	Calculator::MoveJudg(GetCharaDate(), GetEnemyDate(), _a);
 	color = GetColor(0, 0, 255);
 	mState += 1;
-	return mState;
+	return _a;
 }
 
 int UnitMgr::MoveState(int _a) {
@@ -61,47 +66,52 @@ int UnitMgr::MoveState(int _a) {
 		mapPos = GET_POSITION();
 		mapPos.x /= MASSSIZE;
 		mapPos.y /= MASSSIZE;
-		if (cul.GetMoveArea(mapPos.x, mapPos.y) == 1) {
+		if (Calculator::GetMoveArea(mapPos.x, mapPos.y) == 1) {
 			CharaDate[_a]->Move((int)mapPos.x * MASSSIZE, (int)mapPos.y * MASSSIZE);
 			CharaDate[_a]->Update();
-			INSTANCE->cul.Initialize();
-			return mState++;
+			Calculator::Initialize();
+			mState++;
+			return _a;
 		}
 	}
+	return _a;
 }
 
 int UnitMgr::AttackJudgeState(int _a) {
-	INSTANCE->cul.CulMoveRange(CharaDate[_a]->GetPosX() / MASSSIZE, CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetFairy(0).GetRange());
+
+
+	Calculator::CulMoveRange(CharaDate[_a]->GetPosX() / MASSSIZE, CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetFairy(0).GetRange());
 	color = GetColor(255, 0, 0);
 	if (RIGHTCLICK != FALSE && mouseButton != lastMouseButton) {
 		CharaDate[_a]->Move((int)prevPos.x * MASSSIZE, (int)prevPos.y * MASSSIZE);
 		CharaDate[_a]->SetStayFlg(false);
 		Initialize();
 	}
+
+
+
 	if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
-		Button bottan(mapPos.x - mapPos.x / 2, mapPos.y + mapPos.y / 2);
 		mousePos = GET_POSITION();
 		mapPos = mousePos;
 		mapPos.x /= MASSSIZE;
 		mapPos.y /= MASSSIZE;
-		if (cul.GetMoveArea(mapPos.x, mapPos.y) == 1) {
+		if (Calculator::GetMoveArea(mapPos.x, mapPos.y) == 1) {
 			int tmp = INSTANCE->CulNum(mousePos, ENEMY);
-			
+
 			if (tmp == -1) {
 				CharaDate[_a]->SetStayFlg(true);
 				Initialize();
-				return mState = -1;
+				mState = -1;
+				return mState;
 			}
 			else {
 				mState++;
 			}
 		}
-		bottan.Update();
-		bottan.Draw();
 	}
 	//	state++;
-	
-	return mState;
+
+	return _a;
 }
 
 int UnitMgr::AttackState(int _a) {
@@ -112,9 +122,11 @@ int UnitMgr::AttackState(int _a) {
 	Initialize();
 	CharaDate[_a]->SetStayFlg(true);
 	mState = -1;
-	return 0;
+	return mState;
 }
 int UnitMgr::Update(int _a) {
+	BaseObj::sPos tmpPos = GET_POSITION();
+	static int  hoge = 0;
 	typedef enum {
 		eMoveJudg = -1,
 		eMove,
@@ -122,14 +134,23 @@ int UnitMgr::Update(int _a) {
 		eAttack
 	};
 	mouseButton = GET_BUTTON();
+
+
+
 	if (mState < 0) {
+		lastMouseButton = mouseButton;
 		_a = -1;
 		Initialize();
+		return -1;
 	}
-	else (this->*Fanctions[mState])(_a);
+	else {
 
-	lastMouseButton = mouseButton;
-	return _a;
+		hoge = (this->*Fanctions[mState])(_a);
+		lastMouseButton = mouseButton;
+		return hoge;
+	}
+
+
 	////static int state = -1;
 	////static Unit::sPos prevPos = { 0,0 };
 	////Unit::sPos mousePos;
@@ -178,14 +199,13 @@ int UnitMgr::Update(int _a) {
 	//}
 	//DrawFormatString(0, 0, color, "state =  %d", state);
 
-	return _a;
 }
 
 
 int UnitMgr::Draw() {
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 20; j++) {
-			if (cul.GetMoveArea(j, i) != -1 ) {
+			if (Calculator::GetMoveArea(j, i) != -1) {
 				DrawBox(j * MASSSIZE, i * MASSSIZE, j * MASSSIZE + MASSSIZE - 1, i * MASSSIZE + MASSSIZE - 1, color, true);
 			}
 		}
@@ -253,3 +273,6 @@ int UnitMgr::CheckStay(int _turn) {
 	return 1;
 }
 
+void UnitMgr::SetMapData(Map& _map) {
+	Calculator::SetMap(_map);
+}

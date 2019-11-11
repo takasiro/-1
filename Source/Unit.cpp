@@ -34,6 +34,7 @@ int Unit::SetGrowth(float _hp, float _str, float _def, float _int, float _mnd, f
 	mGrowthMnd = _mnd;
 	mGrowthDex = _dex;
 	mGrowthAgi = _agi;
+	AdjustStatus();
 	return 0;
 }
 

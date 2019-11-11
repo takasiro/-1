@@ -17,15 +17,25 @@ int GameMgr::Initialize() {
 }
 
 int  GameMgr::Update() {
-	BaseObj::sPos  tmp;
+	BaseObj::sPos  tmpPos;
 	static int num = -1;
 
+		if (MIDDLECLICK != 0) {
+			BaseObj::sPos tmp = GET_POSITION();
+			if (MIDDLECLICK != 1) {
+				BaseObj::sPos  pos = GET_POSITION();
+				tmp.x -= pos.x;
+				tmp.y -= pos.y;
+				*INSTANCE + tmp;
+			}
+			return 0;
+		}
 
 	if (mNowTurn == PLAYER_TURN) {
 		if ((GET_BUTTON() & MOUSE_INPUT_LEFT) && num == -1) {
-			num = INSTANCE->CulNum(tmp = GET_POSITION(), PLAYER);
+			num = INSTANCE->CulNum(tmpPos = GET_POSITION(), PLAYER);
 		}
-		if (num != -1)num = INSTANCE->Update(num);
+		if (num != -1/*&&INSTANCE->GetCharaStayFlg(num)==false*/)num = INSTANCE->Update(num);
 		return INSTANCE->GetStayFlg(eChara);
 	}
 	else {

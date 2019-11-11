@@ -4,7 +4,9 @@
 #include <iostream>
 using namespace std;
 #include <vector>
+
 //キャラクターはこれを継承して作ります
+
 class Unit : public BaseObj
 {
 	//Fairy& operator = (Fairy _tmp) {
@@ -29,6 +31,8 @@ protected:
 	int mAgi;			//回避
 	int mMove;		//移動力
 
+	int mEquipSlot[4]; //装備枠　マネージャーのFairy配列の要素数を持つ
+	int mEquipNum; //今装備しているものを持つ
 	//以下成長値として使用
 	float mGrowthHp;
 	float mGrowthStr;
@@ -37,7 +41,7 @@ protected:
 	float mGrowthMnd;
 	float mGrowthDex;
 	float mGrowthAgi;
-	
+
 public:
 	Unit();
 	Unit(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
@@ -52,18 +56,18 @@ public:
 	int Update();	//計算処理
 	int Draw();		//描画処理
 	int Close();	//終了処理
-	virtual int Move(int,int);
+	virtual int Move(int, int);
 	virtual int StatusUp(int lv);//レベルアップの能力変化
 	int LastStatus();//武器補正含めた最終ステータス
 	//行動したか受け取る ture:行動済み false:行動前
 	bool GetStayFlg() { return mStayFlg; }
-	void SetStayFlg(bool _flg) {  mStayFlg = _flg; }
+	void SetStayFlg(bool _flg) { mStayFlg = _flg; }
 	int GetMoveRange() { return mMove; }
 
 	string GetName() { return mName; }
 
 	int GetLv() { return mLv; }
-	
+
 	int GetHp() { return mHp; }
 	int GetMaxHp() { return mMaXHp; }
 	int GetGrowthHp() { return mGrowthHp; }
@@ -87,15 +91,35 @@ public:
 	float GetGrowthAgi() { return mGrowthAgi; }
 
 	int GetRole() { return mRole; }
-	
+
+	int GetEquip(int _num) { return mEquipSlot[_num]; }
+
+	int GetEquipNum() { return mEquipNum; }
 	//ｘとｙに代入する関数どちらを使っても可能
 	virtual void SetPos(sPos _pos) {
-		mPos.x = _pos.x*MASSSIZE;
-		mPos.y = _pos.y*MASSSIZE;
+		mPos.x = _pos.x * MASSSIZE;
+		mPos.y = _pos.y * MASSSIZE;
 	}
 
-	virtual void SetPos(int _x,int _y) {
+	virtual void SetPos(int _x, int _y) {
 		mPos.x = _x * MASSSIZE;
 		mPos.y = _y * MASSSIZE;
 	}
+
+	virtual void AdjustStatus() {
+		mHp = mHp + mGrowthHp * mLv;
+		mMaXHp = mMaXHp + mGrowthHp * mLv;
+		mStr = mStr + mGrowthStr * mLv;
+		mDef = mDef + mGrowthDef * mLv;
+		mInt = mInt + mGrowthInt * mLv;
+		mMnd = mMnd + mGrowthMnd * mLv;
+		mDex = mDex + mGrowthDex * mLv;
+		mAgi = mAgi + mGrowthAgi * mLv;
+	}
+
+	void operator + (sPos _pos) {
+		mPos.x += _pos.x;
+		mPos.y += _pos.y;
+	}
+
 };

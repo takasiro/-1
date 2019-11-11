@@ -20,6 +20,16 @@ int  GameMgr::Update() {
 	BaseObj::sPos  tmpPos;
 	static int num = -1;
 
+		if (MIDDLECLICK != 0) {
+			BaseObj::sPos tmp = GET_POSITION();
+			if (MIDDLECLICK != 1) {
+				BaseObj::sPos  pos = GET_POSITION();
+				tmp.x -= pos.x;
+				tmp.y -= pos.y;
+				*INSTANCE + tmp;
+			}
+			return 0;
+		}
 
 	if (mNowTurn == PLAYER_TURN) {
 		if ((GET_BUTTON() & MOUSE_INPUT_LEFT) && num == -1) {

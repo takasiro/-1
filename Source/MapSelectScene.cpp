@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include "Mouse.h"
 #include "MapSelectScene.h"
 
 MapSelectScene::MapSelectScene() {
@@ -18,25 +19,32 @@ int MapSelectScene::Initialize() {
 	return 0;
 }
 int MapSelectScene::Update() {
-
-	//マウス座標取得
-	GetMousePoint(&MouseX, &MouseY);
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++) {
-			if (map[i].connection[j] != -1) {
-				if ((map[i].x - MouseX) * (map[i].x - MouseX) + (map[i].y - MouseY) *
-					(map[i].y - MouseY) <= (map[i].r * map[i].r)) {
-					if (map[i].connection[0] == state) {
-						state = i;
-					}
-					if (map[i].connection[1] == state) {
-						state = i;
+	//マウス長押し変更
+	if (LEFTCLICK != FALSE) {
+		//マウス座標取得
+		GetMousePoint(&MouseX, &MouseY);
+			if (mouseclick == 0) {
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 9; j++) {
+					if (map[i].connection[j] != -1) {
+						if ((map[i].x - MouseX) * (map[i].x - MouseX) + (map[i].y - MouseY) *
+							(map[i].y - MouseY) <= (map[i].r * map[i].r)) {
+							if (map[i].connection[0] == state) {
+								state = i;
+							}
+							if (map[i].connection[1] == state) {
+								state = i;
+							}
+						}
 					}
 				}
 			}
 		}
+		mouseclick = 1;
 	}
-
+	else {
+		mouseclick = 0;
+	}
 	return 0;
 }
 int MapSelectScene::Draw() {

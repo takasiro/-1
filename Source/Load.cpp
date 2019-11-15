@@ -67,7 +67,7 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 	if (_mass.size() < 1) {
 		while (FileRead_eof(stageHandle) == 0) {  //ファイルの終端まで
 			LoadFile(stageHandle, input);  //データ読み込み	
-			_mass.emplace_back(Mass(0, atoi(input), INSTANCE->cul.SetCost(atoi(input))));
+			_mass.emplace_back(Mass(0, atoi(input), Calculator::SetCost(atoi(input))));
 		}
 	}
 

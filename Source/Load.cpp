@@ -1,6 +1,10 @@
 #include<DxLib.h>
 #include"Load.h"
 int Load::Initialize() {
+	mapWidth = 0;
+	mapHeight = 0;
+	mapCount = 0;
+
 	mHp = 0;		//体力
 	mStr = 0;		//力(物理用)
 	mDef = 0;		//防御(物理用)
@@ -41,9 +45,12 @@ int Load::LoadFile(int _fileHandle, char* _data) {
 		if (_data[i] == EOF)return 0;  //ファイル終端ならそこで終わる
 
 		if (_data[i] == ',' || _data[i] == '-' || _data[i] == '\n') {//カンマか改行の場合
+			if (_data[i] == '\n') mapHeight++;
+			//SetMapHeight(mapHeight);
 			_data[i] = '\0';  //そこまでを文字列とする
 			break;
 		}
+
 	}
 }
 
@@ -57,7 +64,7 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 	int stageHandle = FileRead_open(_filePath);  //ファイルオープン
 	int posHandle = FileRead_open(_PosFilePath);
 
-	int n = 0, nn = 0;
+	int n = 0, nn = 0,hoge=0;
 
 	char input[256];
 
@@ -66,8 +73,8 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 
 	if (_mass.size() < 1) {
 		while (FileRead_eof(stageHandle) == 0) {  //ファイルの終端まで
-			LoadFile(stageHandle, input);  //データ読み込み	
-			_mass.emplace_back(Mass(0, atoi(input), INSTANCE->cul.SetCost(atoi(input))));
+			LoadFile(stageHandle, input);  //データ読み込み		
+			_mass.emplace_back(Mass(0, atoi(input), Calculator::SetCost(atoi(input))));
 		}
 	}
 

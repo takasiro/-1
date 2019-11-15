@@ -10,6 +10,7 @@ using namespace std;
 #include"Unit.h"
 #include"fairy.h"
 #include"Enemy.h"
+#include"Map.h"
 
 
 
@@ -22,6 +23,7 @@ private:
 	int mLoadtype;
 
 	char input[256];
+	int mapWidth, mapHeight,mapCount;
 
 	//ステータス情報
 	string mName;	  //名前
@@ -52,6 +54,8 @@ private:
 	BaseObj::sPos mInitPlayerPos[8];
 	BaseObj::sPos mInitEnemyPos[8];
 
+	Map map;
+
 public:
 	Load() { Initialize(); };
 	virtual ~Load() {};
@@ -65,6 +69,10 @@ public:
 	int LoadEnemy(int _baseHandle,int _growthHandle);
 	int LoadWeapon(int _baseHandle, int _growthHandle);
 
+	int GetMapWidth() { return mapCount / mapHeight; }
+	int GetMapCount() { return mapCount; }
+	int GetMapHeight() { return mapHeight; }
+	void SetMapTHeight(int _height) {mapHeight = _height; }
 	vector<Enemy*>& GetEnemyMasterData() { return mEnemyMasterData; }
 
 	int SetEnemyData();

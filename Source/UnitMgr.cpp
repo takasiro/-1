@@ -117,8 +117,10 @@ int UnitMgr::AttackJudgeState(int _a) {
 int UnitMgr::AttackState(int _a) {
 	int tmp = 0;
 	tmp = INSTANCE->CulNum(mousePos, ENEMY);
-
-	EnemyDate[tmp]->SetOnActive(false);
+	//Calculator::HitCalculate(*CharaDate[_a],*EnemyDate[tmp]);
+	if (CharaDate[_a]->GetRole() == eCaster)Calculator::MagicDamageCalculate(*CharaDate[_a], *EnemyDate[tmp]);
+	else  Calculator::PhysicalDamageCalculate(*CharaDate[_a], *EnemyDate[tmp]);
+	//EnemyDate[tmp]->SetOnActive(false);
 	Initialize();
 	CharaDate[_a]->SetStayFlg(true);
 	mState = -1;

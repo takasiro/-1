@@ -11,6 +11,8 @@ private:
 	int oldSteat = 0;
 	int clickFlag = 0;
 
+	int myNum = 0;
+
 	int(*OnClick)(int) = NULL;
 
 public:
@@ -24,6 +26,7 @@ public:
 	void SetOnClick(int(*_fnc)(int _num)) { OnClick = _fnc; }
 	void SetPosX(double _x) { imgx = mPos.x = _x; }
 	void SetPosY(double _y) { imgy = mPos.y = _y; }
+	void SetMyNum(int _num) { myNum = _num; }
 
 
 	

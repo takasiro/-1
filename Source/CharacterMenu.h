@@ -3,6 +3,7 @@
 #include "Button.h"
 #include "Chara.h"
 #include "UnitMgr.h"
+#include "Load.h"
 
 class CharacterMenu : public BaseScene{
 private:

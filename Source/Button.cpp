@@ -50,7 +50,8 @@ int Button::Update() {
 		steat = 0;
 	}
 	if (GET_BUTTON() & MOUSE_INPUT_LEFT && oldSteat == 2 && steat == 1) clickFlag = 1;
-	if (oldSteat == 1 && steat == 2 && clickFlag == 1) OnClick(0);
+	if (oldSteat == 1 && steat == 2 && clickFlag == 1)
+		OnClick(myNum);
 	if (!(GET_BUTTON() & MOUSE_INPUT_LEFT)) clickFlag = 0;
 
 	oldSteat = steat;

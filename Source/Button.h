@@ -10,6 +10,11 @@ private:
 	int steat = 0;
 	int oldSteat = 0;
 	int clickFlag = 0;
+
+	int myNum = 0;
+
+	int(*OnClick)(int) = NULL;
+
 public:
 	Button();
 	Button(int ,int);
@@ -18,8 +23,15 @@ public:
 	int Update();
 	int Draw();
 	int Close();
-	void	OnClick();
+	void SetOnClick(int(*_fnc)(int _num)) { OnClick = _fnc; }
+	void SetPosX(double _x) { imgx = mPos.x = _x; }
+	void SetPosY(double _y) { imgy = mPos.y = _y; }
+	void SetMyNum(int _num) { myNum = _num; }
 
+
+	
 
 };
+
+
 

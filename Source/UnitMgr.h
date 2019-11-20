@@ -204,6 +204,8 @@ public:
 	Chara& GetCharaDate(int _num) { return *CharaDate[_num]; }
 	Fairy& GetFairyDate(int _num) { return *FairyDate[_num]; }
 
+	Chara GetCharaDateC(int _num) { return (*CharaDate[_num]); }
+
 	/*マウスの位置からどれをクリックしたか判定する
 	第一引数 sPos マウス座標
 	第二引数　int 検索する種類 0 プレイヤー　1エネミー　2フェアリー*/

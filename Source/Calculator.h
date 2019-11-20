@@ -37,6 +37,8 @@ public:
 
 	/*移動できる範囲を計算する*/
 	static	int CulMoveRange(int _x, int _y, int _moveRange);
+	/*移動できる範囲を計算する*/
+	static	int CulMoveRange(Unit::sPos _pos, int _moveRange);
 	/*敵と味方がいる位置に移動できないようにする関数
 	引数
 		  　第一　vector<Chara>&		キャラデータ
@@ -51,6 +53,7 @@ public:
 	第一引数 int x軸
 	第二引数 int y軸*/
 	static int GetMoveArea(int _x, int _y) { return mTmpMap[_y * 20 + _x]; }
+	static int GetMoveArea(Unit::sPos _pos) { return mTmpMap[(int)_pos.y * 20 +(int) _pos.x]; }
 
 
 	/************************************************
@@ -65,14 +68,14 @@ public:
 	static int PhysicalDamageCalculate(Unit _Atk, Unit _def);
 
 	/************************************************
-	int EvasionCalculate(Unit 攻撃側ユニット,Unit 防御側ユニット);
+	int HitCalculate(Unit 攻撃側ユニット,Unit 防御側ユニット);
 	回避確立計算関数
 	引数：
 	第一引数　攻撃側ユニット
 	第二引数　防御側ユニット
 	戻り値：回避が成功したか
 	*************************************************/
-	static	int EvasionCalculate(Unit _Atk, Unit _def);
+	static	int HitCalculate(Unit _Atk, Unit _def);
 
 	/************************************************
 	int MagicDamageCalculate(Unit 攻撃側ユニット,Unit 防御側ユニット);

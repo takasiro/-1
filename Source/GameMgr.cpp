@@ -12,30 +12,32 @@ int GameMgr::Initialize() {
 	mNowTurn = PLAYER_TURN;
 	mTurnCount = 0;
 	mStayCount = 0;
+	mUnitNum = -1;
 	return 0;
 
 }
 
 int  GameMgr::Update() {
 	BaseObj::sPos  tmpPos;
-	static int num = -1;
 
-		if (MIDDLECLICK != 0) {
-			BaseObj::sPos tmp = GET_POSITION();
-			if (MIDDLECLICK != 1) {
-				BaseObj::sPos  pos = GET_POSITION();
-				tmp.x -= pos.x;
-				tmp.y -= pos.y;
-				*INSTANCE + tmp;
-			}
-			return 0;
+	if (MIDDLECLICK == 1) {
+		BaseObj::sPos tmp = GET_POSITION();
+		if (MIDDLECLICK == 0) {
+			BaseObj::sPos  pos = GET_POSITION();
+			tmp.x -= pos.x;
+			tmp.y -= pos.y;
+			*INSTANCE + tmp;
 		}
+		return 0;
+	}
 
 	if (mNowTurn == PLAYER_TURN) {
-		if ((GET_BUTTON() & MOUSE_INPUT_LEFT) && num == -1) {
-			num = INSTANCE->CulNum(tmpPos = GET_POSITION(), PLAYER);
+		if ((GET_BUTTON() & MOUSE_INPUT_LEFT) && mUnitNum == -1) {
+			mUnitNum = INSTANCE->CulNum(tmpPos = GET_POSITION(), PLAYER, 0);
 		}
-		if (num != -1/*&&INSTANCE->GetCharaStayFlg(num)==false*/)num = INSTANCE->Update(num);
+		if (mUnitNum != -1/*&&INSTANCE->GetCharaStayFlg(num)==false*/) {
+			mUnitNum = INSTANCE->Update(mUnitNum);
+		}
 		return INSTANCE->GetStayFlg(eChara);
 	}
 	else {
@@ -75,6 +77,6 @@ int GameMgr::Draw() {
 
 int GameMgr::Close() {
 	Initialize();
-//	INSTANCE->Close();
+	//	INSTANCE->Close();
 	return 0;
 }

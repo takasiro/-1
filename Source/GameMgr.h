@@ -10,6 +10,7 @@ private:
 	int mNowTurn;
 	int mTurnCount;
 	int mStayCount;
+	int mUnitNum;
 public:
 	GameMgr();
 	virtual ~GameMgr();

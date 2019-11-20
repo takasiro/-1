@@ -1,5 +1,4 @@
 #include "UnitMgr.h"
-
 UnitMgr::UnitMgr() {
 	prevPos = { 0 };
 	mousePos = { 0 };
@@ -8,10 +7,10 @@ UnitMgr::UnitMgr() {
 	mouseButton = 0;
 	lastMouseButton = 0;
 	color = GetColor(255, 255, 225);
-	Fanctions[0] = &UnitMgr::MoveJudgeState;
-	Fanctions[1] = &UnitMgr::MoveState;
-	Fanctions[2] = &UnitMgr::AttackJudgeState;
-	Fanctions[3] = &UnitMgr::AttackState;
+	//Fanctions[0] = &UnitMgr::MoveJudgeState;
+	//Fanctions[1] = &UnitMgr::MoveState;
+	//Fanctions[2] = &UnitMgr::AttackJudgeState;
+	//Fanctions[3] = &UnitMgr::AttackState;
 
 }
 UnitMgr::~UnitMgr() {
@@ -38,94 +37,94 @@ int UnitMgr::Update() {
 	for (int i = 0; i < EnemyDate.size(); i++) {
 		EnemyDate[i]->Update();
 	}
-
-
-
-
 	return 0;
 }
-int UnitMgr::MoveJudgeState(int _a) {
-	if (_a == -1)return _a;
-	if (mState < -1)return mState = -1;
-	//Initialize();
-	Calculator::CulMoveRange(prevPos.x = CharaDate[_a]->GetPosX() / MASSSIZE, prevPos.y = CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetMoveRange());
-	Calculator::MoveJudg(GetCharaDate(), GetEnemyDate(), _a);
-	color = GetColor(0, 0, 255);
-	mState += 1;
-	return _a;
-}
-
-int UnitMgr::MoveState(int _a) {
-
-	if (RIGHTCLICK != FALSE && mouseButton != lastMouseButton) {
-		Initialize();
-		mState -= 1;
-	}
-	if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
-		mousePos = GET_POSITION();
-		mapPos = GET_POSITION();
-		mapPos.x /= MASSSIZE;
-		mapPos.y /= MASSSIZE;
-		if (Calculator::GetMoveArea(mapPos.x, mapPos.y) == 1) {
-			CharaDate[_a]->Move((int)mapPos.x * MASSSIZE, (int)mapPos.y * MASSSIZE);
-			CharaDate[_a]->Update();
-			Calculator::Initialize();
-			mState++;
-			return _a;
-		}
-	}
-	return _a;
-}
-
-int UnitMgr::AttackJudgeState(int _a) {
-
-
-	Calculator::CulMoveRange(CharaDate[_a]->GetPosX() / MASSSIZE, CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetFairy(0).GetRange());
-	color = GetColor(255, 0, 0);
-	if (RIGHTCLICK != FALSE && mouseButton != lastMouseButton) {
-		CharaDate[_a]->Move((int)prevPos.x * MASSSIZE, (int)prevPos.y * MASSSIZE);
-		CharaDate[_a]->SetStayFlg(false);
-		Initialize();
-	}
-
-
-
-	if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
-		mousePos = GET_POSITION();
-		mapPos = mousePos;
-		mapPos.x /= MASSSIZE;
-		mapPos.y /= MASSSIZE;
-		if (Calculator::GetMoveArea(mapPos.x, mapPos.y) == 1) {
-			int tmp = INSTANCE->CulNum(mousePos, ENEMY);
-
-			if (tmp == -1) {
-				CharaDate[_a]->SetStayFlg(true);
-				Initialize();
-				mState = -1;
-				return mState;
-			}
-			else {
-				mState++;
-			}
-		}
-	}
-	//	state++;
-
-	return _a;
-}
-
-int UnitMgr::AttackState(int _a) {
-	int tmp = 0;
-	tmp = INSTANCE->CulNum(mousePos, ENEMY);
-	//Calculator::HitCalculate(*CharaDate[_a],*EnemyDate[tmp]);
-	if (CharaDate[_a]->GetRole() == eCaster)Calculator::MagicDamageCalculate(*CharaDate[_a], *EnemyDate[tmp]);
-	else  Calculator::PhysicalDamageCalculate(*CharaDate[_a], *EnemyDate[tmp]);
-	//EnemyDate[tmp]->SetOnActive(false);
-	Initialize();
-	CharaDate[_a]->SetStayFlg(true);
-	mState = -1;
-	return mState;
-}
+//int UnitMgr::MoveJudgeState(int _a) {
+//	if (_a == -1)return _a;
+//	if (mState < -1)return mState = -1;
+//	//Initialize();
+//	Calculator::CulMoveRange(prevPos.x = CharaDate[_a]->GetPosX() / MASSSIZE, prevPos.y = CharaDate[_a]->GetPosY() / MASSSIZE, CharaDate[_a]->GetMoveRange());
+//	Calculator::MoveJudg(GetCharaDate(), GetEnemyDate(), _a);
+//	color = GetColor(0, 0, 255);
+//	mState += 1;
+//	return _a;
+//}
+//
+//int UnitMgr::MoveState(int _a) {
+//
+//	if (RIGHTCLICK != FALSE && mouseButton != lastMouseButton) {
+//		Initialize();
+//		mState -= 1;
+//	}
+//	if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
+//		mousePos = GET_POSITION();
+//		mapPos = GET_POSITION();
+//		mapPos.x /= MASSSIZE;
+//		mapPos.y /= MASSSIZE;
+//		if (Calculator::GetMoveArea(mapPos.x, mapPos.y) == 1) {
+//			CharaDate[_a]->Move(mapPos);
+//			CharaDate[_a]->Update();
+//			Calculator::Initialize();
+//			mState++;
+//			return _a;
+//		}
+//	}
+//	return _a;
+//}
+//
+//int UnitMgr::AttackJudgeState(int _a) {
+//
+//
+//	Calculator::CulMoveRange(CharaDate[_a]->GetPosX() / MASSSIZE, CharaDate[_a]->GetPosY() / MASSSIZE, 1);
+//	color = GetColor(255, 0, 0);
+//	if (RIGHTCLICK != FALSE && mouseButton != lastMouseButton) {
+//		CharaDate[_a]->Move(prevPos);
+//		CharaDate[_a]->SetStayFlg(false);
+//		Initialize();
+//	}
+//
+//
+//
+//	if (LEFTCLICK != FALSE && mouseButton != lastMouseButton) {
+//		mousePos = GET_POSITION();
+//		mapPos = mousePos;
+//		mapPos.x /= MASSSIZE;
+//		mapPos.y /= MASSSIZE;
+//		if (Calculator::GetMoveArea(mapPos.x, mapPos.y) == 1) {
+//			int tmp = INSTANCE->CulNum(mousePos, ENEMY);
+//
+//			if (tmp == -1) {
+//				CharaDate[_a]->SetStayFlg(true);
+//				Initialize();
+//				mState = -1;
+//				return mState;
+//			}
+//			else {
+//				mState++;
+//			}
+//		}
+//	}
+//	//	state++;
+//
+//	return _a;
+//}
+//
+//int UnitMgr::AttackState(int _a) {
+//	int tmp = 0;
+//	tmp = INSTANCE->CulNum(mousePos, ENEMY);
+//	int damage = 0;
+//	//Calculator::HitCalculate(*CharaDate[_a],*EnemyDate[tmp]);
+//	if (CharaDate[_a]->GetRole() == eCaster)damage =Calculator::MagicDamageCalculate(*CharaDate[_a], *EnemyDate[tmp]);
+//	else damage = Calculator::PhysicalDamageCalculate(*CharaDate[_a], *EnemyDate[tmp]);
+//	
+//	EnemyDate[tmp]->Damage(damage);
+//	if (EnemyDate[tmp]->GetOnActive() == false)EnemyDate[tmp]->SetStayFlg(true);
+//	//EnemyDate[tmp]->SetOnActive(false);
+//	Initialize();
+//	CharaDate[_a]->SetStayFlg(true);
+//	mState = -1;
+//	return mState;
+//}
 int UnitMgr::Update(int _a) {
 	BaseObj::sPos tmpPos = GET_POSITION();
 	static int  hoge = 0;
@@ -141,13 +140,13 @@ int UnitMgr::Update(int _a) {
 
 	if (mState < 0) {
 		lastMouseButton = mouseButton;
-		_a = -1;
+		//_a = -1;
 		Initialize();
 		return -1;
 	}
 	else {
-
-		hoge = (this->*Fanctions[mState])(_a);
+		;
+		hoge = CharaDate[_a]->Update(_a);// (this->*Fanctions[mState])(_a);
 		lastMouseButton = mouseButton;
 		return hoge;
 	}
@@ -234,6 +233,36 @@ int UnitMgr::CulNum(BaseObj::sPos _arg, int _type) {
 	//プレイヤー検索
 	if (_type == PLAYER) {
 		for (int i = 0; i < CharaDate.size(); i++) {
+			if (CharaDate[i]->GetOnActive() != true)continue;
+			if ((_arg.x > CharaDate[i]->GetPosX()) && (_arg.x < CharaDate[i]->GetPosX() + MASSSIZE) &&
+				(_arg.y > CharaDate[i]->GetPosY()) && (_arg.y < CharaDate[i]->GetPosY() + MASSSIZE))
+				return i;
+		}
+	}
+	//敵検索
+	else if (_type == ENEMY) {
+		for (int i = 0; i < EnemyDate.size(); i++) {
+			if (EnemyDate[i]->GetOnActive() != true)continue;
+			if ((_arg.x > EnemyDate[i]->GetPosX()) && (_arg.x < EnemyDate[i]->GetPosX() + MASSSIZE) &&
+				(_arg.y > EnemyDate[i]->GetPosY()) && (_arg.y < EnemyDate[i]->GetPosY() + MASSSIZE))
+				return i;
+		}
+	}
+	else {
+		for (int i = 0; i < FairyDate.size(); i++) {
+			if (CharaDate[i]->GetOnActive() != true)continue;
+			if (_arg.x / MASSSIZE == FairyDate[i]->GetPosX() &&
+				_arg.y / MASSSIZE == FairyDate[i]->GetPosY())
+				return i;
+		}
+	}
+	return -1;
+}
+
+int UnitMgr::CulNum(BaseObj::sPos _arg, int _type,int _activeFlg) {
+	//プレイヤー検索
+	if (_type == PLAYER) {
+		for (int i = 0; i < CharaDate.size(); i++) {
 			if (CharaDate[i]->GetStayFlg() != false)continue;
 			if ((_arg.x > CharaDate[i]->GetPosX()) && (_arg.x < CharaDate[i]->GetPosX() + MASSSIZE) &&
 				(_arg.y > CharaDate[i]->GetPosY()) && (_arg.y < CharaDate[i]->GetPosY() + MASSSIZE))
@@ -243,7 +272,7 @@ int UnitMgr::CulNum(BaseObj::sPos _arg, int _type) {
 	//敵検索
 	else if (_type == ENEMY) {
 		for (int i = 0; i < EnemyDate.size(); i++) {
-			if (EnemyDate.size() == 0)break;
+			if (EnemyDate[i]->GetStayFlg() != false)continue;
 			if ((_arg.x > EnemyDate[i]->GetPosX()) && (_arg.x < EnemyDate[i]->GetPosX() + MASSSIZE) &&
 				(_arg.y > EnemyDate[i]->GetPosY()) && (_arg.y < EnemyDate[i]->GetPosY() + MASSSIZE))
 				return i;
@@ -251,7 +280,6 @@ int UnitMgr::CulNum(BaseObj::sPos _arg, int _type) {
 	}
 	else {
 		for (int i = 0; i < FairyDate.size(); i++) {
-			if (FairyDate.size() == 0)break;
 			if (_arg.x / MASSSIZE == FairyDate[i]->GetPosX() &&
 				_arg.y / MASSSIZE == FairyDate[i]->GetPosY())
 				return i;
@@ -259,6 +287,7 @@ int UnitMgr::CulNum(BaseObj::sPos _arg, int _type) {
 	}
 	return -1;
 }
+
 
 int UnitMgr::CheckStay(int _turn) {
 	bool tmpFlg = false;

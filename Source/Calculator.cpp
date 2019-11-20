@@ -62,6 +62,35 @@ int Calculator::CulMoveRange(int _x, int _y, int _moveRange) {
 	return 0;
 
 }
+int Calculator::CulMoveRange(Unit::sPos _pos, int _moveRange) {
+	if (_moveRange <= 0)return -1;
+	for (int i = 0; i < 4; i++) {
+		int vx = 0, vy = 0;
+		switch (i) {
+		case eUP:
+			vy--;
+			break;
+		case eRIGHT:
+			vx++;
+			break;
+		case eDOWN:
+			vy++;
+			break;
+		case eLEFT:
+			vx--;
+			break;
+		}
+		if (_pos.x + vx < 20 && _pos.x + vx>0 && _pos.y + vy < 15 && _pos.y + vy>0) {
+			if (mCopyMap->at((_pos.y + vy) * 20 + ((_pos.x)+vx)).GetMoveCost() < 10) {
+				mTmpMap[(_pos.y + vy) * 20 + ((_pos.x)+vx)] = 1;
+				CulMoveRange(_pos, _moveRange - mCopyMap->at((_pos.y - 1) * 20 + (_pos.x - 1)).GetMoveCost());
+			}
+		}
+	}
+	return 0;
+
+}
+
 
 int Calculator::MoveJudg(vector<Chara*>& _chara, vector<Enemy*>& _enemy, int _num) {
 
@@ -75,15 +104,16 @@ int Calculator::MoveJudg(vector<Chara*>& _chara, vector<Enemy*>& _enemy, int _nu
 
 	return 0;
 }
-
-int Calculator::EvasionCalculate(Unit _Atk, Unit _Def) {
+//template  typename T
+int Calculator::HitCalculate(Unit _Atk, Unit _Def) {
+	if ((_Atk.GetAgi() + _Def.GetAgi()) / 2 < _Atk.GetAgi() - _Def.GetAgi());
 	return 0;
 }
 
 int Calculator::PhysicalDamageCalculate(Unit _Atk, Unit _def) {
-	Fairy& AtkFairy = INSTANCE->GetFairyDate(_Atk.GetEquip(_Atk.GetEquipNum()));
-	Fairy& DefFairy = INSTANCE->GetFairyDate(_def.GetEquip(_def.GetEquipNum()));
-	int tmp = (_Atk.GetStr() + AtkFairy.GetStr()) - (_def.GetDef() + DefFairy.GetDef());
+	//Fairy& AtkFairy = INSTANCE->GetFairyDate(_Atk.GetEquip(_Atk.GetEquipNum()));
+	//Fairy& DefFairy = INSTANCE->GetFairyDate(_def.GetEquip(_def.GetEquipNum()));
+	int tmp = (_Atk.GetStr() /*+ AtkFairy.GetStr()*/) - (_def.GetDef() /*+ DefFairy.GetDef()*/);
 	if (tmp < 0)tmp = 0;
 	//int tmp = UŒ‚.str + (UŒ‚.level * UŒ‚.str¬’·) + UŒ‚.•Šístr ( UŒ‚.•Šílevel * UŒ‚.•Šístr¬’·) -
 	//			–hŒä.def + (–hŒä.level * –hŒä.def¬’·) + –hŒä.•Šídef ( –hŒä.•Šílevel * –hŒä.•Šídef¬’·)
@@ -92,9 +122,9 @@ int Calculator::PhysicalDamageCalculate(Unit _Atk, Unit _def) {
 	return tmp;
 }
 int Calculator::MagicDamageCalculate(Unit _Atk, Unit _def) {
-	Fairy& AtkFairy = INSTANCE->GetFairyDate(_Atk.GetEquip(_Atk.GetEquipNum()));
-	Fairy& DefFairy = INSTANCE->GetFairyDate(_def.GetEquip(_def.GetEquipNum()));
-	int tmp = (_Atk.GetInt() + AtkFairy.GetInt()) - (_def.GetMnd() + DefFairy.GetDef());
+	//Fairy& AtkFairy = INSTANCE->GetFairyDate(_Atk.GetEquip(_Atk.GetEquipNum()));
+	//Fairy& DefFairy = INSTANCE->GetFairyDate(_def.GetEquip(_def.GetEquipNum()));
+	int tmp = (_Atk.GetInt() /*+ AtkFairy.GetInt()*/) - (_def.GetMnd() /*+ DefFairy.GetDef()*/);
 	if (tmp < 0)tmp = 0;
 	//int tmp = UŒ‚.mgc + (UŒ‚.level * UŒ‚.mgc¬’·) + UŒ‚.•Šímgc ( UŒ‚.•Šílevel * UŒ‚.•Šímgc¬’·) -
 	//			–hŒä.mnd + (–hŒä.level * –hŒä.mnd¬’·) + –hŒä.•Šímnd ( –hŒä.•Šílevel * –hŒä.•Šímnd¬’·)

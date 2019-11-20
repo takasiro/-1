@@ -6,12 +6,11 @@
 class Enemy :public Unit {
 
 private:
-	vector<Fairy*> mEquipSlot;//‘•”õ˜g
 
 public:
 	Enemy();
 	Enemy(int _x, int _y);
-	Enemy(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	Enemy(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 
 	virtual ~Enemy();
@@ -31,11 +30,11 @@ public:
 	
 	//‘•”õ‚³‚¹‚éŠÖ”
 	//ˆø” ‘•”õ‚³‚¹‚éFairyŒ^A‘•”õ‚³‚¹‚éêŠ
-	int SetFairy(Fairy* _fairy,int _num) {
-		mEquipSlot[_num] = _fairy;
-		if (mEquipSlot[_num] == _fairy)return 0;
-		else return 1;
-	}
+	//int SetFairy(Fairy* _fairy,int _num) {
+	//	mEquipSlot[_num] = _fairy;
+	//	if (mEquipSlot[_num] == _fairy)return 0;
+	//	else return 1;
+	//}
 
 
 };

@@ -25,7 +25,7 @@ private:
 	vector<Chara*> CharaDate;
 	vector<Enemy*> EnemyDate;
 	vector<Fairy*>FairyDate;
-
+	vector<Fairy*>WeaponDate;
 	int color;
 	Unit::sPos prevPos;
 	Unit::sPos mousePos;
@@ -33,9 +33,25 @@ private:
 	int mState;
 	int mouseButton;
 	int lastMouseButton;
-
+	typedef struct {
+		string tank = "タンク";
+		string caster = "キャスター";
+		string ranger = "レンジャー";
+		string fighter = "ファイター";
+	}sRole;
 
 public:
+	sRole roleType;
+
+	string RoleType(int _type) {
+		switch (_type) {
+		case eTank: return roleType.tank; break;
+		case eCaster: return roleType.caster; break;
+		case eRanger: return roleType.ranger; break;
+		case eFighter: return roleType.fighter;  break;
+		}
+	}
+
 	void	operator+(BaseObj::sPos _pos) {
 		for (int i = 0; i < CharaDate.size(); i++) {
 			*CharaDate[i] + _pos;
@@ -59,9 +75,11 @@ public:
 		CharaDate.clear();
 		EnemyDate.clear();
 		FairyDate.clear();
+		WeaponDate.clear();
 		CharaDate.shrink_to_fit();
 		EnemyDate.shrink_to_fit();
 		FairyDate.shrink_to_fit();
+		WeaponDate.shrink_to_fit();
 	}
 
 	int (UnitMgr::* Fanctions[10])(int _a);
@@ -85,6 +103,42 @@ public:
 		return 0;
 	}
 
+	int SetWeaponDate(Fairy _fairy) {
+		WeaponDate.emplace_back(new Fairy(_fairy));
+		return 0;
+	}
+
+	void SetColor(int _r, int _g, int _b) {
+		color = GetColor(_r, _g, _b);
+	}
+	//マウス座標の取得
+	int GetMouseButton() { return mouseButton; }
+	int GetLastMouseButton() { return lastMouseButton; }
+	Unit::sPos GetMapPos() { return mapPos; }
+	//マウス座標の取得
+	Unit::sPos GetMousePos() { return mousePos; }
+	//戻すりょりに使う前回座標
+	Unit::sPos GetPrevPos() { return prevPos; }
+
+	void SetMouseButton(int _a) { mouseButton = _a; }
+	int SetPrevPosX(int  _x) {
+		prevPos.x = _x;
+		return prevPos.x;
+	}
+	int SetPrevPosY( int _y) {
+		prevPos.y = _y;
+		return prevPos.y;
+	}
+	void SetMousePos(Unit::sPos _a) { 
+		mousePos.x = _a.x;
+		mousePos.y = _a.y;
+	}
+	void SetMapPos(Unit::sPos _a) {
+		mapPos = _a; 
+		mapPos.x =(int) mapPos.x/ MASSSIZE;
+		mapPos.y = (int) mapPos.y / MASSSIZE;
+	}
+	void SetLastMouseButton(int _a) { lastMouseButton = _a; }
 	/**************************************************************************
 	フェアリ－を装備させる関数
 	型:int
@@ -93,9 +147,9 @@ public:
 			int _index セットするキャラの要素数
 	　 　int _num,…セットしたい装備欄場所
 	***************************************************************************/
-	int SetFairyChara(Fairy _fairy, int _index, int _num) {
+	/*int SetFairyChara(Fairy _fairy, int _index, int _num) {
 		CharaDate[_index]->SetFairy(_fairy, _num);
-	}
+	}*/
 
 	/**************************************************************************
 	成長値取得関数(chara)
@@ -127,6 +181,16 @@ public:
 		FairyDate[_index]->SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
 		return 0;
 	}
+	/**************************************************************************
+	成長値取得関数(Weapon)
+	型:int
+
+	引数:int _index  setしたいウェポンの要素数
+	***************************************************************************/
+	int SetWeaponGrowth(int _index, float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi) {
+		WeaponDate[_index]->SetGrowth(_hp, _str, _def, _int, _mnd, _dex, _agi);
+		return 0;
+	}
 
 	int GetCharaDataSize() { return CharaDate.size(); }
 	int GetEnemyDataSize() { return EnemyDate.size(); }
@@ -144,6 +208,7 @@ public:
 	第一引数 sPos マウス座標
 	第二引数　int 検索する種類 0 プレイヤー　1エネミー　2フェアリー*/
 	int CulNum(BaseObj::sPos _arg, int _type);
+	int CulNum(BaseObj::sPos _arg, int _type, int _activeFlg);
 	void SetMapData(Map& _map);
 	virtual int Initialize();	//初期化処理
 	virtual int Update();	//計算処理
@@ -235,9 +300,9 @@ public:
 		return 1;
 	}
 
-	int MoveJudgeState(int);
+	/*int MoveJudgeState(int);
 	int MoveState(int);
 	int AttackJudgeState(int);
-	int AttackState(int);
+	int AttackState(int);*/
 
 };

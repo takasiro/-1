@@ -10,7 +10,6 @@ using namespace std;
 #include"Unit.h"
 #include"fairy.h"
 #include"Enemy.h"
-#include"Map.h"
 
 
 
@@ -23,9 +22,9 @@ private:
 	int mLoadtype;
 
 	char input[256];
-	int mapWidth, mapHeight,mapCount;
 
 	//ステータス情報
+	short mId;  //ID
 	string mName;	  //名前
 	eRole mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
 	int mHp;			  //体力
@@ -37,6 +36,7 @@ private:
 	int mAgi;			  //回避
 	int mMove;			  //移動力
 	char mFilePath[256];  //画像のファイルパス
+	char* dummyFilePath;		  //画像ファイルパスがなかった時用のダミーファイルパス
 
 	int mRangeMin;  //最小攻撃範囲
 	int mRangeMax;  //最大攻撃範囲
@@ -54,8 +54,6 @@ private:
 	BaseObj::sPos mInitPlayerPos[8];
 	BaseObj::sPos mInitEnemyPos[8];
 
-	Map map;
-
 public:
 	Load() { Initialize(); };
 	virtual ~Load() {};
@@ -69,10 +67,6 @@ public:
 	int LoadEnemy(int _baseHandle,int _growthHandle);
 	int LoadWeapon(int _baseHandle, int _growthHandle);
 
-	int GetMapWidth() { return mapCount / mapHeight; }
-	int GetMapCount() { return mapCount; }
-	int GetMapHeight() { return mapHeight; }
-	void SetMapTHeight(int _height) {mapHeight = _height; }
 	vector<Enemy*>& GetEnemyMasterData() { return mEnemyMasterData; }
 
 	int SetEnemyData();

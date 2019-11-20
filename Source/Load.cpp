@@ -156,17 +156,18 @@ int Load::LoadChara(int _baseHandle, int _growthHandle) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:mName = input; break;
-			case 1:mRole = eRole(atoi(input)); break;
-			case 2:mHp = atoi(input); break;
-			case 3:mStr = atoi(input); break;
-			case 4:mDef = atoi(input); break;
-			case 5:mIntelli = atoi(input); break;
-			case 6:mMnd = atoi(input); break;
-			case 7:mDex = atoi(input); break;
-			case 8:mAgi = atoi(input); break;
-			case 9:mMove = atoi(input); break;
-			case 10:
+			case 0:mId = short(atoi(input)); break;
+			case 1:mName = input; break;
+			case 2:mRole = eRole(atoi(input)); break;
+			case 3:mHp = atoi(input); break;
+			case 4:mStr = atoi(input); break;
+			case 5:mDef = atoi(input); break;
+			case 6:mIntelli = atoi(input); break;
+			case 7:mMnd = atoi(input); break;
+			case 8:mDex = atoi(input); break;
+			case 9:mAgi = atoi(input); break;
+			case 10:mMove = atoi(input); break;
+			case 11:
 				if (strstr(input, "/") == NULL) {
 					break;
 				}
@@ -176,8 +177,8 @@ int Load::LoadChara(int _baseHandle, int _growthHandle) {
 			}
 
 			n++;
-			if (n == 11) {  //newしないといけないとかそんなことあります？
-				INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+			if (n == 12) {  //newしないといけないとかそんなことあります？
+				INSTANCE->SetCharaData(Chara(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				count++;
 				n = 0;
 				break;
@@ -224,17 +225,18 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:mName = input; break;
-			case 1:mRole = eRole(atoi(input)); break;
-			case 2:mHp = atoi(input); break;
-			case 3:mStr = atoi(input); break;
-			case 4:mDef = atoi(input); break;
-			case 5:mIntelli = atoi(input); break;
-			case 6:mMnd = atoi(input); break;
-			case 7:mDex = atoi(input); break;
-			case 8:mAgi = atoi(input); break;
-			case 9:mMove = atoi(input); break;
-			case 10:
+			case 0:mId = short(atoi(input)); break;
+			case 1:mName = input; break;
+			case 2:mRole = eRole(atoi(input)); break;
+			case 3:mHp = atoi(input); break;
+			case 4:mStr = atoi(input); break;
+			case 5:mDef = atoi(input); break;
+			case 6:mIntelli = atoi(input); break;
+			case 7:mMnd = atoi(input); break;
+			case 8:mDex = atoi(input); break;
+			case 9:mAgi = atoi(input); break;
+			case 10:mMove = atoi(input); break;
+			case 11:
 				if (strstr(input, "/") == NULL) {
 					break;
 				}
@@ -244,9 +246,9 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			}
 
 			n++;
-			if (n == 11) {
-				mEnemyMasterData.emplace_back(new Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
-				INSTANCE->SetEnemyData(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+			if (n == 12) {
+				mEnemyMasterData.emplace_back(new Enemy(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+				INSTANCE->SetEnemyData(Enemy(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				count++;
 				n = 0;
 				break;
@@ -296,19 +298,20 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:mName = input; break;
-			case 1:mRangeMin = atoi(input); break;
-			case 2:mRangeMax = atoi(input); break;
-			case 3:mRole = eRole(atoi(input)); break;
-			case 4:mHp = atoi(input); break;
-			case 5:mStr = atoi(input); break;
-			case 6:mDef = atoi(input); break;
-			case 7:mIntelli = atoi(input); break;
-			case 8:mMnd = atoi(input); break;
-			case 9:mDex = atoi(input); break;
-			case 10:mAgi = atoi(input); break;
-			case 11:mMove = atoi(input); break;
-			case 12:
+			case 0:mId = short(atoi(input)); break;
+			case 1:mName = input; break;
+			case 2:mRangeMin = atoi(input); break;
+			case 3:mRangeMax = atoi(input); break;
+			case 4:mRole = eRole(atoi(input)); break;
+			case 5:mHp = atoi(input); break;
+			case 6:mStr = atoi(input); break;
+			case 7:mDef = atoi(input); break;
+			case 8:mIntelli = atoi(input); break;
+			case 9:mMnd = atoi(input); break;
+			case 10:mDex = atoi(input); break;
+			case 11:mAgi = atoi(input); break;
+			case 12:mMove = atoi(input); break;
+			case 13:
 				if (strstr(input, "/") == NULL) {
 					break;
 				}
@@ -319,9 +322,9 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 
 			n++;
 
-			if (n == 13) {
+			if (n == 14) {
 				//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax));
+				INSTANCE->SetFairyDate(Fairy(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax));
 				count++;
 				n = 0;
 				break;

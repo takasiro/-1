@@ -27,13 +27,13 @@ private:
 	sRole roleType;
 	int NameFontHandle,DataFontHandle,StatusFontHandle;
 
+	int DrawCharaStatus(int _num);
+	int DrawEnemyStatus(int _num);
+	string RoleType(int _type);
+
 public:
 	UI() { Initialize(); };
 	virtual ~UI() {};
-
-	int DrawStatus(int _num);
-	string RoleType(int _type);
-
 	int Initialize();	//‰Šú‰»ˆ—
 	int Update();	//ŒvZˆ—
 	int Draw();		//•`‰æˆ—

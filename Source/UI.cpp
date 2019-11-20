@@ -17,8 +17,8 @@ int UI::Update() {
 }
 
 int UI::Draw() {
-	if (playerNumber != -1)DrawStatus(playerNumber);
-	if (enemyNumber != -1)DrawStatus(enemyNumber);
+	if (playerNumber != -1)DrawCharaStatus(playerNumber);
+	if (enemyNumber != -1)DrawEnemyStatus(enemyNumber);
 
 
 	#ifdef DEBUG
@@ -29,7 +29,7 @@ int UI::Draw() {
 	return 0;
 }
 
-int UI::DrawStatus(int _num) {
+int UI::DrawCharaStatus(int _num) {
 	vector<Chara*>& charaStatus = INSTANCE->GetCharaDate();
 	string tmpName = charaStatus[_num]->GetName();
 	int tmpRole = charaStatus[_num]->GetRole();
@@ -55,6 +55,33 @@ int UI::DrawStatus(int _num) {
 
 	return 0;
 }
+
+int UI::DrawEnemyStatus(int _num) {
+	vector<Enemy*>& enemyStatus = INSTANCE->GetEnemyDate();
+	string tmpName = enemyStatus[_num]->GetName();
+	int tmpRole = enemyStatus[_num]->GetRole();
+	role = RoleType(tmpRole);
+
+	//ƒXƒe[ƒ^ƒX•\Ž¦
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawBox(0, 0, 400, 250, GetColor(180, 140, 220), true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	DrawFormatStringToHandle(10, 20, GetColor(255, 255, 255), NameFontHandle, "%s", tmpName.c_str());
+	DrawFormatStringToHandle(10, 60, GetColor(255, 255, 255), DataFontHandle, "%s", role.c_str(), TRUE);
+	DrawFormatStringToHandle(15, 90, GetColor(255, 255, 255), StatusFontHandle, "EXP:%d", 00, TRUE);
+	DrawFormatStringToHandle(15, 120, GetColor(255, 255, 255), DataFontHandle, "Lv.%d", enemyStatus[_num]->GetLv(), TRUE);
+	DrawFormatStringToHandle(100, 120, GetColor(255, 255, 255), DataFontHandle, "HP:%d/%d", enemyStatus[_num]->GetMaxHp(), enemyStatus[_num]->GetHp(), TRUE);
+	DrawFormatStringToHandle(15, 150, GetColor(255, 255, 255), StatusFontHandle, "UŒ‚:%d", enemyStatus[_num]->GetStr(), TRUE);
+	DrawFormatStringToHandle(120, 150, GetColor(255, 255, 255), StatusFontHandle, "–hŒä:%d", enemyStatus[_num]->GetDef(), TRUE);
+	DrawFormatStringToHandle(15, 180, GetColor(255, 255, 255), StatusFontHandle, "–‚–@:%d", enemyStatus[_num]->GetInt(), TRUE);
+	DrawFormatStringToHandle(120, 180, GetColor(255, 255, 255), StatusFontHandle, "–‚–h:%d", enemyStatus[_num]->GetMnd(), TRUE);
+	DrawFormatStringToHandle(15, 210, GetColor(255, 255, 255), StatusFontHandle, "Ší—p‚³:%d", enemyStatus[_num]->GetDex(), TRUE);
+	DrawFormatStringToHandle(120, 210, GetColor(255, 255, 255), StatusFontHandle, "‘f‘‚³:%d", enemyStatus[_num]->GetAgi(), TRUE);
+
+	return 0;
+}
+
 
 string UI::RoleType(int _type) {
 	switch (_type) {

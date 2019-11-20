@@ -14,7 +14,7 @@ class Unit : public BaseObj
 	//}
 
 protected:
-
+	int mId;//管理用ID 0~9キャラ　10~19エネミー　20~以降武器
 	bool mStayFlg;		//行動したかの判定 true 行動済み　false　行動前
 	int mLv;		//レベル
 	int mExp;		//現在経験値
@@ -31,8 +31,8 @@ protected:
 	int mAgi;			//回避
 	int mMove;		//移動力
 
-	int mEquipSlot[4]; //装備枠　マネージャーのFairy配列の要素数を持つ
-	int mEquipNum; //今装備しているものを持つ
+	//int mEquipSlot[4]; //装備枠　マネージャーのFairy配列の要素数を持つ
+	//int mEquipNum; //今装備しているものを持つ
 	//以下成長値として使用
 	float mGrowthHp;
 	float mGrowthStr;
@@ -44,13 +44,13 @@ protected:
 
 public:
 	Unit();
-	Unit(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	Unit(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 	virtual ~Unit();
 
 	Unit* GetUnit() { return this; }
 	int Initialize();//初期化処理
-	int Initialize(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	int Initialize(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);	//初期化処理(引数付き)
 	virtual int SetGrowth(float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi);  //成長値
 	int Update();	//計算処理
@@ -92,13 +92,21 @@ public:
 
 	int GetRole() { return mRole; }
 
-	int GetEquip(int _num) { return mEquipSlot[_num]; }
+	int GetExp() { return mExp; }
 
-	int GetEquipNum() { return mEquipNum; }
+	//virtual	int GetEquip(int _num) { return mEquipSlot[_num]; }
+
+	//virtual int GetEquipNum() { return mEquipNum; }
+
+	//virtual void SetEquipNum(int _num) { mEquipNum = _num; }
+	////装備する場所　装備するもの要素数
+	//virtual void SetEquipSlot(int _num, int _index) { mEquipSlot[_num] = _index; }
+
 	//ｘとｙに代入する関数どちらを使っても可能
 	virtual void SetPos(sPos _pos) {
 		mPos.x = _pos.x * MASSSIZE;
 		mPos.y = _pos.y * MASSSIZE;
+		
 	}
 
 	virtual void SetPos(int _x, int _y) {
@@ -121,5 +129,19 @@ public:
 		mPos.x += _pos.x;
 		mPos.y += _pos.y;
 	}
+	//ダメージを与える関数
+	virtual int Damage(int _damage) {
+		mHp -= _damage;
+		if (mHp < 0) {
+			mHp = 0;
+			return Dead();
+		}
+		else return 0;
+	}
 
+	virtual int Dead() {
+		SetOnActive(false);
+		//獲得経験値
+		return 50;
+	}
 };

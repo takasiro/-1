@@ -24,6 +24,7 @@ private:
 	char input[256];
 
 	//ステータス情報
+	short mId;  //ID
 	string mName;	  //名前
 	eRole mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
 	int mHp;			  //体力
@@ -66,8 +67,6 @@ public:
 	int LoadWeapon(int _baseHandle, int _growthHandle);
 
 	vector<Enemy*>& GetEnemyMasterData() { return mEnemyMasterData; }
-
-	int SetEnemyData();
 
 	int Initialize();	//初期化処理
 	int Update() { return 0; }		//計算処理

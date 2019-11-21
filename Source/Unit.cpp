@@ -9,6 +9,7 @@ Unit::Unit(short _id,string _name, eRole _role, int _hp, int _str, int _def, int
 }
 int Unit::Initialize(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
+	mId = _id;
 	mRole = _role;
 	mName = _name;
 	mHp = _hp;

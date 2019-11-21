@@ -14,7 +14,7 @@ class Unit : public BaseObj
 	//}
 
 protected:
-	int mId;//管理用ID 0~9キャラ　10~19エネミー　20~以降武器
+	int mId;//管理用ID 0~9キャラ　10~19エネミー　20~以降武器?
 	bool mStayFlg;		//行動したかの判定 true 行動済み　false　行動前
 	int mLv;		//レベル
 	int mExp;		//現在経験値

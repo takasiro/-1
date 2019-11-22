@@ -33,7 +33,7 @@ void EquipDataBase::DeleteEq(int _charaId, int _eqId) {
 	int dataId = 0;
 	
 	for (int i = 0; i < eqData.size(); i++) {
-		if (eqData[i]->GetCharaId() == _charaId && eqData[i]->GetEquipId == _eqId) {
+		if (eqData[i]->GetCharaId() == _charaId && eqData[i]->GetEquipId() == _eqId) {
 			dataId = eqData[i]->GetId();
 		}
 	}

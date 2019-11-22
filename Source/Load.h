@@ -25,8 +25,9 @@ private:
 
 	//ステータス情報
 	short mId;  //ID
-	string mName;	  //名前
+	string mName;		  //名前
 	eRole mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
+	eWeapon mWeapon;	  //武器の種類
 	int mHp;			  //体力
 	int mStr;			  //力(物理用)
 	int mDef;			  //防御(物理用)

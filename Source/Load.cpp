@@ -159,15 +159,16 @@ int Load::LoadChara(int _baseHandle, int _growthHandle) {
 			case 0:mId = short(atoi(input)); break;
 			case 1:mName = input; break;
 			case 2:mRole = eRole(atoi(input)); break;
-			case 3:mHp = atoi(input); break;
-			case 4:mStr = atoi(input); break;
-			case 5:mDef = atoi(input); break;
-			case 6:mIntelli = atoi(input); break;
-			case 7:mMnd = atoi(input); break;
-			case 8:mDex = atoi(input); break;
-			case 9:mAgi = atoi(input); break;
-			case 10:mMove = atoi(input); break;
-			case 11:
+			case 3:mWeapon = eWeapon(atoi(input)); break;
+			case 4:mHp = atoi(input); break;
+			case 5:mStr = atoi(input); break;
+			case 6:mDef = atoi(input); break;
+			case 7:mIntelli = atoi(input); break;
+			case 8:mMnd = atoi(input); break;
+			case 9:mDex = atoi(input); break;
+			case 10:mAgi = atoi(input); break;
+			case 11:mMove = atoi(input); break;
+			case 12:
 				if (strstr(input, "/") == NULL) {
 					break;
 				}
@@ -177,8 +178,8 @@ int Load::LoadChara(int _baseHandle, int _growthHandle) {
 			}
 
 			n++;
-			if (n == 12) {  //new‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢‚Æ‚©‚»‚ñ‚È‚±‚Æ‚ ‚è‚Ü‚·H
-				INSTANCE->SetCharaData(Chara(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+			if (n == 13) { 
+				INSTANCE->SetCharaData(Chara(mId,mName, mRole, mWeapon,mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				count++;
 				n = 0;
 				break;
@@ -228,16 +229,17 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			case 0:mId = short(atoi(input)); break;
 			case 1:mName = input; break;
 			case 2:mRole = eRole(atoi(input)); break;
-			case 3:mHp = atoi(input); break;
-			case 4:mStr = atoi(input); break;
-			case 5:mDef = atoi(input); break;
-			case 6:mIntelli = atoi(input); break;
-			case 7:mMnd = atoi(input); break;
-			case 8:mDex = atoi(input); break;
-			case 9:mAgi = atoi(input); break;
-			case 10:mMove = atoi(input); break;
-			case 11:
-				if (strstr(input, "/") == NULL) {
+			case 3:mWeapon = eWeapon(atoi(input)); break;
+			case 4:mHp = atoi(input); break;
+			case 5:mStr = atoi(input); break;
+			case 6:mDef = atoi(input); break;
+			case 7:mIntelli = atoi(input); break;
+			case 8:mMnd = atoi(input); break;
+			case 9:mDex = atoi(input); break;
+			case 10:mAgi = atoi(input); break;
+			case 11:mMove = atoi(input); break;
+			case 12:
+				if(strstr(input, "/") == NULL) {
 					break;
 				}
 				else {
@@ -246,9 +248,9 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			}
 
 			n++;
-			if (n == 12) {
+			if (n == 13) {
 				mEnemyMasterData.emplace_back(new Enemy(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
-				INSTANCE->SetEnemyData(Enemy(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+				INSTANCE->SetEnemyData(Enemy(mId,mName, mRole,mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				count++;
 				n = 0;
 				break;
@@ -303,15 +305,16 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			case 2:mRangeMin = atoi(input); break;
 			case 3:mRangeMax = atoi(input); break;
 			case 4:mRole = eRole(atoi(input)); break;
-			case 5:mHp = atoi(input); break;
-			case 6:mStr = atoi(input); break;
-			case 7:mDef = atoi(input); break;
-			case 8:mIntelli = atoi(input); break;
-			case 9:mMnd = atoi(input); break;
-			case 10:mDex = atoi(input); break;
-			case 11:mAgi = atoi(input); break;
-			case 12:mMove = atoi(input); break;
-			case 13:
+			case 5:mWeapon = eWeapon(atoi(input)); break;
+			case 6:mHp = atoi(input); break;
+			case 7:mStr = atoi(input); break;
+			case 8:mDef = atoi(input); break;
+			case 9:mIntelli = atoi(input); break;
+			case 10:mMnd = atoi(input); break;
+			case 11:mDex = atoi(input); break;
+			case 12:mAgi = atoi(input); break;
+			case 13:mMove = atoi(input); break;
+			case 14:
 				if (strstr(input, "/") == NULL) {
 					break;
 				}
@@ -322,9 +325,9 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 
 			n++;
 
-			if (n == 14) {
+			if (n == 15) {
 				//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				INSTANCE->SetFairyDate(Fairy(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax));
+				INSTANCE->SetFairyDate(Fairy(mId,mName, mRole, mWeapon,mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax));
 				count++;
 				n = 0;
 				break;

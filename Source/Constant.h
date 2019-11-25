@@ -28,6 +28,17 @@ typedef enum {
 }eRole;
 //eRole role;
 
+//武器種類判定用
+typedef enum {
+	eSword,
+	eSpear,
+	eAx,
+	eKnife,
+	eBow,
+	eBook,
+	eCane
+}eWeapon;
+
 //Load.cpp内でのクラス識別用
 typedef enum {
 	eChara,

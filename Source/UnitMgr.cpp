@@ -229,28 +229,29 @@ int UnitMgr::Close() {
 	return 0;
 }
 
-int UnitMgr::CulNum(BaseObj::sPos _arg, int _type) {
+int UnitMgr::CulMapNum(BaseObj::sPos _arg, int _type) {
 	//プレイヤー検索
+	Unit::sPos tmpPos;
 	if (_type == PLAYER) {
 		for (int i = 0; i < CharaDate.size(); i++) {
-			if (CharaDate[i]->GetOnActive() != true)continue;
-			if ((_arg.x > CharaDate[i]->GetPosX()) && (_arg.x < CharaDate[i]->GetPosX() + MASSSIZE) &&
-				(_arg.y > CharaDate[i]->GetPosY()) && (_arg.y < CharaDate[i]->GetPosY() + MASSSIZE))
+			if (CharaDate[i]->GetOnActive() != true || CharaDate[i]->GetStayFlg() != false)continue;
+			tmpPos = CharaDate[i]->GetMapPos();
+			if ((_arg.x == tmpPos.x) && (_arg.y == tmpPos.y))
 				return i;
 		}
 	}
 	//敵検索
 	else if (_type == ENEMY) {
 		for (int i = 0; i < EnemyDate.size(); i++) {
-			if (EnemyDate[i]->GetOnActive() != true)continue;
-			if ((_arg.x > EnemyDate[i]->GetPosX()) && (_arg.x < EnemyDate[i]->GetPosX() + MASSSIZE) &&
-				(_arg.y > EnemyDate[i]->GetPosY()) && (_arg.y < EnemyDate[i]->GetPosY() + MASSSIZE))
+			if (EnemyDate[i]->GetOnActive() != true || EnemyDate[i]->GetStayFlg() != false)continue;
+			tmpPos = EnemyDate[i]->GetMapPos();
+			if ((_arg.x == tmpPos.x) && (_arg.y == tmpPos.y))
 				return i;
 		}
 	}
 	else {
 		for (int i = 0; i < FairyDate.size(); i++) {
-			if (CharaDate[i]->GetOnActive() != true)continue;
+			if (FairyDate[i]->GetOnActive() != true)continue;
 			if (_arg.x / MASSSIZE == FairyDate[i]->GetPosX() &&
 				_arg.y / MASSSIZE == FairyDate[i]->GetPosY())
 				return i;
@@ -259,33 +260,82 @@ int UnitMgr::CulNum(BaseObj::sPos _arg, int _type) {
 	return -1;
 }
 
-int UnitMgr::CulNum(BaseObj::sPos _arg, int _type,int _activeFlg) {
+int UnitMgr::CulWorldNum(BaseObj::sPos _arg, int _type) {
 	//プレイヤー検索
+	Unit::sPos tmpPos;
 	if (_type == PLAYER) {
 		for (int i = 0; i < CharaDate.size(); i++) {
-			if (CharaDate[i]->GetStayFlg() != false)continue;
-			if ((_arg.x > CharaDate[i]->GetPosX()) && (_arg.x < CharaDate[i]->GetPosX() + MASSSIZE) &&
-				(_arg.y > CharaDate[i]->GetPosY()) && (_arg.y < CharaDate[i]->GetPosY() + MASSSIZE))
+			if (CharaDate[i]->GetOnActive() != true || CharaDate[i]->GetStayFlg() != false)continue;
+			tmpPos = CharaDate[i]->GetmPos();
+			if ((_arg.x > tmpPos.x) && (_arg.x < tmpPos.x + MASSSIZE) &&
+				(_arg.y > tmpPos.y) && (_arg.y < tmpPos.y + MASSSIZE))
 				return i;
 		}
 	}
 	//敵検索
 	else if (_type == ENEMY) {
 		for (int i = 0; i < EnemyDate.size(); i++) {
-			if (EnemyDate[i]->GetStayFlg() != false)continue;
-			if ((_arg.x > EnemyDate[i]->GetPosX()) && (_arg.x < EnemyDate[i]->GetPosX() + MASSSIZE) &&
-				(_arg.y > EnemyDate[i]->GetPosY()) && (_arg.y < EnemyDate[i]->GetPosY() + MASSSIZE))
+			if (EnemyDate[i]->GetOnActive() != true || EnemyDate[i]->GetStayFlg() != false)continue;
+			tmpPos = EnemyDate[i]->GetmPos();
+			if ((_arg.x > tmpPos.x) && (_arg.x < tmpPos.x + MASSSIZE) &&
+				(_arg.y > tmpPos.y) && (_arg.y < tmpPos.y + MASSSIZE))
 				return i;
 		}
 	}
 	else {
 		for (int i = 0; i < FairyDate.size(); i++) {
+			if (FairyDate[i]->GetOnActive() != true)continue;
 			if (_arg.x / MASSSIZE == FairyDate[i]->GetPosX() &&
 				_arg.y / MASSSIZE == FairyDate[i]->GetPosY())
 				return i;
 		}
 	}
 	return -1;
+}
+
+int UnitMgr::CulUiNum(BaseObj::sPos _arg, int _type) {
+	//プレイヤー検索
+	Unit::sPos tmpPos;
+	if (_type == PLAYER) {
+		for (int i = 0; i < CharaDate.size(); i++) {
+			if (CharaDate[i]->GetOnActive() != true)continue;
+			tmpPos = CharaDate[i]->GetmPos();
+			if ((_arg.x > tmpPos.x) && (_arg.x < tmpPos.x + MASSSIZE) &&
+				(_arg.y > tmpPos.y) && (_arg.y < tmpPos.y + MASSSIZE))
+				return i;
+		}
+	}
+	//敵検索
+	else if (_type == ENEMY) {
+		for (int i = 0; i < EnemyDate.size(); i++) {
+			if (EnemyDate[i]->GetOnActive() != true)continue;
+			tmpPos = EnemyDate[i]->GetmPos();
+			if ((_arg.x > tmpPos.x) && (_arg.x < tmpPos.x + MASSSIZE) &&
+				(_arg.y > tmpPos.y) && (_arg.y < tmpPos.y + MASSSIZE))
+				return i;
+		}
+	}
+	else {
+		for (int i = 0; i < FairyDate.size(); i++) {
+			if (FairyDate[i]->GetOnActive() != true)continue;
+			if (_arg.x / MASSSIZE == FairyDate[i]->GetPosX() &&
+				_arg.y / MASSSIZE == FairyDate[i]->GetPosY())
+				return i;
+		}
+	}
+	return -1;
+}
+
+int UnitMgr::CulNum(BaseObj::sPos _arg, int _type, int _serchFlg) {
+	if (_serchFlg == 0) {
+		return	CulWorldNum(_arg, _type);
+	}
+	else if (_serchFlg == 1) {
+		return	CulMapNum(_arg, _type);
+	}
+	else if (_serchFlg == 2) {
+		return	CulUiNum(_arg, _type);
+	}
 }
 
 

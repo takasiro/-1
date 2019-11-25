@@ -52,26 +52,26 @@ public:
 		mGrHandlesCount = 0;
 	}
 	//値の獲得
-	double GetPosX() { return mPos.x; }
-	double GetPosY() { return mPos.y; }
-	sPos GetmPos() { return mPos; }
-	double GetVX() { return mV.x; }
-	double GetVY() { return mV.y; }
-	sPos GetV() { return mV; }
-	double GetCX() { return mC.x; }
-	double GetCY() { return mC.y; }
-	sPos GetC() { return mC; }
-	double GetWidth() { return mWidth; }
-	double GetHight() { return mHeight; }
-	double GetAngle() { return mAngle; }
-	double GetSpeed() { return mSpeed; }
-	double GetR() { return mR; }
-	int GetOnActive() { return mOnActive; }
+	virtual double GetPosX() { return mPos.x; }
+	virtual double GetPosY() { return mPos.y; }
+	virtual sPos GetmPos() { return mPos; }
+	virtual double GetVX() { return mV.x; }
+	virtual double GetVY() { return mV.y; }
+	virtual sPos GetV() { return mV; }
+	virtual double GetCX() { return mC.x; }
+	virtual double GetCY() { return mC.y; }
+	virtual sPos GetC() { return mC; }
+	virtual double GetWidth() { return mWidth; }
+	virtual double GetHight() { return mHeight; }
+	virtual double GetAngle() { return mAngle; }
+	virtual double GetSpeed() { return mSpeed; }
+	virtual double GetR() { return mR; }
+	virtual int GetOnActive() { return mOnActive; }
 	int GetGrHandle() { return mGrHandle; }
 	int* GetGrHandles() { return mGrHandles; }
 	int GetGrHandleCount() { return mGrHandlesCount; }
 
-	void AddPos(double _vx) { mPos.x += _vx; }
+	virtual void AddPos(double _vx) { mPos.x += _vx; }
 
 	/*
 	//値の設定（未使用

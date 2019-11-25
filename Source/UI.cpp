@@ -10,8 +10,8 @@ int UI::Initialize() {
 
 int UI::Update() {
 	BaseObj::sPos  tmp;
-	playerNumber = INSTANCE->CulNum(tmp = GET_POSITION(), PLAYER);
-	enemyNumber = INSTANCE->CulNum(tmp = GET_POSITION(), ENEMY);
+	playerNumber = INSTANCE->CulNum(tmp = GET_POSITION(), PLAYER,2);
+	enemyNumber = INSTANCE->CulNum(tmp = GET_POSITION(), ENEMY,2);
 
 	return 0;
 }

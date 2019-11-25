@@ -170,7 +170,7 @@ int Chara::AttackJudgeState(int _a) {
 		INSTANCE->SetMousePos(GET_POSITION());
 		INSTANCE->SetMapPos(GET_POSITION());
 		if (Calculator::GetMoveArea(INSTANCE->GetMapPos()) == 1) {
-			int tmp = INSTANCE->CulNum(INSTANCE->GetMapPos(), ENEMY);
+			int tmp = INSTANCE->CulNum(INSTANCE->GetMapPos(), ENEMY,1);
 
 			if (tmp == -1) {
 				//Initialize();
@@ -190,7 +190,7 @@ int Chara::AttackJudgeState(int _a) {
 
 int Chara::AttackState(int _a) {
 	int tmp = 0;
-	tmp = INSTANCE->CulNum(INSTANCE->GetMousePos(), ENEMY);
+	tmp = INSTANCE->CulNum(INSTANCE->GetMousePos(), ENEMY,0);
 	int damage = 0;
 	Enemy& tmpEnemy = INSTANCE->GetEnemyDate(tmp);
 	//Calculator::HitCalculate(*CharaDate[_a],*EnemyDate[tmp]);

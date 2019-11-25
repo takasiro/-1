@@ -19,6 +19,7 @@ protected:
 	int mLv;		//レベル
 	int mExp;		//現在経験値
 
+	sPos mMapPos;
 	eRole	 mRole;		//そのキャラの職業(成長値に偏りを出させるため)
 	string mName;	//名前
 	int mMaXHp;		//最大体力
@@ -94,6 +95,8 @@ public:
 
 	int GetExp() { return mExp; }
 
+	sPos GetMapPos() { return mMapPos; }
+
 	//virtual	int GetEquip(int _num) { return mEquipSlot[_num]; }
 
 	//virtual int GetEquipNum() { return mEquipNum; }
@@ -106,12 +109,16 @@ public:
 	virtual void SetPos(sPos _pos) {
 		mPos.x = _pos.x * MASSSIZE;
 		mPos.y = _pos.y * MASSSIZE;
+		mMapPos.x = _pos.x;
+		mMapPos.y = _pos.y;
 		
 	}
 
 	virtual void SetPos(int _x, int _y) {
 		mPos.x = _x * MASSSIZE;
 		mPos.y = _y * MASSSIZE;
+		mMapPos.x = _x;
+		mMapPos.y = _y;
 	}
 
 	virtual void AdjustStatus() {
@@ -141,6 +148,7 @@ public:
 
 	virtual int Dead() {
 		SetOnActive(false);
+		SetStayFlg(true);
 		//獲得経験値
 		return 50;
 	}

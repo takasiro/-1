@@ -2,8 +2,8 @@
 #include"UnitMgr.h"
 Chara::Chara() {
 }
-Chara::Chara(short _id, string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) :Unit(_id, _name, _role, _hp, _str, _def, _int, _mnd,
+Chara::Chara(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv) :Unit(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd,
 		_dex, _agi, _move, _exp, _lv) {
 	/*mColor = GetColor(0, 0, 255);
 	mGrHandlesCount = 12;
@@ -58,7 +58,7 @@ int Chara::Initialize() {
 	INSTANCE->SetMousePos(Unit::sPos{ 0,0 });
 	return 0;
 }
-int Chara::Initialize(short _id, string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+int Chara::Initialize(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 
 	return 0;
@@ -144,7 +144,7 @@ int Chara::MoveState(int _a) {
 		//INSTANCE->SetMapPos(INSTANCE->GetMousePos());
 
 		//Unit::sPos tmp = INSTANCE->GetMapPos();
-		if (Calculator::GetMoveArea(INSTANCE->GetMapPos())==1) {
+		if (Calculator::GetMoveArea(INSTANCE->GetMapPos()) == 1) {
 			Move(INSTANCE->GetMapPos());
 			Update();
 			Calculator::Initialize();
@@ -170,7 +170,7 @@ int Chara::AttackJudgeState(int _a) {
 		INSTANCE->SetMousePos(GET_POSITION());
 		INSTANCE->SetMapPos(GET_POSITION());
 		if (Calculator::GetMoveArea(INSTANCE->GetMapPos()) == 1) {
-			int tmp = INSTANCE->CulNum(INSTANCE->GetMapPos(), ENEMY,1);
+			int tmp = INSTANCE->CulNum(INSTANCE->GetMapPos(), ENEMY, 1);
 
 			if (tmp == -1) {
 				//Initialize();
@@ -190,7 +190,7 @@ int Chara::AttackJudgeState(int _a) {
 
 int Chara::AttackState(int _a) {
 	int tmp = 0;
-	tmp = INSTANCE->CulNum(INSTANCE->GetMousePos(), ENEMY,0);
+	tmp = INSTANCE->CulNum(INSTANCE->GetMousePos(), ENEMY, 0);
 	int damage = 0;
 	Enemy& tmpEnemy = INSTANCE->GetEnemyDate(tmp);
 	//Calculator::HitCalculate(*CharaDate[_a],*EnemyDate[tmp]);

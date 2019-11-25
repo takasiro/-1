@@ -357,3 +357,4 @@ int UnitMgr::CheckStay(int _turn) {
 void UnitMgr::SetMapData(Map& _map) {
 	Calculator::SetMap(_map);
 }
+

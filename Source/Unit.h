@@ -21,6 +21,7 @@ protected:
 
 	sPos mMapPos;
 	eRole	 mRole;		//そのキャラの職業(成長値に偏りを出させるため)
+	eWeapon mWeaponType;//武器の種類(Fairyのみで使用)
 	string mName;	//名前
 	int mMaXHp;		//最大体力
 	int mHp;			//体力
@@ -45,13 +46,13 @@ protected:
 
 public:
 	Unit();
-	Unit(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	Unit(short _id,string _name, eRole _role, eWeapon _weapon,int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 	virtual ~Unit();
 
 	Unit* GetUnit() { return this; }
 	int Initialize();//初期化処理
-	int Initialize(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	int Initialize(short _id,string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);	//初期化処理(引数付き)
 	virtual int SetGrowth(float _hp, float _str, float _def, float _int, float _mnd, float _dex, float _agi);  //成長値
 	int Update();	//計算処理

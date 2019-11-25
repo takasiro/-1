@@ -2,7 +2,7 @@
 
 SoundMgr::SoundMgr() {
 	mSE["SE01"] = LoadSoundMem("../Sound/se01.wav");
-	mBGM["BGM01"] = LoadSoundMem("../Sound/bgm01.wav");
+	mBGM["bgm_maoudamashii_fantasy13"] = LoadSoundMem("../Resource/Sound/bgm_maoudamashii_fantasy13.mp3");
 }
 SoundMgr:: ~SoundMgr() {
 	InitSoundMem();

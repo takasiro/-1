@@ -3,7 +3,6 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "SceneMgr.h"
-
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);

@@ -34,6 +34,7 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/PlayerPos01.csv");
 	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/EnemyPos01.csv");
 	INSTANCE->SetMapData(map);
+	SoundMgr::Instance()->PlayBGM("bgm_maoudamashii_fantasy13");
 }
 
 InGameScene::~InGameScene() {

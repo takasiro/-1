@@ -12,7 +12,7 @@ private:
 	int mState;
 public:
 	Chara();
-	Chara(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	Chara(short _id,string _name, eRole _role, eWeapon _weapon ,int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);
 		
 	
@@ -23,7 +23,7 @@ public:
 	//Chara(Chara&);
 
 	int Initialize();//‰Šú‰»ˆ—
-	int Initialize(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+	int Initialize(short _id,string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv);	//‰Šú‰»ˆ—(ˆø”•t‚«)
 	
 	int Update();	//ŒvZˆ—

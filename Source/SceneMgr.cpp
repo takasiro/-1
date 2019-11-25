@@ -5,7 +5,7 @@
 
 SceneMgr::SceneMgr(){
 	//‰ŠúƒV[ƒ“İ’è
-	AddScene((BaseScene*)new CharacterMenu(this));
+	AddScene((BaseScene*)new InGameScene(this));
 }
 
 

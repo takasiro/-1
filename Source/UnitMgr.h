@@ -125,18 +125,18 @@ public:
 		prevPos.x = _x;
 		return prevPos.x;
 	}
-	int SetPrevPosY( int _y) {
+	int SetPrevPosY(int _y) {
 		prevPos.y = _y;
 		return prevPos.y;
 	}
-	void SetMousePos(Unit::sPos _a) { 
+	void SetMousePos(Unit::sPos _a) {
 		mousePos.x = _a.x;
 		mousePos.y = _a.y;
 	}
 	void SetMapPos(Unit::sPos _a) {
-		mapPos = _a; 
-		mapPos.x =(int) mapPos.x/ MASSSIZE;
-		mapPos.y = (int) mapPos.y / MASSSIZE;
+		mapPos = _a;
+		mapPos.x = (int)mapPos.x / MASSSIZE;
+		mapPos.y = (int)mapPos.y / MASSSIZE;
 	}
 	void SetLastMouseButton(int _a) { lastMouseButton = _a; }
 	/**************************************************************************
@@ -211,6 +211,9 @@ public:
 	第二引数　int 検索する種類 0 プレイヤー　1エネミー　2フェアリー*/
 	int CulNum(BaseObj::sPos _arg, int _type);
 	int CulNum(BaseObj::sPos _arg, int _type, int _activeFlg);
+	int CulUiNum(BaseObj::sPos _arg, int _type);
+	int CulWorldNum(BaseObj::sPos _arg, int _type);
+	int CulMapNum(BaseObj::sPos _arg, int _type);
 	void SetMapData(Map& _map);
 	virtual int Initialize();	//初期化処理
 	virtual int Update();	//計算処理

@@ -3,6 +3,7 @@
 #include "BaseTask.h"
 #include "ISceneChanger.h"
 #include "UnitMgr.h"
+#include "SoundMgr.h"
 
 class BaseScene:public BaseTask {
 	

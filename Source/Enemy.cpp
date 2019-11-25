@@ -18,8 +18,8 @@ Enemy::Enemy(int _x, int _y) {
 	mEquipNum = 0;*/
 }
 
-Enemy::Enemy(short _id,string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) : Unit( _id,_name, _role, _hp, _str, _def,  _int,  _mnd, _dex, _agi, _move, _exp, _lv) {
+Enemy::Enemy(short _id,string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv) : Unit( _id,_name, _role, _weapon, _hp, _str, _def,  _int,  _mnd, _dex, _agi, _move, _exp, _lv) {
 	mGrHandlesCount = 12;
 	mGrHandles = new int[mGrHandlesCount];
 	LoadDivGraph("../Resource/Image/Enemy/Enemy00.png", 12, 3, 4, 64, 64, mGrHandles);
@@ -35,7 +35,7 @@ int Enemy::Initialize() {
 	return 0;
 }
 
-int Enemy::Initialize( char* _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
+int Enemy::Initialize( char* _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv) {
 	return 0;
 }

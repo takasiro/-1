@@ -15,7 +15,6 @@ public:
 	virtual ~Fontcall();
 	int Initialize();
 	int Update();
-	int Update(int _b);	//ŒvZˆ—
 
 	int Draw();
 	int Close();

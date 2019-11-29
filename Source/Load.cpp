@@ -1,5 +1,6 @@
 #include<DxLib.h>
 #include"Load.h"
+#include"Calculator.h"
 int Load::Initialize() {
 	mHp = 0;		//‘Ì—Í
 	mStr = 0;		//—Í(•¨——p)
@@ -249,7 +250,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 
 			n++;
 			if (n == 13) {
-				mEnemyMasterData.emplace_back(new Enemy(mId,mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+				mEnemyMasterData.emplace_back(new Enemy(mId,mName, mRole, mWeapon,mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				INSTANCE->SetEnemyData(Enemy(mId,mName, mRole,mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
 				count++;
 				n = 0;

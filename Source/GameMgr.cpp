@@ -9,7 +9,7 @@ GameMgr::~GameMgr() {
 }
 
 int GameMgr::Initialize() {
-	mNowTurn = PLAYER_TURN;
+	mNowTurn = ENEMY_TURN;
 	mTurnCount = 0;
 	mStayCount = 0;
 	mUnitNum = -1;
@@ -41,7 +41,10 @@ int  GameMgr::Update() {
 		return INSTANCE->GetStayFlg(eChara);
 	}
 	else {
-		INSTANCE->SetEnemyStayFlg();
+		for (int i = 0; i < INSTANCE->GetEnemyDataSize(); i++) {
+			//	INSTANCE->SetEnemyStayFlg();
+			INSTANCE->GetEnemyDate(i).Update();
+		}
 		return INSTANCE->GetStayFlg(eEnemy);
 	}
 
@@ -54,24 +57,41 @@ int  GameMgr::Update(int _turn) {
 	if (INSTANCE->GetOnActive(eEnemy) != 0) {
 		return 1;
 	}
-	if (mNowTurn == ENEMY_TURN && LEFTCLICK == 0) {
+	if (mNowTurn == ENEMY_TURN /*&& LEFTCLICK == 0*/) {
 
 
-		if (INSTANCE->GetStayFlg(eEnemy) != 0) {
+		/*if (INSTANCE->GetStayFlg(eEnemy) != 0) {
 			mNowTurn *= -1;
 			INSTANCE->InitCharaStayFlg();
 			INSTANCE->InitEnemyStayFlg();
 			return 0;
-		}
+		}*/
 
 	}
-	if (_turn == 1)mNowTurn *= -1;
-}
+	if (_turn != 0) {
+		if (INSTANCE->CheckStay(mNowTurn) == 1) {
+			if (mNowTurn == PLAYER_TURN) {
+				mNowTurn *= -1;
+			
+				INSTANCE->InitCharaStayFlg();
+			
+			}
+			else {
+				mNowTurn *= -1;
+			
+				INSTANCE->InitEnemyStayFlg();
+			
+			}
+		}
 
+
+	}
+}
 
 int GameMgr::Draw() {
 	INSTANCE->Draw();
-	DrawFormatString(0, 50, GetColor(255, 255, 255), "turn %d", mNowTurn);
+	if (mNowTurn == PLAYER_TURN)	DrawFormatString(0, 50, GetColor(255, 255, 255), "turn PLAYER");
+	else if(mNowTurn==ENEMY_TURN) 	DrawFormatString(0, 50, GetColor(255, 255, 255), "turn ENEMY");
 	return 0;
 }
 

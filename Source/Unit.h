@@ -1,6 +1,7 @@
 #pragma once
 #include "Constant.h"
 #include "BaseObj.h"
+#include"SoundMgr.h"
 #include <iostream>
 using namespace std;
 #include <vector>
@@ -32,6 +33,16 @@ protected:
 	int mDex;			//	命中
 	int mAgi;			//回避
 	int mMove;		//移動力
+
+	int mBaseMaXHp;		//最大体力
+	int mBaseHp;			//体力
+	int mBaseStr;			//力(物理用)
+	int mBaseDef;			//防御(物理用)
+	int mBaseInt;			//魔力(魔法用)
+	int mBaseMnd;			//魔防(魔法用)
+	int mBaseDex;			//	命中
+	int mBaseAgi;			//回避
+	int mBaseMove;		//移動力
 
 	//int mEquipSlot[4]; //装備枠　マネージャーのFairy配列の要素数を持つ
 	//int mEquipNum; //今装備しているものを持つ
@@ -123,14 +134,14 @@ public:
 	}
 
 	virtual void AdjustStatus() {
-		mHp = mHp + mGrowthHp * mLv;
-		mMaXHp = mMaXHp + mGrowthHp * mLv;
-		mStr = mStr + mGrowthStr * mLv;
-		mDef = mDef + mGrowthDef * mLv;
-		mInt = mInt + mGrowthInt * mLv;
-		mMnd = mMnd + mGrowthMnd * mLv;
-		mDex = mDex + mGrowthDex * mLv;
-		mAgi = mAgi + mGrowthAgi * mLv;
+		mHp = mBaseHp + mGrowthHp * mLv;
+		mMaXHp = mBaseMaXHp + mGrowthHp * mLv;
+		mStr = mBaseStr + mGrowthStr * mLv;
+		mDef = mBaseDef + mGrowthDef * mLv;
+		mInt = mBaseInt + mGrowthInt * mLv;
+		mMnd = mBaseMnd + mGrowthMnd * mLv;
+		mDex = mBaseDex + mGrowthDex * mLv;
+		mAgi = mBaseAgi + mGrowthAgi * mLv;
 	}
 
 	void operator + (sPos _pos) {
@@ -139,6 +150,7 @@ public:
 	}
 	//ダメージを与える関数
 	virtual int Damage(int _damage) {
+		SoundMgr::Instance()->PlaySE("SE01");
 		mHp -= _damage;
 		if (mHp < 0) {
 			mHp = 0;

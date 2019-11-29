@@ -4,7 +4,7 @@ using namespace std;
 #include "Unit.h"
 //武器のステータスのクラス
 
-class Unit;
+
 class Fairy :public  Unit {
 protected:
 	bool mWeaponFlg;//味方用か敵用化の判定　false敵 true味方

@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 using namespace std;
+#include<string.h>
 #include "Unit.h"
 #include"Fairy.h"
 #include"Constant.h"
@@ -21,7 +22,7 @@ private:
 public:
 	Chara();
 	Chara(short _id,string _name, eRole _role, eWeapon _weapon ,int _hp, int _str, int _def, int _int, int _mnd,
-		int _dex, int _agi, int _move, int _exp, int _lv);
+		int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath);
 		
 	
 	Chara(int x, int y);
@@ -32,7 +33,7 @@ public:
 
 	int Initialize();//初期化処理
 	int Initialize(short _id,string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-		int _dex, int _agi, int _move, int _exp, int _lv);	//初期化処理(引数付き)
+		int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath);	//初期化処理(引数付き)
 	
 	int Update();	//計算処理
 	int Update(int _num);	//計算処理

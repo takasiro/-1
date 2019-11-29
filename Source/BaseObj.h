@@ -22,7 +22,7 @@ protected:
 	int* mGrHandles;	//グラフィックハンドル複数ある場合
 	int* mGrHandles2;	//グラフィックハンドル複数ある場合
 	int mGrHandlesCount;	//複数ある場合の個数
-
+	char mGrFilePath[256];
 	//幅高さから半径を生成
 	void RUpdate() {
 		mR = mWidth < mHeight ? mWidth / 2 : mHeight / 2;
@@ -50,6 +50,7 @@ public:
 		mGrHandle = 0;
 		mGrHandles = NULL;
 		mGrHandlesCount = 0;
+		memset(mGrFilePath, NULL, sizeof(mGrFilePath));
 	}
 	//値の獲得
 	virtual double GetPosX() { return mPos.x; }

@@ -21,13 +21,13 @@ public:
 	Enemy();
 	Enemy(int _x, int _y);
 	Enemy(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-		int _dex, int _agi, int _move, int _exp, int _lv);
+		int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath);
 
 	virtual ~Enemy();
 
 	int Initialize();//初期化処理
 	int Initialize(char* _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-		int _dex, int _agi, int _move, int _exp, int _lv);	//初期化処理(引数付き)
+		int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath);	//初期化処理(引数付き)
 	int Update();	//計算処理
 	int Draw();		//描画処理
 	int Close();	//終了処理

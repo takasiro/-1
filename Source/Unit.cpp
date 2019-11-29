@@ -4,11 +4,11 @@ Unit::Unit() {
 	Initialize();
 }
 Unit::Unit(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) {
-	Initialize(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv);
+	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath) {
+	Initialize(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv,  _filePath);
 }
 int Unit::Initialize(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) {
+	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath) {
 	mId = _id;
 	mRole = _role;
 	mWeaponType = _weapon;
@@ -27,6 +27,7 @@ int Unit::Initialize(short _id, string _name, eRole _role, eWeapon _weapon, int 
 	mStayFlg = false;
 	mMapPos.x = mPos.x / MASSSIZE;
 	mMapPos.y = mPos.y / MASSSIZE;
+	strcpy(mGrFilePath,_filePath);
 	return 0;
 }
 

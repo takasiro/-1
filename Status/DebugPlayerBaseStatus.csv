@@ -1,6 +1,6 @@
-//キャラ名,ロール,体力,力,防御,魔法,魔防,器用さ,素早さ,移動,画像
-//name,role,hp,str,def,int,mnd,dex,agi,move,src
-タンク１,0,25,4,10,2,4,4,3,4,../Image/Player/Chara00.png
-タンク２,0,20,6,8,3,3,5,4,4,../Image/Player/Chara01.png
-キャス１,1,12,2,5,6,6,4,4,5,../Image/Player/Chara02.png
-キャス２,1,10,2,3,8,7,6,5,4,../Image/Player/Chara03.png
+//id番号,キャラ名,ロール,武器,体力,力,防御,魔法,魔防,器用さ,素早さ,移動,画像
+//id,name,role,weapon,hp,str,def,int,mnd,dex,agi,move,src
+0,タンク１,0,0,25,8,10,6,4,4,3,4,../Resource/Image/Player/Chara_Tank01.png
+0,キャス１,1,0,12,6,5,10,7,4,4,5,../Resource/Image/Player/Chara_Caster01.png
+0,レン１,2,0,15,9,3,9,4,6,5,5,../Resource/Image/Player/Chara_Ranger01.png
+0,ファイ１,3,0,18,10,4,7,4,5,4,5,../Resource/Image/Player/Chara_Fighter01.png

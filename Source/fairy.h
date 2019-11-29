@@ -36,8 +36,8 @@ public:
 
 	Fairy();
 	//Fairy(Fairy* _tmp);
-	Fairy(short _id,string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-		int _dex, int _agi, int _move, int _exp, int _lv, int _minRange, int _maxRange);
+	Fairy(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
+		int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath, int _minRange, int _maxRange);
 	void SetRange(int _minRange, int _maxRange) { mMinRange = _minRange; mMaxRange = _maxRange; }
 	virtual ~Fairy();
 	//Fairy& GetFairy() { return 0; }

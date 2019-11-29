@@ -3,8 +3,8 @@
 Chara::Chara() {
 }
 Chara::Chara(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) :Unit(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd,
-		_dex, _agi, _move, _exp, _lv) {
+	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath) :Unit(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd,
+		_dex, _agi, _move, _exp, _lv, _filePath) {
 	/*mColor = GetColor(0, 0, 255);
 	mGrHandlesCount = 12;
 	mGrHandles = new int[mGrHandlesCount];
@@ -15,9 +15,13 @@ Chara::Chara(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int
 	mGrHandlesCount = 12;
 	mGrHandles = new int[mGrHandlesCount];
 	mGrHandles2 = new int[mGrHandlesCount];
-	LoadDivGraph("../Resource/Image/Player/Chara00.png", 12, 3, 4, 64, 64, mGrHandles);
-	LoadDivGraph("../Resource/Image/Player/Chara02.png", 12, 3, 4, 64, 64, mGrHandles2);
-	//for (int i = 0; i < 4; i++)mEquipSlot[i] = i;
+	LoadDivGraph(mGrFilePath, 12, 3, 4, 64, 64, mGrHandles);
+	int len = strlen(mGrFilePath) - 4;
+	char tmpWord[256];
+	memset(tmpWord, 0x00, sizeof(tmpWord));
+   strncpy(tmpWord,mGrFilePath,len);
+	strcat(tmpWord, "Acted.png");
+	LoadDivGraph(tmpWord, 12, 3, 4, 64, 64, mGrHandles2);
 	//mEquipNum = 0;
 	Fanctions[0] = &Chara::MoveJudgeState;
 	Fanctions[1] = &Chara::MoveState;
@@ -61,7 +65,7 @@ int Chara::Initialize() {
 	return 0;
 }
 int Chara::Initialize(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) {
+	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath) {
 
 	return 0;
 }
@@ -87,7 +91,7 @@ int Chara::Update(int _num) {
 int Chara::Draw() {
 	mHpPercent = (double)mHp / (double)mMaXHp;
 	if (mHpPercent >= 0.7)mHpColor = GetColor(0, 255, 0);
-	else	if (mHpPercent < 0.7&& mHpPercent>0.3)mHpColor = GetColor(255, 255, 0);
+	else	if (mHpPercent < 0.7 && mHpPercent>0.3)mHpColor = GetColor(255, 255, 0);
 	else if (mHpPercent <= 0.3)mHpColor = GetColor(255, 0, 0);
 
 	if (mHpPercent > 1.0000)mHpPercent = 1.00000;
@@ -95,8 +99,8 @@ int Chara::Draw() {
 	else mColor = GetColor(150, 150, 150);*/
 	//if(mGrHandle == -1)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, mColor, true);
 	 //else LoadGraphScreen(mPos.x, mPos.y,"../Resource/Image/Map/map1.png",false);
-	if (mStayFlg == false) DrawGraph(mPos.x, mPos.y, mGrHandles[7], TRUE);
-	else DrawGraph(mPos.x, mPos.y, mGrHandles2[7], TRUE);
+	if (mStayFlg == false) DrawGraph(mPos.x, mPos.y, mGrHandles[2], TRUE);
+	else DrawGraph(mPos.x, mPos.y, mGrHandles2[2], TRUE);
 	DrawBox(mPos.x + 10, mPos.y + 58, mPos.x + 54, mPos.y + 64, GetColor(0, 0, 0), true);
 	DrawBox(mPos.x + 10, mPos.y + 58, (mPos.x + 10) + 44 * mHpPercent, mPos.y + 64, mHpColor, true);
 	return 0;

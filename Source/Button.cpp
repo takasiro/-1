@@ -36,6 +36,7 @@ Button::~Button()
 	delete[] mGrHandles;
 }
 int Button::Initialize() {
+	GetGraphSize(mGrHandles[0], &imgw, &imgh);
 	return 0;
 }
 

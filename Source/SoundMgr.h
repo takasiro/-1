@@ -32,4 +32,7 @@ public:
 	//í‚é~
 	int StopSE(const char*);
 	int StopBGM(const char*);
+
+	int GetSE(const char* _SEName) { return mSE[_SEName]; }
+	int GetBGM(const char * _BGMName){ return mBGM[_BGMName]; }
 };

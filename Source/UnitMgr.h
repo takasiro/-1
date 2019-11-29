@@ -279,9 +279,11 @@ public:
 ***************************************************************************/
 	int GetStayFlg(int _type) {
 		if (_type == eChara)	for (int i = 0; i < GetCharaDataSize(); i++) {
+			if (CharaDate[i]->GetOnActive() == true)continue;
 			if (CharaDate[i]->GetStayFlg() == false)return 0;
 		}
 		else if (_type == eEnemy) 	for (int i = 0; i < GetEnemyDataSize(); i++) {
+			if (EnemyDate[i]->GetOnActive() == true)continue;
 			if (EnemyDate[i]->GetStayFlg() == false)return 0;
 		}
 		return 1;

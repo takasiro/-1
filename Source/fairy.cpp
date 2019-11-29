@@ -8,8 +8,8 @@ Fairy::Fairy() {
 
 
 Fairy::Fairy(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv, int _minRange, int _maxRange) :Unit(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd,
-		_dex, _agi, _move, _exp, _lv) {
+	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath, int _minRange, int _maxRange) :Unit(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd,
+		_dex, _agi, _move, _exp, _lv, _filePath) {
 	mMaxRange = _maxRange;
 	mMinRange = _minRange;
 }

@@ -88,8 +88,8 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 			if (strstr(_PosFilePath, "Player") != NULL)	INSTANCE->SetCharaPos(nn, mInitPlayerPos[nn]);
 			else INSTANCE->SetEnemyPos(nn, mInitEnemyPos[nn]);
 			nn++;
-			
-			
+
+
 		}
 	}
 
@@ -174,13 +174,17 @@ int Load::LoadChara(int _baseHandle, int _growthHandle) {
 					break;
 				}
 				else {
-					strcpy(mFilePath, input); break;
+					char* tmp = strstr(input, "\r");
+					if (*tmp != NULL) {
+						*tmp = 0x00;
+						strcpy(mFilePath, input); break;
+					}
 				}
 			}
 
 			n++;
-			if (n == 13) { 
-				INSTANCE->SetCharaData(Chara(mId,mName, mRole, mWeapon,mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+			if (n == 13) {
+				INSTANCE->SetCharaData(Chara(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
 				count++;
 				n = 0;
 				break;
@@ -240,18 +244,22 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			case 10:mAgi = atoi(input); break;
 			case 11:mMove = atoi(input); break;
 			case 12:
-				if(strstr(input, "/") == NULL) {
+				if (strstr(input, "/") == NULL) {
 					break;
 				}
 				else {
-					strcpy(mFilePath, input); break;
+					char* tmp = strstr(input, "\r");
+					if (*tmp != NULL) {
+						*tmp = 0x00;
+						strcpy(mFilePath, input); break;
+					}
 				}
 			}
 
 			n++;
 			if (n == 13) {
-				mEnemyMasterData.emplace_back(new Enemy(mId,mName, mRole, mWeapon,mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
-				INSTANCE->SetEnemyData(Enemy(mId,mName, mRole,mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+				mEnemyMasterData.emplace_back(new Enemy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
+				INSTANCE->SetEnemyData(Enemy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
 				count++;
 				n = 0;
 				break;
@@ -272,7 +280,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			}
 			nn++;
 			if (nn == 7) {
-				mEnemyMasterData.at( count - 1)->SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				mEnemyMasterData.at(count - 1)->SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				INSTANCE->SetEnemyGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
@@ -320,7 +328,11 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 					break;
 				}
 				else {
-					strcpy(mFilePath, input); break;
+					char* tmp = strstr(input, "\r");
+					if (*tmp != NULL) {
+						*tmp = 0x00;
+						strcpy(mFilePath, input); break;
+					}
 				}
 			}
 
@@ -328,7 +340,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 
 			if (n == 15) {
 				//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				INSTANCE->SetFairyDate(Fairy(mId,mName, mRole, mWeapon,mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax));
+				INSTANCE->SetFairyDate(Fairy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath, mRangeMin, mRangeMax));
 				count++;
 				n = 0;
 				break;

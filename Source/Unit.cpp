@@ -3,26 +3,31 @@
 Unit::Unit() {
 	Initialize();
 }
-Unit::Unit(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) {
-	Initialize(_name, _role, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv);
+Unit::Unit(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath) {
+	Initialize(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv,  _filePath);
 }
-int Unit::Initialize(string _name, eRole _role, int _hp, int _str, int _def, int _int, int _mnd,
-	int _dex, int _agi, int _move, int _exp, int _lv) {
+int Unit::Initialize(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
+	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath) {
+	mId = _id;
 	mRole = _role;
+	mWeaponType = _weapon;
 	mName = _name;
-	mHp = _hp;
-	mMaXHp = mHp;
-	mStr = _str;
-	mDef = _def;
-	mInt = _int;
-	mMnd = _mnd;
-	mDex = _dex;
-	mAgi = _agi;
-	mMove = _move;
+	mHp = mBaseHp = _hp;
+	mMaXHp = mBaseMaXHp = mHp;
+	mStr = mBaseStr = _str;
+	mDef = mBaseDef = _def;
+	mInt = mBaseInt = _int;
+	mMnd = mBaseMnd = _mnd;
+	mDex = mBaseDex = _dex;
+	mAgi = mBaseAgi = _agi;
+	mMove = mBaseMove = _move;
 	mExp = _exp;
 	mLv = _lv;
 	mStayFlg = false;
+	mMapPos.x = mPos.x / MASSSIZE;
+	mMapPos.y = mPos.y / MASSSIZE;
+	strcpy(mGrFilePath,_filePath);
 	return 0;
 }
 
@@ -34,6 +39,7 @@ int Unit::SetGrowth(float _hp, float _str, float _def, float _int, float _mnd, f
 	mGrowthMnd = _mnd;
 	mGrowthDex = _dex;
 	mGrowthAgi = _agi;
+	AdjustStatus();
 	return 0;
 }
 

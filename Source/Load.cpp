@@ -1,5 +1,6 @@
 #include<DxLib.h>
 #include"Load.h"
+#include"Calculator.h"
 int Load::Initialize() {
 	mHp = 0;		//体力
 	mStr = 0;		//力(物理用)
@@ -64,26 +65,31 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 	if (stageHandle == NULL)return -1;
 	if (posHandle == NULL)return -1;
 
-	while (FileRead_eof(stageHandle) == 0) {  //ファイルの終端まで
-		LoadFile(stageHandle, input);  //データ読み込み	
-		_mass.emplace_back(Mass(0, atoi(input), INSTANCE->cul.SetCost(atoi(input))));
+	if (_mass.size() < 1) {
+		while (FileRead_eof(stageHandle) == 0) {  //ファイルの終端まで
+			LoadFile(stageHandle, input);  //データ読み込み	
+			_mass.emplace_back(Mass(0, atoi(input), Calculator::SetCost(atoi(input))));
+		}
 	}
 
 	while (FileRead_eof(posHandle) == 0) {  //ファイルの終端まで
 		LoadFile(posHandle, input);  //データ読み込み	
 
 		switch (n) {
-		case 0: strstr(_PosFilePath, "Player") ? mInitPlayerPos[nn].x = atoi(input) : mInitEnemyPos[nn].x = atoi(input); break;
-		case 1: strstr(_PosFilePath, "Player") ? mInitPlayerPos[nn].y = atoi(input) : mInitEnemyPos[nn].y = atoi(input); break;
+		case 0: strstr(_PosFilePath, "Player") != NULL ? mInitPlayerPos[nn].x = atoi(input) : mInitEnemyPos[nn].x = atoi(input); break;
+		case 1: strstr(_PosFilePath, "Player") != NULL ? mInitPlayerPos[nn].y = atoi(input) : mInitEnemyPos[nn].y = atoi(input); break;
 		}
 		n++;
 		if (n == 2) {
 			n = 0;
-			if (strstr(_PosFilePath, "Player"))	INSTANCE->SetCharaPos(nn, mInitPlayerPos[nn]);
+			int tmp = INSTANCE->GetEnemyDataSize();
+			if (strstr(_PosFilePath, "Player") != NULL && nn == INSTANCE->GetCharaDataSize() ||
+				strstr(_PosFilePath, "Enemy") != NULL && nn == INSTANCE->GetEnemyDataSize())break;
+			if (strstr(_PosFilePath, "Player") != NULL)	INSTANCE->SetCharaPos(nn, mInitPlayerPos[nn]);
 			else INSTANCE->SetEnemyPos(nn, mInitEnemyPos[nn]);
 			nn++;
-			if (strstr(_PosFilePath, "Player") && nn == INSTANCE->GetCharaDataSize() ||
-				strstr(_PosFilePath, "Enemy") && nn == INSTANCE->GetEnemyDataSize())break;
+
+
 		}
 	}
 
@@ -116,10 +122,10 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
 
 			if (strstr(_baseFilePath, "Player") && FileRead_eof(mBaseHandle) == 0) {
-				LoadChara(mBaseHandle, mGrowthHandle, eChara);
+				LoadChara(mBaseHandle, mGrowthHandle);
 			}
 			else if (strstr(_baseFilePath, "Enemy") && FileRead_eof(mBaseHandle) == 0) {
-				LoadChara(mBaseHandle, mGrowthHandle, eEnemy);
+				LoadEnemy(mBaseHandle, mGrowthHandle);
 			}
 			else if (strstr(_baseFilePath, "Fairy") && FileRead_eof(mBaseHandle) == 0) {
 				LoadWeapon(mBaseHandle, mGrowthHandle);
@@ -140,12 +146,10 @@ int Load::LoadData(const char* _baseFilePath, const char* _growthFilePath) {
 	 const char* _growthHandle…読み込むファイルのハンドル
 　　 int _type…読み込むデータタイプ
 ***************************************************************************/
-//int Load::LoadChara(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
-int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
+int Load::LoadChara(int _baseHandle, int _growthHandle) {
 	int n = 0;
 	int nn = 0;
 	static int count = 0;
-	//	int dataSize = INSTANCE->GetCharaDataSize();
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
@@ -153,28 +157,34 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:mName = input; break;
-			case 1:mRole = eRole(atoi(input)); break;
-			case 2:mHp = atoi(input); break;
-			case 3:mStr = atoi(input); break;
-			case 4:mDef = atoi(input); break;
-			case 5:mIntelli = atoi(input); break;
-			case 6:mMnd = atoi(input); break;
-			case 7:mDex = atoi(input); break;
-			case 8:mAgi = atoi(input); break;
-			case 9:mMove = atoi(input); break;
-			case 10:
+			case 0:mId = short(atoi(input)); break;
+			case 1:mName = input; break;
+			case 2:mRole = eRole(atoi(input)); break;
+			case 3:mWeapon = eWeapon(atoi(input)); break;
+			case 4:mHp = atoi(input); break;
+			case 5:mStr = atoi(input); break;
+			case 6:mDef = atoi(input); break;
+			case 7:mIntelli = atoi(input); break;
+			case 8:mMnd = atoi(input); break;
+			case 9:mDex = atoi(input); break;
+			case 10:mAgi = atoi(input); break;
+			case 11:mMove = atoi(input); break;
+			case 12:
 				if (strstr(input, "/") == NULL) {
 					break;
 				}
 				else {
-					strcpy(mFilePath, input); break;
+					char* tmp = strstr(input, "\r");
+					if (*tmp != NULL) {
+						*tmp = 0x00;
+						strcpy(mFilePath, input); break;
+					}
 				}
 			}
 
 			n++;
-			if (n == 11) {  //newしないといけないとかそんなことあります？
-				INSTANCE->SetCharaData(Chara(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+			if (n == 13) {
+				INSTANCE->SetCharaData(Chara(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
 				count++;
 				n = 0;
 				break;
@@ -183,8 +193,6 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 		while (FileRead_eof(mGrowthHandle) == 0) {  //ファイルの終端まで
 
 			LoadFile(mGrowthHandle, input);  //データ読み込み	
-			int tmp;
-			//for (int i = 0;   tmp = INSTANCE->GetCharaDataSize(); i++) {
 			switch (nn) {
 			case 0:mGrowthHp = atof(input); break;
 			case 1:mGrowthStr = atof(input); break;
@@ -197,8 +205,7 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 			}
 			nn++;
 			if (nn == 7) {
-				INSTANCE->SetCharaGrowth(count-1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
-				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				INSTANCE->SetCharaGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}
@@ -217,35 +224,43 @@ int Load::LoadChara(int _baseHandle, int _growthHandle, int _type) {
 int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 	int n = 0;
 	int nn = 0;
-
+	static	int count = 0;
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
 
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:mName = input; break;
-			case 1:mRole = eRole(atoi(input)); break;
-			case 2:mHp = atoi(input); break;
-			case 3:mStr = atoi(input); break;
-			case 4:mDef = atoi(input); break;
-			case 5:mIntelli = atoi(input); break;
-			case 6:mMnd = atoi(input); break;
-			case 7:mDex = atoi(input); break;
-			case 8:mAgi = atoi(input); break;
-			case 9:mMove = atoi(input); break;
-			case 10:
+			case 0:mId = short(atoi(input)); break;
+			case 1:mName = input; break;
+			case 2:mRole = eRole(atoi(input)); break;
+			case 3:mWeapon = eWeapon(atoi(input)); break;
+			case 4:mHp = atoi(input); break;
+			case 5:mStr = atoi(input); break;
+			case 6:mDef = atoi(input); break;
+			case 7:mIntelli = atoi(input); break;
+			case 8:mMnd = atoi(input); break;
+			case 9:mDex = atoi(input); break;
+			case 10:mAgi = atoi(input); break;
+			case 11:mMove = atoi(input); break;
+			case 12:
 				if (strstr(input, "/") == NULL) {
 					break;
 				}
 				else {
-					strcpy(mFilePath, input); break;
+					char* tmp = strstr(input, "\r");
+					if (*tmp != NULL) {
+						*tmp = 0x00;
+						strcpy(mFilePath, input); break;
+					}
 				}
 			}
 
 			n++;
-			if (n == 11) {
-				mEnemyData.emplace_back(Enemy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1));
+			if (n == 13) {
+				mEnemyMasterData.emplace_back(new Enemy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
+				INSTANCE->SetEnemyData(Enemy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
+				count++;
 				n = 0;
 				break;
 			}
@@ -255,7 +270,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			LoadFile(mGrowthHandle, input);  //データ読み込み	
 
 			switch (nn) {
-			case 0:mName = input; break;
+			case 0:mGrowthHp = atof(input); break;
 			case 1:mGrowthStr = atof(input); break;
 			case 2:mGrowthDef = atof(input); break;
 			case 3:mGrowthIntelli = atof(input); break;
@@ -265,12 +280,14 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			}
 			nn++;
 			if (nn == 7) {
-				//mEnemyData[mEnemyData.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				mEnemyMasterData.at(count - 1)->SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				INSTANCE->SetEnemyGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}
 		}
 	}
+	count = 0;
 	return 0;
 }
 
@@ -285,39 +302,46 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 	//int Load::LoadWeapon(int _baseHandle, int _growthHandle, vector<Unit>& _unit) {
 	int n = 0, nn = 0;
+	static	int count = 0;
 
 	while (FileRead_eof(mBaseHandle) == 0) {
 		while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
 			LoadFile(mBaseHandle, input);  //データ読み込み
 
 			switch (n) {
-			case 0:mName = input; break;
-			case 1:mRangeMin = atoi(input); break;
-			case 2:mRangeMax = atoi(input); break;
-			case 3:mRole = eRole(atoi(input)); break;
-			case 4:mHp = atoi(input); break;
-			case 5:mStr = atoi(input); break;
-			case 6:mDef = atoi(input); break;
-			case 7:mIntelli = atoi(input); break;
-			case 8:mMnd = atoi(input); break;
-			case 9:mDex = atoi(input); break;
-			case 10:mAgi = atoi(input); break;
-			case 11:mMove = atoi(input); break;
-			case 12:
+			case 0:mId = short(atoi(input)); break;
+			case 1:mName = input; break;
+			case 2:mRangeMin = atoi(input); break;
+			case 3:mRangeMax = atoi(input); break;
+			case 4:mRole = eRole(atoi(input)); break;
+			case 5:mWeapon = eWeapon(atoi(input)); break;
+			case 6:mHp = atoi(input); break;
+			case 7:mStr = atoi(input); break;
+			case 8:mDef = atoi(input); break;
+			case 9:mIntelli = atoi(input); break;
+			case 10:mMnd = atoi(input); break;
+			case 11:mDex = atoi(input); break;
+			case 12:mAgi = atoi(input); break;
+			case 13:mMove = atoi(input); break;
+			case 14:
 				if (strstr(input, "/") == NULL) {
 					break;
 				}
 				else {
-					strcpy(mFilePath, input); break;
+					char* tmp = strstr(input, "\r");
+					if (*tmp != NULL) {
+						*tmp = 0x00;
+						strcpy(mFilePath, input); break;
+					}
 				}
 			}
 
 			n++;
 
-			if (n == 13) {
+			if (n == 15) {
 				//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
-				INSTANCE->SetFairyDate(Fairy(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0, mRangeMin, mRangeMax)); break;
-
+				INSTANCE->SetFairyDate(Fairy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath, mRangeMin, mRangeMax));
+				count++;
 				n = 0;
 				break;
 			}
@@ -336,7 +360,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			}
 			nn++;
 			if (nn == 7) {
-				//_unit[_unit.size() - 1].SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				INSTANCE->SetFairyGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}

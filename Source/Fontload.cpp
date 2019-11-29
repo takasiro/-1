@@ -1,13 +1,27 @@
-#include "DxLib.h"
 #include "Fontcall.h"
-
-void Fontload(){
-
-	Font[0]= CreateFontToHandle("HG丸ｺﾞｼｯｸM-PRO", Fontsize[0], 3, DX_FONTTYPE_ANTIALIASING_EDGE);
-	Font[1] = CreateFontToHandle("メイリオ", Fontsize[1], 3, DX_FONTTYPE_ANTIALIASING_EDGE);
-	/*Font[2] = CreateFontToHandle("HG丸ｺﾞｼｯｸM-PRO", 30, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
-	Font[3] = CreateFontToHandle("メイリオ", 30, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
-	Font[4] = CreateFontToHandle("HG丸ｺﾞｼｯｸM-PRO", 30, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
-	Font[5] = CreateFontToHandle("メイリオ", 30, 3, DX_FONTTYPE_ANTIALIASING_EDGE);*/
-
+#include <iostream>
+using namespace std;
+Fontcall::Fontcall() {
+		Font[0] = CreateFontToHandle("HG丸ｺﾞｼｯｸM-PRO", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[1] = CreateFontToHandle("メイリオ", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[2] = CreateFontToHandle("DragonQuestFC", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[3] = CreateFontToHandle("游明朝 Demibold", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[4] = CreateFontToHandle("Algerian", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+}
+Fontcall::~Fontcall() {
+}
+int Fontcall::Initialize() {
+	return 0;
+}
+int Fontcall::Update() {
+	return 0;
+}
+int Fontcall::Draw() {
+	return 0;
+}
+int Fontcall::Close() {
+	return 0;
+}
+int Fontcall::FontNum(int FontNum) {
+	return Font[FontNum];
 }

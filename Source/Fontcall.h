@@ -1,22 +1,22 @@
-#define  _FONT_H_INCLUDED
-#include "DxLib.h"
+#pragma once
+#include <iostream>
+#include<vector>
+using namespace std;
+#include"BaseObj.h"
 
-//#include "Font.h"
-//int Font[10];
+#define _FONT_H_INCLUDED
 
-//Fontload.cpp
-extern void Fontload();
-//_FONT_H_INCLUDED
+class Fontcall {
+public:
+private:
+	int Font[10];
+public:
+	Fontcall();
+	virtual ~Fontcall();
+	int Initialize();
+	int Update();
 
-#ifndef  _GLOBAL_INSTANCE_
-
-int Font[10];
-int Fontsize[10];
-extern void Fontload();
-
-#else
-
-extern int Font[10];
-extern int Fontsize[10];
-
-#endif //_GLOBAL_INSTANCE_
+	int Draw();
+	int Close();
+	int FontNum(int Num);
+};

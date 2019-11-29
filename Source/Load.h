@@ -24,8 +24,10 @@ private:
 	char input[256];
 
 	//ステータス情報
-	string mName;	  //名前
+	short mId;  //ID
+	string mName;		  //名前
 	eRole mRole;		  //そのキャラの職業(成長値に偏りを出させるため)
+	eWeapon mWeapon;	  //武器の種類
 	int mHp;			  //体力
 	int mStr;			  //力(物理用)
 	int mDef;			  //防御(物理用)
@@ -39,15 +41,15 @@ private:
 	int mRangeMin;  //最小攻撃範囲
 	int mRangeMax;  //最大攻撃範囲
 
-	double mGrowthHp;
-	double mGrowthStr;
-	double mGrowthDef;
-	double mGrowthIntelli;
-	double mGrowthMnd;
-	double mGrowthDex;
-	double mGrowthAgi;
+	float mGrowthHp;
+	float mGrowthStr;
+	float mGrowthDef;
+	float mGrowthIntelli;
+	float mGrowthMnd;
+	float mGrowthDex;
+	float mGrowthAgi;
 
-	vector<Enemy> mEnemyData;  //Enemyのマスターデータ
+	vector<Enemy*> mEnemyMasterData;  //Enemyのマスターデータ
 
 	BaseObj::sPos mInitPlayerPos[8];
 	BaseObj::sPos mInitEnemyPos[8];
@@ -61,9 +63,11 @@ public:
 	int LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosFilePath);  //マップロード関数
 	int LoadData(const char* _baseFilePath, const char* _growthFilePath);  //キャラクターステータスのロード関数 
 
-	int LoadChara(int _baseHandle, int _growthHandle, int _type);
+	int LoadChara(int _baseHandle, int _growthHandle);
 	int LoadEnemy(int _baseHandle,int _growthHandle);
 	int LoadWeapon(int _baseHandle, int _growthHandle);
+
+	vector<Enemy*>& GetEnemyMasterData() { return mEnemyMasterData; }
 
 	int Initialize();	//初期化処理
 	int Update() { return 0; }		//計算処理

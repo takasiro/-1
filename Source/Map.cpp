@@ -3,17 +3,21 @@
 Map::Map() {
 	//mMap
 	//	mConnect
-	mMapNum = 0;
-	mGrHandlesCount = 3;
-	mGrHandles = new int[mGrHandlesCount];
- LoadDivGraph("../Resource/Image/Map/maptip.png",3,3,1,64,64, mGrHandles);
-
+	
+	Initialize();
 }
 
 Map::~Map() {
 	delete[] mGrHandles;
 }
 int Map::Initialize() {
+	mMapNum = 0;
+	mGrHandlesCount = 3;
+	mGrHandles = new int[mGrHandlesCount];
+	LoadDivGraph("../Resource/Image/Map/maptip.png", 3, 3, 1, 64, 64, mGrHandles);
+	mMapHeight = 15;
+	mMapWidth = 20;
+	mMapPos = { 0 };
 	return 0;
 }
 
@@ -26,11 +30,11 @@ int Map::Draw() {
 	/*for (int i = 0; i < mMap.size(); i++) {
 		DrawFormatString(0 + 10 * i, 0, GetColor(255, 255, 255), "%d\n", mMap[i].GetLandType());
 	}*/static int GraphNum=0;
-	for (int i = 0; i < 15; i++) {
-		for (int j = 0; j < 20; j++) {
+	for (int i = 0; i < mMapHeight; i++) {
+		for (int j = 0; j < mMapWidth; j++) {
 		GraphNum=	MassDraw(mMap[i * 20 + j].GetLandType());
 			//DrawBox(j * 64, i * 64, j * 64 + 63, i * 64 + 63, color, true);
-		DrawGraph(j * 64, i * 64, mGrHandles[GraphNum] ,false );
+		DrawGraph((mMapPos.x +j) * MASSSIZE, (mMapPos.y + i) * MASSSIZE, mGrHandles[GraphNum] ,false );
 		//LoadGraphScreen(j * 64, i * 64, "../Resource/Image/Map/map1.png", false);
 		}
 	}

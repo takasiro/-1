@@ -3,11 +3,13 @@
 #include "BaseTask.h"
 #include "ISceneChanger.h"
 #include "UnitMgr.h"
+#include "SoundMgr.h"
+#include "Fontcall.h"
 
 class BaseScene:public BaseTask {
 	
 protected:
-	
+	Fontcall mFontcall;
 	ISceneChanger* mISceneChanger;
 public:
 	BaseScene() { ; }

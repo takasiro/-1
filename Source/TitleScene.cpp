@@ -2,8 +2,26 @@
 #include "Load.h"
 #include"Map.h"
 
-int ChangeScene(int _num) {
-	mISceneChanger->AddScene((BaseScene*)new InGameScene(mISceneChanger));
+ISceneChanger* TitleScene::mStaticISceneChanger;
+
+int TitleScene::ChangeScene(int _buttonNumber) {
+	switch (_buttonNumber) {
+	case 0:
+		//InGameScene移行
+		mStaticISceneChanger->AddScene((BaseScene*)new InGameScene(mStaticISceneChanger));
+		break;
+	case 1:
+		//なんかのSceneに移行
+		//mStaticISceneChanger->AddScene((BaseScene*)new CharacterMenu(mStaticISceneChanger));
+		break;
+	case 2:
+		//ゲーム終了とかそんなん
+		DxLib_End() ; 
+		break;
+	default:
+		//エラー処理とか
+		break;
+	}
 	return 0;
 }
 
@@ -18,15 +36,28 @@ TitleScene::TitleScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	for (int i = 0; i < 3; i++) {  //ボタン画像読み込み
 		button[i].SetGrHandleCount(3);
 		button[i].SetGrHandles(new int[button[i].GetGrHandleCount() ]);
-		button[i].GetGrHandles()[0] = LoadGraph("../Resource/Image/StartButton01.png");
-		button[i].GetGrHandles()[1] = LoadGraph("../Resource/Image/StartButton03.png");
-		button[i].GetGrHandles()[2] = LoadGraph("../Resource/Image/StartButton02.png");
-		button[i].SetPosY(200+i * 200);
+		button[i].GetGrHandles()[0] = LoadGraph("../Resource/Image/Button/StartButton01.png");
+		button[i].GetGrHandles()[1] = LoadGraph("../Resource/Image/Button/StartButton02.png");
+		button[i].GetGrHandles()[2] = LoadGraph("../Resource/Image/Button/StartButton03.png");
+		button[i].SetPosX(475);
+		button[i].SetPosY(550+i * 125);
 		button[i].SetOnClick(&ChangeScene);
 		button[i].SetMyNum(i);
+		button[i].Initialize();
 	}
 
+	//未実装シーンへのボタンは灰色表示にしています
+		//未実装シーンへのボタンは灰色表示にしています
+	button[1].GetGrHandles()[0] = LoadGraph("../Resource/Image/Button/CharaMenuButton02.png");
+	button[1].GetGrHandles()[1] = LoadGraph("../Resource/Image/Button/CharaMenuButton02.png");
+	button[1].GetGrHandles()[2] = LoadGraph("../Resource/Image/Button/CharaMenuButton02.png");
 
+	button[2].GetGrHandles()[0] = LoadGraph("../Resource/Image/Button/QuitButton01.png");
+	button[2].GetGrHandles()[1] = LoadGraph("../Resource/Image/Button/QuitButton02.png");
+	button[2].GetGrHandles()[2] = LoadGraph("../Resource/Image/Button/QuitButton03.png");
+
+
+	mStaticISceneChanger = mISceneChanger;
 
 }
 
@@ -48,6 +79,7 @@ int TitleScene::Initialize() {
 	return 0;
 }
 int TitleScene::Update() {
+	for (int i = 0; i < 3; i++)button[i].Update();
 	return 0;
 }
 int TitleScene::Draw() {

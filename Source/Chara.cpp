@@ -1,5 +1,5 @@
 #include"Chara.h"
-#include"UnitMgr.h"
+#include "Calculator.h"
 Chara::Chara() {
 }
 Chara::Chara(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
@@ -10,6 +10,7 @@ Chara::Chara(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int
 	mGrHandles = new int[mGrHandlesCount];
 	LoadDivGraph("../Resource/Image/Player/Chara00.png", 12, 3, 4, 64, 64, mGrHandles);
 */
+	mHpPercent = (double)mHp / (double)mMaXHp;
 	mState = 0;
 	mGrHandlesCount = 12;
 	mGrHandles = new int[mGrHandlesCount];
@@ -36,6 +37,7 @@ Chara::Chara(int _x, int _y) {
 	mStayFlg = false;
 	mOnActive = true;
 	mColor = GetColor(0, 0, 255);
+	mHpColor = GetColor(0, 255, 0);
 	mGrHandlesCount = 12;
 	mGrHandles = new int[mGrHandlesCount];
 	LoadDivGraph("../Resource/Image/Player/Chara00.png", 12, 3, 4, 64, 64, mGrHandles);
@@ -78,16 +80,25 @@ int Chara::Update(int _num) {
 	mC.x = mPos.x * 64 + 64 / 2;
 	mC.y = mPos.y * 64 + 64 / 2;
 	hoge = (this->*Fanctions[mState])(_num);
+
 	return hoge;
 }
 
 int Chara::Draw() {
+	mHpPercent = (double)mHp / (double)mMaXHp;
+	if (mHpPercent >= 0.7)mHpColor = GetColor(0, 255, 0);
+	else	if (mHpPercent < 0.7&& mHpPercent>0.3)mHpColor = GetColor(255, 255, 0);
+	else if (mHpPercent <= 0.3)mHpColor = GetColor(255, 0, 0);
+
+	if (mHpPercent > 1.0000)mHpPercent = 1.00000;
 	/*if (mStayFlg == false)mColor = GetColor(0, 0, 255);
 	else mColor = GetColor(150, 150, 150);*/
 	//if(mGrHandle == -1)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, mColor, true);
 	 //else LoadGraphScreen(mPos.x, mPos.y,"../Resource/Image/Map/map1.png",false);
 	if (mStayFlg == false) DrawGraph(mPos.x, mPos.y, mGrHandles[7], TRUE);
 	else DrawGraph(mPos.x, mPos.y, mGrHandles2[7], TRUE);
+	DrawBox(mPos.x + 10, mPos.y + 58, mPos.x + 54, mPos.y + 64, GetColor(0, 0, 0), true);
+	DrawBox(mPos.x + 10, mPos.y + 58, (mPos.x + 10) + 44 * mHpPercent, mPos.y + 64, mHpColor, true);
 	return 0;
 }
 int Chara::Close() {
@@ -103,6 +114,8 @@ int Chara::LastStatus() {
 int Chara::Move(Unit::sPos _pos) {
 	mPos.x = _pos.x * MASSSIZE;
 	mPos.y = _pos.y * MASSSIZE;
+	mMapPos.x = _pos.x;
+	mMapPos.y = _pos.y;
 	//ステイフラグは一時的な処理
 	/*if (mStayFlg == false) {
 		mStayFlg = true;
@@ -156,7 +169,12 @@ int Chara::MoveState(int _a) {
 }
 
 int Chara::AttackJudgeState(int _a) {
-	Calculator::CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 1);
+	if (mRole != eCaster) {
+		Calculator::CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 2);
+	}
+	else {
+		Calculator::CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 1);
+	}
 	INSTANCE->SetColor(255, 0, 0);
 	if (RIGHTCLICK != FALSE && INSTANCE->GetMouseButton() != INSTANCE->GetLastMouseButton()) {
 		Move(INSTANCE->GetPrevPos());
@@ -169,19 +187,29 @@ int Chara::AttackJudgeState(int _a) {
 	if (LEFTCLICK != FALSE && INSTANCE->GetMouseButton() != INSTANCE->GetLastMouseButton()) {
 		INSTANCE->SetMousePos(GET_POSITION());
 		INSTANCE->SetMapPos(GET_POSITION());
-		if (Calculator::GetMoveArea(INSTANCE->GetMapPos()) == 1) {
+		if (INSTANCE->GetMapPos().x == mMapPos.x &&
+			INSTANCE->GetMapPos().y == mMapPos.y) {
+			Initialize();
+			mStayFlg = true;
+			mState = -1;
+			return mState;
+		}
+		else if (Calculator::GetMoveArea(INSTANCE->GetMapPos()) == 1) {
 			int tmp = INSTANCE->CulNum(INSTANCE->GetMapPos(), ENEMY, 1);
 
 			if (tmp == -1) {
 				//Initialize();
 				//mState = -1;
 				//return mState;
+
 			}
 			else {
 				mStayFlg = true;
 				mState++;
 			}
 		}
+
+
 	}
 	//	state++;
 

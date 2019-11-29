@@ -5,11 +5,19 @@ using namespace std;
 #include"Fairy.h"
 #include"Constant.h"
 #include"DxLib.h"
+
 class Chara :public Unit {
 private:
 	//—v‰ü‘¢
+	double mHpPercent;
 	unsigned int mColor;//F
+	unsigned int mHpColor;//‘Ì—ÍF
 	int mState;
+	int MoveJudgeState(int _A);
+	int MoveState(int _a);
+	int AttackJudgeState(int _a);
+	int AttackState(int _a);
+	int (Chara::* Fanctions[10])(int _a);
 public:
 	Chara();
 	Chara(short _id,string _name, eRole _role, eWeapon _weapon ,int _hp, int _str, int _def, int _int, int _mnd,
@@ -56,9 +64,4 @@ public:
 		mPos.y += _pos.y;
 	}*/
 
-	int MoveJudgeState(int _A);
-	int MoveState(int _a);
-	int AttackJudgeState(int _a);
-	int AttackState(int _a);
-	int (Chara::* Fanctions[10])(int _a );
 };

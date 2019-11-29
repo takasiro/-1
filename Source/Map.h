@@ -56,4 +56,7 @@ public:
 		mMapPos.x += _pos.x;
 		mMapPos.y += _pos.y;
 	}
+
+	int GetMapWidth() { return mMapWidth; }
+	int GetMapHeight() { return mMapHeight; }
 };

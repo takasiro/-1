@@ -3,20 +3,20 @@
 #include"Mouse.h"
 Button::Button() :BaseObj()
 {
-	mGrHandlesCount = 3;
-	mGrHandles = new int[mGrHandlesCount];
+	//mGrHandlesCount = 3;
+	//mGrHandles = new int[mGrHandlesCount];
 
-	mGrHandles[0] = LoadGraph("../Resource/Image/button1.png");
-	mGrHandles[1] = LoadGraph("../Resource/Image/button2.png");
-	mGrHandles[2] = LoadGraph("../Resource/Image/button3.png");
-	GetGraphSize(mGrHandles[0], &imgw, &imgh);
-	mPos.x = 50;
-	mPos.y = 50;
+	//mGrHandles[0] = LoadGraph("../Resource/Image/button1.png");
+	////mGrHandles[1] = LoadGraph("../Resource/Image/button2.png");
+	//mGrHandles[2] = LoadGraph("../Resource/Image/button3.png");
+	//GetGraphSize(mGrHandles[0], &imgw, &imgh);
+	//mPos.x = 50;
+	//mPos.y = 50;
 }
 
 Button::Button(int _x,int _y) :BaseObj()
 {
-	mGrHandlesCount = 3;
+	/*mGrHandlesCount = 3;
 	mGrHandles = new int[mGrHandlesCount];
 
 	mGrHandles[0] = LoadGraph("../Resource/Image/button1.png");
@@ -25,12 +25,18 @@ Button::Button(int _x,int _y) :BaseObj()
 	GetGraphSize(mGrHandles[0], &imgw, &imgh);
 	mPos.x = _x;
 	mPos.y = _y;
+	*/
 }
 
 Button::~Button()
 {
+	for (int i = 0; i < 3; i++) {
+		DeleteGraph(mGrHandles[i]);
+	}
+	delete[] mGrHandles;
 }
 int Button::Initialize() {
+	GetGraphSize(mGrHandles[0], &imgw, &imgh);
 	return 0;
 }
 

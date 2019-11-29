@@ -2,9 +2,11 @@
 #include <iostream>
 using namespace std;
 Fontcall::Fontcall() {
-		Font[0] = CreateFontToHandle("HG丸ｺﾞｼｯｸM-PRO", 20, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
-		Font[1] = CreateFontToHandle("メイリオ", 20, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
-		Font[2] =  CreateFontToHandle("DragonQuestFC", 20, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[0] = CreateFontToHandle("HG丸ｺﾞｼｯｸM-PRO", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[1] = CreateFontToHandle("メイリオ", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[2] = CreateFontToHandle("DragonQuestFC", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[3] = CreateFontToHandle("游明朝 Demibold", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
+		Font[4] = CreateFontToHandle("Algerian", 15, 1, DX_FONTTYPE_ANTIALIASING_EDGE);
 }
 Fontcall::~Fontcall() {
 }

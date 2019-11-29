@@ -187,8 +187,8 @@ int Chara::AttackJudgeState(int _a) {
 	if (LEFTCLICK != FALSE && INSTANCE->GetMouseButton() != INSTANCE->GetLastMouseButton()) {
 		INSTANCE->SetMousePos(GET_POSITION());
 		INSTANCE->SetMapPos(GET_POSITION());
-		if (INSTANCE->GetMapPosX() == mMapPos.x &&
-			INSTANCE->GetMapPosY() == mMapPos.y) {
+		if (INSTANCE->GetMapPos().x == mMapPos.x &&
+			INSTANCE->GetMapPos().y == mMapPos.y) {
 			Initialize();
 			mStayFlg = true;
 			mState = -1;

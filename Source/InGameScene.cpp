@@ -29,10 +29,10 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 
 	Load load;
 	load.LoadData("../Resource/Status/FairyBaseStatus.csv", "../Resource/Status/FairyGrowthStatus.csv");
-	load.LoadData("../Resource/Status/DebugPlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
+	load.LoadData("../Resource/Status/PlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
 	load.LoadData("../Resource/Status/DebugEnemyBaseStatus.csv", "../Resource/Status/EnemyGrowthStatus.csv");
 	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/PlayerPos01.csv");
-	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/EnemyPos01.csv");
+	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/DebugEnemyPos01.csv");
 	INSTANCE->SetMapData(map);
 	SoundMgr::Instance()->PlayBGM("bgm_maoudamashii_fantasy13");
 	ChangeVolumeSoundMem(255,SoundMgr::Instance()->GetSE("SE01"));
@@ -76,7 +76,7 @@ int InGameScene::Draw() {
 	//DrawBox(0, 0, 1280, 300,GetColor(50,255,50),true);
 
 #ifdef DEBUG
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "InGame");
+	//DrawFormatString(0, 0, GetColor(255, 255, 255), "InGame");
 #endif
 	return 0;
 }

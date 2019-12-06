@@ -10,7 +10,7 @@ using namespace std;
 #include"Unit.h"
 #include"fairy.h"
 #include"Enemy.h"
-
+#include"Effect.h"
 
 
 class Load :public BaseTask {
@@ -66,6 +66,8 @@ public:
 	int LoadChara(int _baseHandle, int _growthHandle);
 	int LoadEnemy(int _baseHandle,int _growthHandle);
 	int LoadWeapon(int _baseHandle, int _growthHandle);
+
+	int LoadEffect(const char* _FilePath, map<string,Effect>& _Effect);
 
 	vector<Enemy*>& GetEnemyMasterData() { return mEnemyMasterData; }
 

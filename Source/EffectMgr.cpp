@@ -20,3 +20,10 @@ int EffectMgr::Draw() {
 int EffectMgr::Close() {
 	return 0;
 }
+
+int EffectMgr::PlayEffect(string _name, int _x, int _y) {
+	mEffect.at(_name).SetPosXY(_x,_y);
+	mEffect.at(_name).SetOnActive(true);
+	mEffect.at(_name).ReSetEffectCounter();
+	return 0;
+}

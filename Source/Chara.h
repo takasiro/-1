@@ -10,9 +10,9 @@ using namespace std;
 class Chara :public Unit {
 private:
 	//—v‰ü‘¢
-	double mHpPercent;
+	
 	unsigned int mColor;//F
-	unsigned int mHpColor;//‘Ì—ÍF
+	
 	int mState;
 	int MoveJudgeState(int _A);
 	int MoveState(int _a);

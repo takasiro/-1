@@ -41,7 +41,6 @@ Chara::Chara(int _x, int _y) {
 	mStayFlg = false;
 	mOnActive = true;
 	mColor = GetColor(0, 0, 255);
-	mHpColor = GetColor(0, 255, 0);
 	mGrHandlesCount = 12;
 	mGrHandles = new int[mGrHandlesCount];
 	LoadDivGraph("../Resource/Image/Player/Chara00.png", 12, 3, 4, 64, 64, mGrHandles);
@@ -89,20 +88,17 @@ int Chara::Update(int _num) {
 }
 
 int Chara::Draw() {
-	mHpPercent = (double)mHp / (double)mMaXHp;
-	if (mHpPercent >= 0.7)mHpColor = GetColor(0, 255, 0);
-	else	if (mHpPercent < 0.7 && mHpPercent>0.3)mHpColor = GetColor(255, 255, 0);
-	else if (mHpPercent <= 0.3)mHpColor = GetColor(255, 0, 0);
-
-	if (mHpPercent > 1.0000)mHpPercent = 1.00000;
+	HpBar();
 	/*if (mStayFlg == false)mColor = GetColor(0, 0, 255);
 	else mColor = GetColor(150, 150, 150);*/
 	//if(mGrHandle == -1)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, mColor, true);
 	 //else LoadGraphScreen(mPos.x, mPos.y,"../Resource/Image/Map/map1.png",false);
-	if (mStayFlg == false) DrawGraph(mPos.x, mPos.y, mGrHandles[2], TRUE);
-	else DrawGraph(mPos.x, mPos.y, mGrHandles2[2], TRUE);
-	DrawBox(mPos.x + 10, mPos.y + 58, mPos.x + 54, mPos.y + 64, GetColor(0, 0, 0), true);
-	DrawBox(mPos.x + 10, mPos.y + 58, (mPos.x + 10) + 44 * mHpPercent, mPos.y + 64, mHpColor, true);
+	if (mOnActive == true) {
+		if (mStayFlg == false) DrawGraph(mPos.x, mPos.y, mGrHandles[2], TRUE);
+		else DrawGraph(mPos.x, mPos.y, mGrHandles2[2], TRUE);
+		DrawBox(mPos.x + 10, mPos.y + 58, mPos.x + 54, mPos.y + 64, GetColor(0, 0, 0), true);
+		DrawBox(mPos.x + 10, mPos.y + 58, (mPos.x + 10) + 44 * mHpPercent, mPos.y + 64, mHpColor, true);
+	}
 	return 0;
 }
 int Chara::Close() {

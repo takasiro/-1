@@ -17,11 +17,12 @@ int Map::Initialize() {
 	LoadDivGraph("../Resource/Image/Map/maptip.png", 3, 3, 1, 64, 64, mGrHandles);
 	mMapHeight = 15;
 	mMapWidth = 20;
-	mMapPos = { 0 };
+	mMapPos = { 16, 16};
 	return 0;
 }
 
 int Map::Update() {
+
 	return 0;
 }
 
@@ -29,15 +30,22 @@ int Map::Update() {
 int Map::Draw() {
 	/*for (int i = 0; i < mMap.size(); i++) {
 		DrawFormatString(0 + 10 * i, 0, GetColor(255, 255, 255), "%d\n", mMap[i].GetLandType());
-	}*/static int GraphNum=0;
+	}*/
+	static int GraphNum=0;
+
+
 	for (int i = 0; i < mMapHeight; i++) {
 		for (int j = 0; j < mMapWidth; j++) {
 		GraphNum=	MassDraw(mMap[i * 20 + j].GetLandType());
 			//DrawBox(j * 64, i * 64, j * 64 + 63, i * 64 + 63, color, true);
-		DrawGraph((mMapPos.x +j) * MASSSIZE, (mMapPos.y + i) * MASSSIZE, mGrHandles[GraphNum] ,false );
+		DrawGraph(mMapPos.x +j * MASSSIZE, mMapPos.y + i * MASSSIZE, mGrHandles[GraphNum] ,false );
 		//LoadGraphScreen(j * 64, i * 64, "../Resource/Image/Map/map1.png", false);
 		}
 	}
+
+	DrawFormatString(0, 200, GetColor(255, 255, 255), "mMapPos.x:%.0f", mMapPos.x);
+	DrawFormatString(0, 220, GetColor(255, 255, 255), "mMapPos.y:%.0f", mMapPos.y);
+
 	return 0;
 }
 

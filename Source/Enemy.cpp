@@ -66,6 +66,8 @@ int Enemy::Draw() {
 		DrawBox(mPos.x + 10, mPos.y + 58, mPos.x + 54, mPos.y + 64, GetColor(0, 0, 0), true);
 		DrawBox(mPos.x + 10, mPos.y + 58, (mPos.x + 10) + 44 * mHpPercent, mPos.y + 64, mHpColor, true);
 	}
+
+
 	//	if (mOnActive == true) DrawGraph(mPos.x, mPos.y, mGrHandles[1], TRUE); //DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, GetColor(255, 0, 0),true);
 	return 0;
 }
@@ -97,12 +99,15 @@ int Enemy::MoveJudgeState(int _a) {
 	for (int i = 0; i < INSTANCE->GetCharaDataSize(); i++) {
 		if (INSTANCE->GetCharaDate(i).GetOnActive() == false)continue;
 		Calculator::Initialize();
-		Calculator::CulRange(mMapPos.x, mMapPos.y, 0, i, &mTargeNum);
+		Calculator::CulRange(mMapPos.x, mMapPos.y, 0, i, &mTargeNum, &mDir);
 
 	}
 	Calculator::Initialize();
-	Calculator::CulRange(mMapPos.x, mMapPos.y, 0, mTargeNum, &mTargeNum);
+	Calculator::CulRange(mMapPos.x, mMapPos.y, 0, mTargeNum, &mTargeNum, &mDir);
 	Calculator::RootCreate(INSTANCE->GetCharaDate(mTargeNum).GetMapPos());
+	{
+		mDir;
+	}
 	/*Calculator::RootCreate(INSTANCE->GetCharaDate(mTargeNum).GetMapPos().x,
 		INSTANCE->GetCharaDate(mTargeNum).GetMapPos().y, this);*/
 		//Calculator::RootCreate(INSTANCE->GetCharaDate(mTargeNum).GetMapPos().x,

@@ -141,7 +141,7 @@ int Calculator::MagicDamageCalculate(Unit _Atk, Unit _def) {
 	return tmp;
 }
 
-int Calculator::CulRange(int _x, int _y, int _range, int _index, int* _arg) {
+int Calculator::CulRange(int _x, int _y, int _range, int _index, int* _arg,vector<Direction>* _dir) {
 	//ƒƒ“ƒo•Ï”‚É‚·‚é‚×‚«
 	static	Unit::sPos pos = { 0 };
 	static	vector<Chara*> test;
@@ -195,12 +195,14 @@ int Calculator::CulRange(int _x, int _y, int _range, int _index, int* _arg) {
 		if (mTmpMap[(_y + vy) * 20 + (_x + vx)] == GOAL) {
 			tmpArray[_index] = _range;
 			mRangeMap[(_y + vy) * 20 + (_x + vx)] = _range ;
+			_dir->emplace_back((i + 2) % 4);
 		}
 		////V‚Ì‚É‹N“®‚·‚éğŒ‚É
 		if ((mCopyMap->at((_y + vy) * 20 + (_x + vx)).GetMoveCost() < 10 || mTmpMap[(_y + vy) * 20 + (_x + vx)] == GOAL) &&
 			(mRangeMap[(_y + vy) * 20 + (_x + vx)] == -1 || mRangeMap[(_y + vy) * 20 + (_x + vx)] > _range)) {
 			mRangeMap[(_y + vy) * 20 + (_x + vx)] = _range;
-			CulRange(_x + vx, _y + vy, _range, _index, _arg);
+			_dir->emplace_back((i + 2) % 4);
+			CulRange(_x + vx, _y + vy, _range, _index, _arg,_dir);
 		}
 	}
 	if (_index == INSTANCE->GetCharaDataSize() - 1 && tmpArray[_index] != 99) {

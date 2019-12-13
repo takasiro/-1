@@ -46,6 +46,14 @@ typedef enum {
 	eFairy
 }eClass;
 
+//•ûŒüŽw’è—p
+typedef enum Direction {
+	eUP,
+	eRIGHT,
+	eDOWN,
+	eLEFT
+}dir;
+
 
 
 

@@ -54,30 +54,17 @@ int  GameMgr::Update() {
 int  GameMgr::Update(int _turn) {
 	//player.update‚Æenemy.update‚Ì–ß‚è’l‚ðŽó‚¯Žæ‚é—\’è
 
-	if (INSTANCE->GetOnActive(eEnemy) != 0) {
-		return 1;
-	}
-	if (mNowTurn == ENEMY_TURN /*&& LEFTCLICK == 0*/) {
 
-
-		/*if (INSTANCE->GetStayFlg(eEnemy) != 0) {
-			mNowTurn *= -1;
-			INSTANCE->InitCharaStayFlg();
-			INSTANCE->InitEnemyStayFlg();
-			return 0;
-		}*/
-
-	}
 	if (_turn != 0) {
 		if (INSTANCE->CheckStay(mNowTurn) == 1) {
-			if (mNowTurn == PLAYER_TURN) {
+		/*	if (mNowTurn == PLAYER_TURN) {
 				mNowTurn *= -1;
 			
-				INSTANCE->InitCharaStayFlg();
+				INSTANCE->InitCharaS	ayFlg();
 			
-			}
-			else {
-				mNowTurn *= -1;
+			}*/
+			{
+				//mNowTurn *= -1;
 			
 				INSTANCE->InitEnemyStayFlg();
 			
@@ -86,6 +73,7 @@ int  GameMgr::Update(int _turn) {
 
 
 	}
+	return 0;
 }
 
 int GameMgr::Draw() {

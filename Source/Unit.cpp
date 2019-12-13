@@ -28,6 +28,7 @@ int Unit::Initialize(short _id, string _name, eRole _role, eWeapon _weapon, int 
 	mMapPos.x = mPos.x / MASSSIZE;
 	mMapPos.y = mPos.y / MASSSIZE;
 	strcpy(mGrFilePath,_filePath);
+	mHpColor = GetColor(0, 255, 0);
 	return 0;
 }
 

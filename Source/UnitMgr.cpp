@@ -207,7 +207,8 @@ int UnitMgr::Update(int _a) {
 int UnitMgr::Draw() {
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 20; j++) {
-			if (Calculator::GetMoveArea(j, i) != -1) {
+			if (Calculator::GetMoveArea(j, i) != -1 && Calculator::GetMoveArea(j, i) != -5 
+				&& Calculator::GetMoveArea(j, i) != -10 && Calculator::GetMoveArea(j, i) != 0) {
 				DrawBox(j * MASSSIZE, i * MASSSIZE, j * MASSSIZE + MASSSIZE - 1, i * MASSSIZE + MASSSIZE - 1, color, true);
 			}
 		}

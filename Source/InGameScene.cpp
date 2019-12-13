@@ -60,15 +60,9 @@ int InGameScene::Update() {
 		mISceneChanger->AddScene((BaseScene*)new InGameScene(mISceneChanger));
 		return 0;
 	}
-	if (MIDDLECLICK !=FALSE) {
+	if (MIDDLECLICK != FALSE) {
 		map = map + mMousePos;
-		x++;
 	}
-	else {
-
-		x = 0;
-	}
-
 	mMousePos = GET_POSITION();
 
 	return 0;

@@ -141,7 +141,7 @@ int Calculator::MagicDamageCalculate(Unit _Atk, Unit _def) {
 	return tmp;
 }
 
-int Calculator::CulRange(int _x, int _y, int _range, int _index, int* _arg,vector<Direction>* _dir) {
+int Calculator::CulRange(int _x, int _y, int _range, int _index, int* _arg) {
 	//ƒƒ“ƒo•Ï”‚É‚·‚é‚×‚«
 	static	Unit::sPos pos = { 0 };
 	static	vector<Chara*> test;
@@ -194,15 +194,14 @@ int Calculator::CulRange(int _x, int _y, int _range, int _index, int* _arg,vecto
 
 		if (mTmpMap[(_y + vy) * 20 + (_x + vx)] == GOAL) {
 			tmpArray[_index] = _range;
-			mRangeMap[(_y + vy) * 20 + (_x + vx)] = _range ;
-			_dir->emplace_back((i + 2) % 4);
+			mRangeMap[(_y + vy) * 20 + (_x + vx)] = _range;
 		}
 		////V‚Ì‚É‹N“®‚·‚éğŒ‚É
 		if ((mCopyMap->at((_y + vy) * 20 + (_x + vx)).GetMoveCost() < 10 || mTmpMap[(_y + vy) * 20 + (_x + vx)] == GOAL) &&
 			(mRangeMap[(_y + vy) * 20 + (_x + vx)] == -1 || mRangeMap[(_y + vy) * 20 + (_x + vx)] > _range)) {
 			mRangeMap[(_y + vy) * 20 + (_x + vx)] = _range;
-			_dir->emplace_back((i + 2) % 4);
-			CulRange(_x + vx, _y + vy, _range, _index, _arg,_dir);
+
+			CulRange(_x + vx, _y + vy, _range, _index, _arg);
 		}
 	}
 	if (_index == INSTANCE->GetCharaDataSize() - 1 && tmpArray[_index] != 99) {
@@ -286,7 +285,7 @@ int Calculator::RootCreate(int _x, int _y) {
 	}
 	return 0;
 }
-int Calculator::RootCreate(BaseObj::sPos _pos) {
+int Calculator::RootCreate(BaseObj::sPos _pos, vector<int>  &_dir) {
 	for (int i = 0; i < 4; i++) {
 		int vx = 0, vy = 0;
 		switch (i) {
@@ -312,15 +311,14 @@ int Calculator::RootCreate(BaseObj::sPos _pos) {
 		if (mRangeMap[(_pos.y + vy) * 20 + (_pos.x + vx)] == 0) {
 			if (mRangeMap[(_pos.y + vy) * 20 + (_pos.x + vx)] == START) {
 				mRootMap[(_pos.y + vy) * 20 + (_pos.x + vx)] = 0;
-				return 0;
 			}
 		}
 		else if (mRangeMap[(_pos.y + vy) * 20 + (_pos.x + vx)] == mRangeMap[(_pos.y) * 20 + (_pos.x)] - 1) {
 			/*routeDirection[routeDirectionCount] = i;
 			routeDirectionCount++;*/
+			_dir.push_back(i);
 			mRootMap[(_pos.y + vy) * 20 + (_pos.x + vx)] = 1;
 			RootCreate(_pos.x + vx, _pos.y + vy);
-			return 0;
 		}
 	}
 	return 0;

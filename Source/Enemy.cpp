@@ -38,6 +38,8 @@ Enemy:: ~Enemy() {
 }
 
 int Enemy::Initialize() {
+	mDir.clear();
+	mDir.shrink_to_fit();
 	return 0;
 }
 
@@ -99,12 +101,12 @@ int Enemy::MoveJudgeState(int _a) {
 	for (int i = 0; i < INSTANCE->GetCharaDataSize(); i++) {
 		if (INSTANCE->GetCharaDate(i).GetOnActive() == false)continue;
 		Calculator::Initialize();
-		Calculator::CulRange(mMapPos.x, mMapPos.y, 0, i, &mTargeNum, &mDir);
+		Calculator::CulRange(mMapPos.x, mMapPos.y, 0, i, &mTargeNum);
 
 	}
 	Calculator::Initialize();
-	Calculator::CulRange(mMapPos.x, mMapPos.y, 0, mTargeNum, &mTargeNum, &mDir);
-	Calculator::RootCreate(INSTANCE->GetCharaDate(mTargeNum).GetMapPos());
+	Calculator::CulRange(mMapPos.x, mMapPos.y, 0, mTargeNum, &mTargeNum);
+	Calculator::RootCreate(INSTANCE->GetCharaDate(mTargeNum).GetMapPos(),mDir);
 	{
 		mDir;
 	}

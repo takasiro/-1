@@ -24,7 +24,7 @@ protected:
 	int mExp;		//現在経験値
 
 	sPos mMapPos;
-	vector<Direction> mDir;
+	vector<int> mDir;
 
 	eRole	 mRole;		//そのキャラの職業(成長値に偏りを出させるため)
 	eWeapon mWeaponType;//武器の種類(Fairyのみで使用)

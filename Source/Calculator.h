@@ -17,7 +17,7 @@ class Calculator {
 
 
 private:
-	
+
 	/*受けっとったマップ情報を格納する変数　*/
 	static vector<Mass>* mCopyMap;
 	/*受けっとったマップ情報に編集を加えるときに使う変数　*/
@@ -114,7 +114,7 @@ int NearCaluculate(Unit 攻撃側ユニット,Unit 防御側ユニット);
 第五引数　要素数を受け取る変数のアドレス
 戻り値：一番近いキャラの要素数
 *************************************************/
-	static int CulRange(int _x, int _y, int _range, int _index, int* _ary,vector<Direction>* _dir);
-	static int RootCreate(BaseObj::sPos);
+	static int CulRange(int _x, int _y, int _range, int _index, int* _ary);
+	static int RootCreate(BaseObj::sPos, vector<int> &_dir);
 	static int RootCreate(int _x, int _y);
 };

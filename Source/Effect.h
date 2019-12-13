@@ -19,5 +19,14 @@ public:
 	void ReSetEffectCounter() { mEffectCounter = -1; }
 	int GetEffectCounter() { return mEffectCounter; }
 	void SetPosXY(int _x, int _y) { mPos.x = _x, mPos.y = _y; }
+
+	int GetAllNum() { return mAllNum; }
+	int GetXNum() { return mXNum; }
+	int GetYNum() { return mYNum; }
+	int GetXSize() { return mXSize; }
+	int GetYSize() { return mYSize; }
+	char* GetFileName() { return mFileName; }
+	void* RenameFileName(const char* _name) { return memcpy(mFileName, _name, 255); }
+
 };
 

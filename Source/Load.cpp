@@ -377,7 +377,8 @@ int Load::LoadEffect(const char* _FilePath, map<string,Effect>& _Effect) {
 	char str[256],Name[256],FileName[256];
 	int AllNum, XNum, YNum, XSize, YSize;
 	while (fgets(str,255,p) != NULL) {
-		if (sscanf(str, "%s,%d,%d,%d,%d,%d,%s", Name, AllNum, XNum, YNum, XSize, YSize, FileName) == 7);
+		if (sscanf(str, "%[^,],%d,%d,%d,%d,%d,%s", Name, &AllNum, &XNum, &YNum, &XSize, &YSize, FileName) == 7);
+		if (Name[0] == '/' && Name[1] == '/')continue;
 		_Effect[Name].SetAll(Name, AllNum, XNum, YNum, XSize, YSize, FileName);
 	}
 	fclose(p);

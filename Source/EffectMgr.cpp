@@ -9,7 +9,22 @@ EffectMgr:: ~EffectMgr() {
 }
 int EffectMgr::Initialize() {
 	Load load;
-	load.LoadEffect("../Resource /Effect/Effect.csv", mEffect);
+	load.LoadEffect("../Resource/Effect/Effect.csv", mEffect);
+
+	for (auto itr = mEffect.begin(); itr != mEffect.end(); itr++) {
+		char buf[256];
+		snprintf(buf, 255, "../Resource/Effect/%s", mEffect[itr->first].GetFileName());
+		mEffect[itr->first].RenameFileName(buf);
+		mEffect[itr->first].SetGrHandleCount(mEffect[itr->first].GetAllNum());
+		mEffect[itr->first].SetGrHandles(new int[mEffect[itr->first].GetGrHandleCount()]);
+		if (!LoadDivGraph(mEffect[itr->first].GetFileName(), mEffect[itr->first].GetAllNum(),
+			mEffect[itr->first].GetXNum(), mEffect[itr->first].GetYNum(), mEffect[itr->first].GetXSize(), mEffect[itr->first].GetYSize(),
+			mEffect[itr->first].GetGrHandles())) {
+			//err
+		}
+
+	}
+
 	return 0;
 }
 int EffectMgr::Update() {

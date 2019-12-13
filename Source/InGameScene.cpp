@@ -37,6 +37,7 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	SoundMgr::Instance()->PlayBGM("bgm_maoudamashii_fantasy13");
 	ChangeVolumeSoundMem(255,SoundMgr::Instance()->GetSE("SE01"));
 	ChangeVolumeSoundMem(255*50/100, SoundMgr::Instance()->GetBGM("bgm_maoudamashii_fantasy13"));
+
 }
 
 InGameScene::~InGameScene() {
@@ -48,7 +49,7 @@ int InGameScene::Initialize() {
 	return 0;
 }
 int InGameScene::Update() {
-	BaseObj::sPos tmpPos =  GET_POSITION();
+	
 	ui.Update();
 	if (gameMgr.Update(gameMgr.Update()) == 1) {
 		mISceneChanger->AddScene((BaseScene*)new ResultScene(mISceneChanger));
@@ -59,12 +60,16 @@ int InGameScene::Update() {
 		mISceneChanger->AddScene((BaseScene*)new InGameScene(mISceneChanger));
 		return 0;
 	}
-	if (MIDDLECLICK !=0) {
-		BaseObj::sPos tmp = GET_POSITION();
-		tmp.x -= tmpPos.x;
-		tmp.y -= tmpPos.y;
-		map + tmp;
+	if (MIDDLECLICK !=FALSE) {
+		map = map + mMousePos;
+		x++;
 	}
+	else {
+
+		x = 0;
+	}
+
+	mMousePos = GET_POSITION();
 
 	return 0;
 }
@@ -76,6 +81,8 @@ int InGameScene::Draw() {
 	//DrawBox(0, 0, 1280, 300,GetColor(50,255,50),true);
 
 #ifdef DEBUG
+	if(x>0)	DrawFormatString(0, 240, GetColor(255, 255, 255), "‚Ý‚Ç‚é‚­‚è‚Á‚­");
+
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "InGame");
 #endif
 	return 0;

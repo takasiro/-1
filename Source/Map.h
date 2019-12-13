@@ -5,6 +5,7 @@ using namespace std;
 #include"BaseTask.h"
 #include"Mass.h"
 #include "BaseObj.h"
+#include"Mouse.h"
 class Map :public BaseTask {
 public:
 	//マス地形の選択用
@@ -52,9 +53,21 @@ public:
 	int GetMapSize() { return mMap.size(); }
 	int MassDraw(int _landType);
 
-	void operator +(BaseObj::sPos _pos) {
-		mMapPos.x += _pos.x;
-		mMapPos.y += _pos.y;
+	BaseObj::sPos operator =(BaseObj::sPos _pos) {
+		BaseObj::sPos returnPos;
+		returnPos = _pos;
+		return returnPos;
+	}
+
+	BaseObj::sPos operator +(BaseObj::sPos _pos) {
+		BaseObj::sPos returnPos;
+		BaseObj::sPos tmpPos = GET_POSITION();
+
+		returnPos = {
+			mMapPos.x += (tmpPos.x - _pos.x),
+			mMapPos.y += (tmpPos.y - _pos.y),
+		};
+		return returnPos;
 	}
 
 	int GetMapWidth() { return mMapWidth; }

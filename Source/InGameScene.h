@@ -12,6 +12,10 @@ private:
 	Map map;
 	GameMgr gameMgr;
 	UI ui;
+	BaseObj::sPos mMousePos;
+
+
+	double x;
 public:
 	InGameScene();
 	InGameScene(ISceneChanger*);
@@ -20,6 +24,8 @@ public:
 	int Update();
 	int Draw();
 	int Close();
+
+
 
 
 };

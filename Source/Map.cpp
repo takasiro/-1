@@ -17,7 +17,7 @@ int Map::Initialize() {
 	LoadDivGraph("../Resource/Image/Map/maptip.png", 3, 3, 1, 64, 64, mGrHandles);
 	mMapHeight = 15;
 	mMapWidth = 20;
-	mMapPos = { 16, 16};
+	mMapPos = {0,0};
 	return 0;
 }
 

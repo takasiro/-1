@@ -4,6 +4,7 @@
 
 Effect::Effect()
 {
+	SetOnActive(false);
 }
 
 
@@ -23,12 +24,16 @@ int Effect::Initialize() {
 int Effect::Update() {
 	if (GetOnActive() != true)return 1;
 	mEffectCounter++;
-	if (mEffectCounter == GetGrHandleCount())SetOnActive(false);
+	if (mEffectCounter / 2 == GetGrHandleCount()) {
+		SetOnActive(false);
+		mEffectCounter = -1;
+	}
 	return 0;
 }
 
 int Effect::Draw() {
-	DrawGraph(GetPosX(), GetPosY(), GetGrHandles()[mEffectCounter],true);
+	int tmpg = GetGrHandles()[mEffectCounter];
+	int tmp = DrawGraph(GetPosX(), GetPosY(), GetGrHandles()[mEffectCounter/2],true);
 	return 0;
 }
 

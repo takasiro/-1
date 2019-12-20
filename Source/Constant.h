@@ -42,8 +42,7 @@ typedef enum {
 //Load.cpp内でのクラス識別用
 typedef enum {
 	eChara,
-	eEnemy,
-	eFairy
+	eEnemy
 }eClass;
 
 //方向指定用

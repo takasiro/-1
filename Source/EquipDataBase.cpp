@@ -19,7 +19,7 @@ int EquipDataBase::Initialize() {
 			 ¨ƒ^ƒ“ƒN‚ª•Ší‚ğ2‚Â‘•”õ‚µ‚Ä‚¢‚½‚çhoge‚É2‚ª‘ã“ü‚³‚ê‚Ü‚·B
 *********************************************************************************************************/
 int EquipDataBase::GetEqCount(eClass _unitType, int _unitId) {
-	int idCount;
+	int idCount = 0;
 	
 	if (_unitType == eChara) {
 		for (int i = 0; i < charaEqData.size(); i++) {

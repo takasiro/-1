@@ -2,11 +2,18 @@
 
 int EquipDataBase::Initialize() {
 	//デバッグ用に仮データを入れています
-	for (int i = 0; i = 8; i++) {
+	/*for (int i = 0; i = 8; i++) {
 		charaEqData.emplace_back(new EquipData(i,i+1,i+2));
 	}
+	*/
 	return 0;
 }
+
+int EquipDataBase::GetDataCount(eClass _unitType){
+	if (_unitType == eChara)return charaEqData.size();
+	if (_unitType == eEnemy)return enemyEqData.size();
+}
+
 
 /********************************************************************************************************
 関数名：int EquipDataBase::GetEqCount(eClass _unitType,int _unitId) 
@@ -18,7 +25,7 @@ int EquipDataBase::Initialize() {
 			 int hoge=GetEqCount(eChara,1);
 			 →タンクが武器を2つ装備していたらhogeに2が代入されます。
 *********************************************************************************************************/
-int EquipDataBase::GetEqCount(eClass _unitType, int _unitId) {
+int EquipDataBase::GetEqCount(eClass _unitType, short _unitId) {
 	int idCount = 0;
 	
 	if (_unitType == eChara) {
@@ -47,7 +54,7 @@ int EquipDataBase::GetEqCount(eClass _unitType, int _unitId) {
 			 int hoge=GetEq(eChara,1,2);
 			 →タンクが武器(ID:99)を装備していたらhogeに99が代入されます。
 *********************************************************************************************/
-int EquipDataBase::GetEq(eClass _unitType, int _unitId, int _eqNum) {
+int EquipDataBase::GetEq(eClass _unitType, short _unitId, short _eqNum) {
 	int tmpNum = 0,eqId = 0;
 
 	if (_unitType == eChara) {
@@ -83,7 +90,7 @@ int EquipDataBase::GetEq(eClass _unitType, int _unitId, int _eqNum) {
 			 int hoge=SetEquipData(eChara,1,99);
 			 →データベース上にタンクが武器ID(99)の武器を装備している情報が追加されます。
 *****************************************************************************************/
-void EquipDataBase::SetEquipData(eClass _unitType, int _unitId, int _equipId) {
+void EquipDataBase::SetEquipData(eClass _unitType, short _unitId, short _equipId) {
 	if(_unitType==eChara)charaEqData.emplace_back(new EquipData(charaEqData.size() + 1, _unitId, _equipId));
 	else if(_unitType==eEnemy)enemyEqData.emplace_back(new EquipData(enemyEqData.size() + 1, _unitId, _equipId));
 }
@@ -99,7 +106,7 @@ void EquipDataBase::SetEquipData(eClass _unitType, int _unitId, int _equipId) {
 			 int hoge=GetEqCount(eChara,1);
 			 →データベース上からタンクが武器(ID:99)装備している情報が消去されます。
 ************************************************************************************/
-void EquipDataBase::DeleteEq(eClass _unitType, int _unitId, int _eqId) {
+void EquipDataBase::DeleteEq(eClass _unitType, short _unitId, short _eqId) {
 	int dataId = 0;
 	
 	if (_unitType == eChara) {

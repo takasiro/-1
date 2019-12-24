@@ -49,7 +49,10 @@ private:
 	float mGrowthDex;
 	float mGrowthAgi;
 
-	vector<Enemy*> mEnemyMasterData;  //Enemyのマスターデータ
+	BaseObj::sPos mPos;
+	int mLevel;
+
+	vector<Enemy> mEnemyMasterData;  //Enemyのマスターデータ
 
 	BaseObj::sPos mInitPlayerPos[8];
 	BaseObj::sPos mInitEnemyPos[8];
@@ -67,9 +70,11 @@ public:
 	int LoadEnemy(int _baseHandle,int _growthHandle);
 	int LoadWeapon(int _baseHandle, int _growthHandle);
 
+	int LoadEnemyData(const char* _filePath);
+
 	int LoadEffect(const char* _FilePath, map<string,Effect>& _Effect);
 
-	vector<Enemy*>& GetEnemyMasterData() { return mEnemyMasterData; }
+	//vector<Enemy*>& GetEnemyMasterData() { return mEnemyMasterData; }
 
 	int Initialize();	//初期化処理
 	int Update() { return 0; }		//計算処理

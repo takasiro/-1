@@ -24,7 +24,10 @@ typedef enum {
 	eTank,
 	eCaster,
 	eRanger,
-	eFighter
+	eFighter,
+	eUnique01,
+	eUnique02,
+	eUnique03
 }eRole;
 //eRole role;
 

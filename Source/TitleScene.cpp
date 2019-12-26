@@ -40,7 +40,7 @@ TitleScene::TitleScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 		button[i].GetGrHandles()[1] = LoadGraph("../Resource/Image/Button/StartButton02.png");
 		button[i].GetGrHandles()[2] = LoadGraph("../Resource/Image/Button/StartButton03.png");
 		button[i].SetPosX(475);
-		button[i].SetPosY(550+i * 125);
+		button[i].SetPosY(625+i * 100);
 		button[i].SetOnClick(&ChangeScene);
 		button[i].SetMyNum(i);
 		button[i].Initialize();

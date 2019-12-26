@@ -20,7 +20,9 @@ int Load::Initialize() {
 	mGrowthIntelli = 0;
 	mGrowthMnd = 0;
 	mGrowthDex = 0;
-	mGrowthAgi = 0;
+	
+	mPos = { 0,0 };
+	mLevel = 0;
 
 	return 0;
 }
@@ -76,17 +78,16 @@ int Load::LoadData(const char* _filePath, vector<Mass>& _mass, const char* _PosF
 		LoadFile(posHandle, input);  //データ読み込み	
 
 		switch (n) {
-		case 0: strstr(_PosFilePath, "Player") != NULL ? mInitPlayerPos[nn].x = atoi(input) : mInitEnemyPos[nn].x = atoi(input); break;
-		case 1: strstr(_PosFilePath, "Player") != NULL ? mInitPlayerPos[nn].y = atoi(input) : mInitEnemyPos[nn].y = atoi(input); break;
+		case 0: mInitPlayerPos[nn].x = atoi(input); break;
+		case 1: mInitPlayerPos[nn].y = atoi(input); break;
 		}
 		n++;
 		if (n == 2) {
 			n = 0;
 			int tmp = INSTANCE->GetEnemyDataSize();
-			if (strstr(_PosFilePath, "Player") != NULL && nn == INSTANCE->GetCharaDataSize() ||
-				strstr(_PosFilePath, "Enemy") != NULL && nn == INSTANCE->GetEnemyDataSize())break;
+			if (strstr(_PosFilePath, "Player") != NULL && nn == INSTANCE->GetCharaDataSize())break;
 			if (strstr(_PosFilePath, "Player") != NULL)	INSTANCE->SetCharaPos(nn, mInitPlayerPos[nn]);
-			else INSTANCE->SetEnemyPos(nn, mInitEnemyPos[nn]);
+			//else INSTANCE->SetEnemyPos(nn, mInitEnemyPos[nn]);
 			nn++;
 
 
@@ -258,8 +259,8 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 
 			n++;
 			if (n == 13) {
-				mEnemyMasterData.emplace_back(new Enemy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
-				INSTANCE->SetEnemyData(Enemy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
+				mEnemyMasterData.emplace_back(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath);
+				//INSTANCE->SetEnemyData(Enemy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath));
 				count++;
 				n = 0;
 				break;
@@ -280,8 +281,8 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 			}
 			nn++;
 			if (nn == 7) {
-				mEnemyMasterData.at(count - 1)->SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
-				INSTANCE->SetEnemyGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				mEnemyMasterData.at(count - 1).SetGrowth(mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
+				//INSTANCE->SetEnemyGrowth(count - 1, mGrowthHp, mGrowthStr, mGrowthDef, mGrowthIntelli, mGrowthMnd, mGrowthDex, mGrowthAgi);
 				nn = 0;
 				break;
 			}
@@ -335,9 +336,7 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 					}
 				}
 			}
-
 			n++;
-
 			if (n == 15) {
 				//	INSTANCE->SetFairyDate(Unit(mName, mRole, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 0)); break;
 				INSTANCE->SetFairyDate(Fairy(mId, mName, mRole, mWeapon, mHp, mStr, mDef, mIntelli, mMnd, mDex, mAgi, mMove, 0, 1, mFilePath, mRangeMin, mRangeMax));
@@ -366,6 +365,36 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			}
 		}
 	}
+	return 0;
+}
+
+int Load::LoadEnemyData(const char* _FilePath) {
+	//読み込み
+	int n = 0;
+
+	mBaseHandle = FileRead_open(_FilePath);
+
+	while (FileRead_eof(mBaseHandle) == 0) {  //ファイルの終端まで
+		LoadFile(mBaseHandle, input);  //データ読み込み
+
+		switch (n) {
+		case 0:mPos.x = double(atof(input)); break;
+		case 1:mPos.y= double(atof(input)); break;
+		case 2:mRole = eRole(atoi(input)); break;
+		case 3:mLevel = atoi(input); break;
+
+		}
+		n++;
+		if (n == 4) {
+			INSTANCE->SetEnemyData(mEnemyMasterData[mRole]);
+			INSTANCE->GetEnemyDate(INSTANCE->GetEnemyDataSize() - 1).SetLv(mLevel);  //レベル設定
+			INSTANCE->GetEnemyDate(INSTANCE->GetEnemyDataSize() - 1).AdjustStatus();  //レベルシンク
+			INSTANCE->GetEnemyDate(INSTANCE->GetEnemyDataSize() - 1).SetPos(mPos);  //初期座標設定
+			n = 0;
+			
+		}
+	}
+
 	return 0;
 }
 

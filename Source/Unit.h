@@ -138,6 +138,8 @@ public:
 		mMapPos.y = _y;
 	}
 
+	virtual void SetLv(int _lv) { mLv = _lv; }
+
 	virtual void AdjustStatus() {
 		mHp = mBaseHp + mGrowthHp * mLv;
 		mMaXHp = mBaseMaXHp + mGrowthHp * mLv;

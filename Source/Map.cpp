@@ -3,7 +3,7 @@
 Map::Map() {
 	//mMap
 	//	mConnect
-	
+
 	Initialize();
 }
 
@@ -17,7 +17,7 @@ int Map::Initialize() {
 	LoadDivGraph("../Resource/Image/Map/maptip.png", 3, 3, 1, 64, 64, mGrHandles);
 	mMapHeight = 15;
 	mMapWidth = 20;
-	mMapPos = { 16, 16};
+	mMapPos = { 16, 16 };
 	return 0;
 }
 
@@ -31,15 +31,20 @@ int Map::Draw() {
 	/*for (int i = 0; i < mMap.size(); i++) {
 		DrawFormatString(0 + 10 * i, 0, GetColor(255, 255, 255), "%d\n", mMap[i].GetLandType());
 	}*/
-	static int GraphNum=0;
+	static int GraphNum = 0;
 
 
 	for (int i = 0; i < mMapHeight; i++) {
 		for (int j = 0; j < mMapWidth; j++) {
-		GraphNum=	MassDraw(mMap[i * 20 + j].GetLandType());
+			GraphNum = MassDraw(mMap[i * 20 + j].GetLandType());
 			//DrawBox(j * 64, i * 64, j * 64 + 63, i * 64 + 63, color, true);
-		DrawGraph(mMapPos.x +j * MASSSIZE, mMapPos.y + i * MASSSIZE, mGrHandles[GraphNum] ,false );
-		//LoadGraphScreen(j * 64, i * 64, "../Resource/Image/Map/map1.png", false);
+			if (mPos.y > 0)mPos.y = 0;
+			if (mPos.x > 0)mPos.x = 0;
+		//	if (mPos.y + MASSSIZE * mMapHeight < WINDOW_HEIGHT)mPos.y = WINDOW_HEIGHT;
+			if (mPos.x + MASSSIZE * mMapWidth < WINDOW_WIDTH)mPos.x = WINDOW_WIDTH;
+			DrawGraph(mPos.x + j * MASSSIZE, mPos.y + i * MASSSIZE, mGrHandles[GraphNum], false);
+			//LoadGraphScreen(j * 64, i * 64, "../Resource/Image/Map/map1.png", false);
+
 		}
 	}
 
@@ -66,7 +71,7 @@ int Map::MassDraw(int _landType) {
 	else	 if (_landType == eDemonKingFloor)color = GetColor(102, 0, 102);
 	else	 if (_landType == eDemonKingPillars)color = GetColor(117, 113, 113);
 	else	 if (_landType == eDemonKingCarpet)color = GetColor(165, 0, 33);
-	
+
 }
 
 int Map::Close() {

@@ -3,9 +3,14 @@
 Unit::Unit() {
 	Initialize();
 }
+Unit::Unit(int _lv){
+	mLv = _lv;
+	AdjustStatus();
+
+}
 Unit::Unit(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath) {
-	Initialize(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv,  _filePath);
+	Initialize(_id, _name, _role, _weapon, _hp, _str, _def, _int, _mnd, _dex, _agi, _move, _exp, _lv, _filePath);
 }
 int Unit::Initialize(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
 	int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath) {
@@ -27,8 +32,12 @@ int Unit::Initialize(short _id, string _name, eRole _role, eWeapon _weapon, int 
 	mStayFlg = false;
 	mMapPos.x = mPos.x / MASSSIZE;
 	mMapPos.y = mPos.y / MASSSIZE;
-	strcpy(mGrFilePath,_filePath);
+	strcpy(mGrFilePath, _filePath);
 	mHpColor = GetColor(0, 255, 0);
+	mDirCount = eDOWN;
+	mAnimCount = 0;
+	mAnimNum = 0;
+	mDir = eDOWN;
 	return 0;
 }
 
@@ -57,7 +66,9 @@ int Unit::Update() {
 int Unit::Draw() {
 	return 0;
 }
-
+int Unit::Move(int _dir) {
+	return 0;
+}
 int Unit::Close() {
 	return 0;
 }

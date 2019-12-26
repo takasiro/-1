@@ -16,7 +16,8 @@ private:
 	int AttackJudgeState(int _a);
 	int AttackState(int _a);
 	int (Enemy::* Fanctions[10])(int _a);
-	int mRangeArray[50] = {0};
+	int mMoveDir;
+
 public:
 	Enemy();
 	Enemy(int _x, int _y);
@@ -32,6 +33,7 @@ public:
 	int Draw();		//描画処理
 	int Close();	//終了処理
 	int Move(Unit::sPos _pos);//移動処理
+	int Move(int _dir);//移動処理
 	int StatusUp(int lv);//レベルアップの能力変化
 
 

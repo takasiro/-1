@@ -24,7 +24,11 @@ protected:
 	int mExp;		//現在経験値
 
 	sPos mMapPos;
-	vector<int> mDir;
+	vector<int> mDirArray;
+	int mDir;
+	int mDirCount;
+	int mAnimCount;//アニメーションの秒数
+	int mAnimNum;//アニメーションの番号
 
 	eRole	 mRole;		//そのキャラの職業(成長値に偏りを出させるため)
 	eWeapon mWeaponType;//武器の種類(Fairyのみで使用)
@@ -64,7 +68,21 @@ public:
 	Unit();
 	Unit(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int _str, int _def, int _int, int _mnd,
 		int _dex, int _agi, int _move, int _exp, int _lv, char* _filePath);
+	Unit(int _Lv);
 	virtual ~Unit();
+
+	virtual void  AddPos(sPos _pos) {
+
+		/*if (_pos.y > 0)	mPos.y += MASSSIZE / 3;
+		if (_pos.y < 0)mPos.y -= MASSSIZE / 3;
+		if (_pos.x > 0)mPos.x += MASSSIZE / 3;
+		if (_pos.x < 0)mPos.x -= MASSSIZE / 3;*/
+
+		/*if (mPos.x / MASSSIZE < 0)mMapPos.x = 0;
+		else if (mPos.x / MASSSIZE > )
+			mMapPos.y = mPos.y / MASSSIZE;*/
+	}
+
 
 	Unit* GetUnit() { return this; }
 	int Initialize();//初期化処理
@@ -75,6 +93,7 @@ public:
 	int Draw();		//描画処理
 	int Close();	//終了処理
 	virtual int Move(int, int);
+	virtual int Move(int);
 	virtual int StatusUp(int lv);//レベルアップの能力変化
 	int LastStatus();//武器補正含めた最終ステータス
 	//行動したか受け取る ture:行動済み false:行動前
@@ -149,10 +168,7 @@ public:
 		mAgi = mBaseAgi + mGrowthAgi * mLv;
 	}
 
-	void operator + (sPos _pos) {
-		mPos.x += _pos.x;
-		mPos.y += _pos.y;
-	}
+
 	//ダメージを与える関数
 	virtual int Damage(int _damage) {
 		SoundMgr::Instance()->PlaySE("SE01");
@@ -178,5 +194,7 @@ public:
 		else if (mHpPercent <= 0.3)mHpColor = GetColor(255, 0, 0);
 
 		if (mHpPercent > 1.0000)mHpPercent = 1.00000;
+		DrawBox(mPos.x + 10, mPos.y + 58, mPos.x + 54, mPos.y + 64, GetColor(0, 0, 0), true);
+		DrawBox(mPos.x + 10, mPos.y + 58, (mPos.x + 10) + 44 * mHpPercent, mPos.y + 64, mHpColor, true);
 	}
 };

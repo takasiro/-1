@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseTask.h"
 #include "DxLib.h"
+
 class BaseObj : public BaseTask
 {
 public:
@@ -77,22 +78,51 @@ public:
 	/*
 	//値の設定（未使用
 	void SetPosX(double x) { mPos.x = x; }
-	void SetPosY(double y) { mPos.y = y; }
+	void SetPosY(double y) { mPos.y = y; }*/
 	void SetPos(sPos pos) { mPos = pos; }
-	void SetVX(double vx) { mV.x = vx; }
-	void SetVY(double vy) { mV.y = vy; }
-	void SetV(sPos v) { v = mV; }
-	void SetCX(double cx) { mC.x = cx; }
-	void SetCY(double cy) { mC.y = cy; }
-	void SetC(sPos c) { mC = c; }
-	void SetWidth(double width) { mWidth = width; }
-	void SetHight(double hight) { mHeight = hight; }
-	void SetAngle(double angle) { mAngle = angle; }
-	void SetSpeed(double speed) { mSpeed = speed; }
-	void SetR(double r) { mR = r; }*/
+	/*	void SetVX(double vx) { mV.x = vx; }
+		void SetVY(double vy) { mV.y = vy; }
+		void SetV(sPos v) { v = mV; }
+		void SetCX(double cx) { mC.x = cx; }
+		void SetCY(double cy) { mC.y = cy; }
+		void SetC(sPos c) { mC = c; }
+		void SetWidth(double width) { mWidth = width; }
+		void SetHight(double hight) { mHeight = hight; }
+		void SetAngle(double angle) { mAngle = angle; }
+		void SetSpeed(double speed) { mSpeed = speed; }
+		void SetR(double r) { mR = r; }*/
 	void SetOnActive(int onactive) { mOnActive = onactive; }
 	void SetGrHandle(int grhandle) { mGrHandle = grhandle; }
 	void SetGrHandles(int* grhandles) { mGrHandles = grhandles; }
 	void SetGrHandleCount(int grhandlescount) { mGrHandlesCount = grhandlescount; }
 
+	virtual void  AddPos(sPos _pos) {
+
+		/*if (_pos.y > 0)	mPos.y += MASSSIZE / 3;
+		else	if (_pos.y < 0)mPos.y -= MASSSIZE / 3;
+		else if (_pos.x > 0)mPos.x += MASSSIZE / 3;
+		else if (_pos.x < 0)mPos.x -= MASSSIZE / 3;*/
+	}
+
+	friend	sPos   operator + (sPos _pos1, sPos _pos2) {
+		sPos tmp;
+		tmp.x = _pos1.x + _pos2.x;
+		tmp.y = _pos1.y + _pos2.y;
+		return tmp;
+	}
+
+	friend	sPos   operator - (sPos _pos1, sPos _pos2) {
+		sPos tmp;
+		tmp.x = _pos1.x - _pos2.x;
+		tmp.y = _pos1.y - _pos2.y;
+		return tmp;
+	}
+
+	/*friend	sPos   operator + (sPos _pos) {
+		sPos tmp;
+		sPos mousePos = GET_POSITION();
+		tmp.x = (int)mousePos.x - _pos.x;
+		tmp.y = (int)mousePos.y - _pos.y;
+		return tmp;
+	}*/
 };

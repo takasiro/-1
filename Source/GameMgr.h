@@ -6,11 +6,12 @@
 
 class GameMgr: public BaseTask{
 private:
-
-	int mNowTurn;
+	BaseObj::sPos mMousePos;
+	int mNowTurn;//åªç›ÇÃÉ^Å[Éì
 	int mTurnCount;
 	int mStayCount;
 	int mUnitNum;
+	int mActiveNum;
 public:
 	GameMgr();
 	virtual ~GameMgr();

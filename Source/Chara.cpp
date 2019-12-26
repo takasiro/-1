@@ -19,7 +19,7 @@ Chara::Chara(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int
 	int len = strlen(mGrFilePath) - 4;
 	char tmpWord[256];
 	memset(tmpWord, 0x00, sizeof(tmpWord));
-   strncpy(tmpWord,mGrFilePath,len);
+	strncpy(tmpWord, mGrFilePath, len);
 	strcat(tmpWord, "Acted.png");
 	LoadDivGraph(tmpWord, 12, 3, 4, 64, 64, mGrHandles2);
 	//mEquipNum = 0;
@@ -55,7 +55,7 @@ Chara::Chara(int _x, int _y) {
 //}
 
 int Chara::Initialize() {
-	Calculator::Initialize();
+	Calculator::Instance()->Initialize();
 	mState = 0;
 	INSTANCE->SetMouseButton(0);
 	INSTANCE->SetLastMouseButton(0);
@@ -83,21 +83,23 @@ int Chara::Update(int _num) {
 	mC.x = mPos.x * 64 + 64 / 2;
 	mC.y = mPos.y * 64 + 64 / 2;
 	hoge = (this->*Fanctions[mState])(_num);
-
+	mMapPos.x = mPos.x / MASSSIZE;
+	mMapPos.y = mPos.y / MASSSIZE;
 	return hoge;
 }
 
 int Chara::Draw() {
-	HpBar();
+
 	/*if (mStayFlg == false)mColor = GetColor(0, 0, 255);
 	else mColor = GetColor(150, 150, 150);*/
 	//if(mGrHandle == -1)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, mColor, true);
 	 //else LoadGraphScreen(mPos.x, mPos.y,"../Resource/Image/Map/map1.png",false);
+
 	if (mOnActive == true) {
-		if (mStayFlg == false) DrawGraph(mPos.x, mPos.y, mGrHandles[2], TRUE);
-		else DrawGraph(mPos.x, mPos.y, mGrHandles2[2], TRUE);
-		DrawBox(mPos.x + 10, mPos.y + 58, mPos.x + 54, mPos.y + 64, GetColor(0, 0, 0), true);
-		DrawBox(mPos.x + 10, mPos.y + 58, (mPos.x + 10) + 44 * mHpPercent, mPos.y + 64, mHpColor, true);
+
+		if (mStayFlg == false) DrawGraph(mPos.x, mPos.y, mGrHandles[mDirCount], TRUE);
+		else DrawGraph(mPos.x, mPos.y, mGrHandles2[mDirCount], TRUE);
+		HpBar();
 	}
 	return 0;
 }
@@ -116,15 +118,7 @@ int Chara::Move(Unit::sPos _pos) {
 	mPos.y = _pos.y * MASSSIZE;
 	mMapPos.x = _pos.x;
 	mMapPos.y = _pos.y;
-	//ステイフラグは一時的な処理
-	/*if (mStayFlg == false) {
-		mStayFlg = true;
-		mColor = GetColor(150, 150, 150);
-	}
-	else {
-		mStayFlg = false;
-		mColor = GetColor(0, 0, 255);
-	}*/
+
 	return 0;
 }
 
@@ -132,10 +126,11 @@ int Chara::MoveJudgeState(int _a) {
 	if (_a == -1)return _a;
 	if (mState < -1)return mState = -1;
 	//Initialize();
-	Calculator::CulMoveRange(INSTANCE->SetPrevPosX(mPos.x / MASSSIZE), INSTANCE->SetPrevPosY(mPos.y / MASSSIZE), mMove);
-	Calculator::MoveJudg(INSTANCE->GetCharaDate(), INSTANCE->GetEnemyDate(), _a);
+	Calculator::Instance()->SetColor(0, 0, 255);
+	Calculator::Instance()->CulMoveRange(INSTANCE->SetPrevPosX(mPos.x / MASSSIZE), INSTANCE->SetPrevPosY(mPos.y / MASSSIZE), mMove);
+	Calculator::Instance()->MoveJudg(INSTANCE->GetCharaDate(), INSTANCE->GetEnemyDate(), _a);
 	INSTANCE->SetColor(0, 0, 255);
-	mState += 1;
+	mState++;
 	return _a;
 }
 
@@ -157,10 +152,10 @@ int Chara::MoveState(int _a) {
 		//INSTANCE->SetMapPos(INSTANCE->GetMousePos());
 
 		//Unit::sPos tmp = INSTANCE->GetMapPos();
-		if (Calculator::GetMoveArea(INSTANCE->GetMapPos()) == 1) {
+		if (Calculator::Instance()->GetMoveArea(INSTANCE->GetMapPos()) == 1) {
 			Move(INSTANCE->GetMapPos());
 			Update();
-			Calculator::Initialize();
+			Calculator::Instance()->Initialize();
 			mState++;
 			return _a;
 		}
@@ -169,11 +164,12 @@ int Chara::MoveState(int _a) {
 }
 
 int Chara::AttackJudgeState(int _a) {
+	Calculator::Instance()->SetColor(255, 0, 0);
 	if (mRole != eCaster) {
-		Calculator::CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 2);
+		Calculator::Instance()->CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 2);
 	}
 	else {
-		Calculator::CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 1);
+		Calculator::Instance()->CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 1);
 	}
 	INSTANCE->SetColor(255, 0, 0);
 	if (RIGHTCLICK != FALSE && INSTANCE->GetMouseButton() != INSTANCE->GetLastMouseButton()) {
@@ -194,7 +190,7 @@ int Chara::AttackJudgeState(int _a) {
 			mState = -1;
 			return mState;
 		}
-		else if (Calculator::GetMoveArea(INSTANCE->GetMapPos()) == 1) {
+		else if (Calculator::Instance()->GetMoveArea(INSTANCE->GetMapPos()) == 1) {
 			int tmp = INSTANCE->CulNum(INSTANCE->GetMapPos(), ENEMY, 1);
 
 			if (tmp == -1) {
@@ -222,11 +218,20 @@ int Chara::AttackState(int _a) {
 	int damage = 0;
 	Enemy& tmpEnemy = INSTANCE->GetEnemyDate(tmp);
 	//Calculator::HitCalculate(*CharaDate[_a],*EnemyDate[tmp]);
-	if (mRole == eCaster)damage = Calculator::MagicDamageCalculate(*this, tmpEnemy);
-	else damage = Calculator::PhysicalDamageCalculate(*this, tmpEnemy);
+	if (mRole == eCaster)damage = Calculator::Instance()->MagicDamageCalculate(*this, tmpEnemy);
+	else damage = Calculator::Instance()->PhysicalDamageCalculate(*this, tmpEnemy);
 
 	tmpEnemy.Damage(damage);
 	if (tmpEnemy.GetOnActive() == false)tmpEnemy.SetStayFlg(true);
+	else {
+		if (tmpEnemy.GetRole() == eCaster)damage = Calculator::Instance()->MagicDamageCalculate(tmpEnemy, *this);
+		else damage = Calculator::Instance()->PhysicalDamageCalculate(tmpEnemy, *this);
+		Damage(damage);
+		Initialize();
+		mStayFlg = true;
+		mState = -1;
+		return mState;
+	}
 	//EnemyDate[tmp]->SetOnActive(false);
 	Initialize();
 	mStayFlg = true;

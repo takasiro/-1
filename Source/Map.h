@@ -2,11 +2,11 @@
 #include<iostream>
 using namespace std;
 #include<vector>
-#include"BaseTask.h"
+#include"BaseObj.h"
 #include"Mass.h"
 #include "BaseObj.h"
 #include"Mouse.h"
-class Map :public BaseTask {
+class Map :public BaseObj {
 public:
 	//マス地形の選択用
 	typedef enum eTerrain {
@@ -53,13 +53,13 @@ public:
 	int GetMapSize() { return mMap.size(); }
 	int MassDraw(int _landType);
 
-	BaseObj::sPos operator =(BaseObj::sPos _pos) {
+	/*BaseObj::sPos operator =(BaseObj::sPos _pos) {
 		BaseObj::sPos returnPos;
 		returnPos = _pos;
 		return returnPos;
-	}
+	}*/
 
-	BaseObj::sPos operator +(BaseObj::sPos _pos) {
+	/*BaseObj::sPos operator +(BaseObj::sPos _pos) {
 		BaseObj::sPos returnPos;
 		BaseObj::sPos tmpPos = GET_POSITION();
 
@@ -68,7 +68,7 @@ public:
 			mMapPos.y += (tmpPos.y - _pos.y),
 		};
 		return returnPos;
-	}
+	}*/
 
 	int GetMapWidth() { return mMapWidth; }
 	int GetMapHeight() { return mMapHeight; }

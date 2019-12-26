@@ -30,9 +30,9 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	Load load;
 	load.LoadData("../Resource/Status/FairyBaseStatus.csv", "../Resource/Status/FairyGrowthStatus.csv");
 	load.LoadData("../Resource/Status/DebugPlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
-	load.LoadData("../Resource/Status/DebugEnemyBaseStatus.csv", "../Resource/Status/EnemyGrowthStatus.csv");
+	load.LoadData("../Resource/Status/EnemyBaseStatus.csv", "../Resource/Status/EnemyGrowthStatus.csv");
+	load.LoadEnemyData("../Resource/Map/EnemyData1.csv");
 	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/PlayerPos1.csv");
-	load.LoadData("../Resource/Map/map1.csv", map.GetMap(), "../Resource/Map/EnemyPos1.csv");
 	INSTANCE->SetMapData(map);
 	SoundMgr::Instance()->PlayBGM("bgm_maoudamashii_fantasy13");
 	ChangeVolumeSoundMem(255,SoundMgr::Instance()->GetSE("SE01"));
@@ -61,7 +61,7 @@ int InGameScene::Update() {
 		return 0;
 	}
 	if (MIDDLECLICK != FALSE) {
-		map = map + mMousePos;
+	//	map = map + mMousePos;
 	}
 	mMousePos = GET_POSITION();
 
@@ -70,14 +70,14 @@ int InGameScene::Update() {
 int InGameScene::Draw() {
 	map.Draw();
 	gameMgr.Draw();
-	//ui.Draw();
+	ui.Draw();
 	//Œã‚ÅUI‚ÉˆÚA
 	//DrawBox(0, 0, 1280, 300,GetColor(50,255,50),true);
 
 #ifdef DEBUG
-	if(x>0)	DrawFormatString(0, 240, GetColor(255, 255, 255), "‚Ý‚Ç‚é‚­‚è‚Á‚­");
+	//if(x>0)	DrawFormatString(0, 240, GetColor(255, 255, 255), "‚Ý‚Ç‚é‚­‚è‚Á‚­");
 
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "InGame");
+	//DrawFormatString(0, 0, GetColor(255, 255, 255), "InGame");
 #endif
 	return 0;
 }

@@ -28,7 +28,7 @@ Enemy::Enemy(short _id, string _name, eRole _role, eWeapon _weapon, int _hp, int
 	Fanctions[1] = &Enemy::MoveState;
 	Fanctions[2] = &Enemy::AttackJudgeState;
 	Fanctions[3] = &Enemy::AttackState;
-	mState = 0;
+	mState = 2;
 	mTargeNum = 0;
 	mDir = 2;
 	mMoveDir = -1;
@@ -69,7 +69,7 @@ int Enemy::Draw() {
 	//if(mGrHandle == -1)DrawBox(mPos.x, mPos.y, mPos.x + MASSSIZE, mPos.y + MASSSIZE, mColor, true);
 	 //else LoadGraphScreen(mPos.x, mPos.y,"../Resource/Image/Map/map1.png",false);
 	if (mOnActive == true) {
-		/*	if (mStayFlg == false)*/ DrawGraph(mPos.x, mPos.y, mGrHandles[mDir * 3 /*+ mAnimCount % 20*/], TRUE);
+		/*	if (mStayFlg == false)*/ DrawGraph(mPos.x, mPos.y, mGrHandles[mDir/*+ mAnimCount % 20*/], TRUE);
 		//else DrawGraph(mPos.x, mPos.y, mGrHandles2[2], TRUE);
 		HpBar();
 	}
@@ -198,7 +198,7 @@ int Enemy::AttackJudgeState(int _a) {
 	Calculator::Instance()->Initialize();
 	Initialize();
 	mTargeNum = -2;
-	mState = 0;
+	mState = 2;
 	mStayFlg = true;
 	return mState;
 }
@@ -218,12 +218,12 @@ int Enemy::AttackState(int _a) {
 		Damage(damage);
 		Initialize();
 		mStayFlg = true;
-		mState = 0;
+		mState = 2;
 		return mState;
 	}
 	Calculator::Instance()->Initialize();
 	Initialize();
-	mState = 0;
+	mState = 2;
 	mTargeNum = -2;
 	mStayFlg = true;
 	return mState;

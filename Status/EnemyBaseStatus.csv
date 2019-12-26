@@ -1,9 +1,9 @@
 //id番号,キャラ名,ロール,武器,体力,力,防御,魔法,魔防,器用さ,素早さ,移動,画像
 //id,name,role,weapon,hp,str,def,int,mnd,dex,agi,move,src
 0,タンク,0,0,18,4,5,2,3,4,3,4,../Resource/Image/Enemy/Unit_Enemy01.png
-1,キャス,1,0,10,2,2,7,6,5,4,4,../Resource/Image/Enemy/Unit_Enemy02.png
-2,レン,2,0,12,5,3,4,3,6,5,5,../Resource/Image/Enemy/Unit_Enemy03.png
-3,ファイ,3,0,14,6,4,3,4,5,4,4,../Resource/Image/Enemy/Unit_Enemy04.png
+1,キャス,1,0,10,2,2,7,6,5,4,4,../Resource/Image/Enemy/Unit_Enemy04.png
+2,レン,2,0,12,5,3,4,3,6,5,5,../Resource/Image/Enemy/Unit_Enemy02.png
+3,ファイ,3,0,14,6,4,3,4,5,4,4,../Resource/Image/Enemy/Unit_Enemy03.png
 4,特殊１,4,0,30,10,10,10,10,10,10,0,../Resource/Image/Enemy/Enemy00.png
 5,特殊２,5,0,30,10,10,10,10,10,10,0,../Resource/Image/Enemy/Enemy01.png
 6,特殊３,6,0,40,15,15,15,15,15,15,1,../Resource/Image/Enemy/Enemy02.png

@@ -450,7 +450,7 @@ int Calculator::Draw() {
 			}
 		}
 	}
-	DrawFormatString(0, 500, GetColor(255, 255, 255), "debugcount%d", debugcount);
+	/*DrawFormatString(0, 500, GetColor(255, 255, 255), "debugcount%d", debugcount);
 
 	if (mRangeMap.size() != 0) {
 		for (int i = 0; i < mTmpMap.size(); i++) {
@@ -462,7 +462,7 @@ int Calculator::Draw() {
 		for (int i = 0; i < mRootMap.size(); i++) {
 			DrawFormatString(64 * (i % 20), 64 * (i / 20) + 40, GetColor(255, 0, 0), "Ro%d", mRootMap[i]);
 		}
-	}
+	}*/
 	return 0;
 }
 

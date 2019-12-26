@@ -9,7 +9,7 @@ GameMgr::~GameMgr() {
 }
 
 int GameMgr::Initialize() {
-	mNowTurn = ENEMY_TURN;
+	mNowTurn = PLAYER_TURN;
 	mTurnCount = 0;
 	mStayCount = 0;
 	mUnitNum = -1;
@@ -23,7 +23,7 @@ int  GameMgr::Update() {
 	BaseObj::sPos  tmpPos;
 
 	if (MIDDLECLICK != FALSE) {
-		*INSTANCE + mMousePos;
+		//*INSTANCE + mMousePos;
 	}
 
 	mMousePos = GET_POSITION();

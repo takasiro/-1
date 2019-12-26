@@ -35,6 +35,7 @@ int UnitMgr::Update() {
 		CharaDate[i]->Update();
 	}
 	for (int i = 0; i < EnemyDate.size(); i++) {
+		if (EnemyDate[i]->GetStayFlg() == true)continue;
 		EnemyDate[i]->Update();
 	}
 	return 0;

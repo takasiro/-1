@@ -52,14 +52,14 @@ public:
 		}
 	}
 
-	void	operator+(BaseObj::sPos _pos) {
+	/*void	operator+(BaseObj::sPos _pos) {
 		for (int i = 0; i < CharaDate.size(); i++) {
 			*CharaDate[i] + _pos;
 		}
 		for (int i = 0; i < EnemyDate.size(); i++) {
 			*EnemyDate[i] + _pos;
 		}
-	}
+	}*/
 
 	typedef enum {
 		eMoveJudge,
@@ -279,11 +279,15 @@ public:
 ***************************************************************************/
 	int GetStayFlg(int _type) {
 		if (_type == eChara)	for (int i = 0; i < GetCharaDataSize(); i++) {
-			if (CharaDate[i]->GetOnActive() == true)continue;
+			if (CharaDate[i]->GetOnActive() == false) {
+				CharaDate[i]->SetStayFlg(true);
+			}
 			if (CharaDate[i]->GetStayFlg() == false)return 0;
 		}
 		else if (_type == eEnemy) 	for (int i = 0; i < GetEnemyDataSize(); i++) {
-			if (EnemyDate[i]->GetOnActive() == true)continue;
+			if (EnemyDate[i]->GetOnActive() == false) {
+				EnemyDate[i]->SetStayFlg(true);
+			}
 			if (EnemyDate[i]->GetStayFlg() == false)return 0;
 		}
 		return 1;

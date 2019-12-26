@@ -1,6 +1,6 @@
 #include"UI.h"
 int UI::Initialize() {
-	playerNumber = 0, enemyNumber = 0;
+	playerNumber = -1, enemyNumber = -1;
 	role = "ÉmÅ[ÉWÉáÉu";
 	NameFontHandle = CreateFontToHandle(NULL, 35, 4);
 	DataFontHandle = CreateFontToHandle(NULL, 25, 2);
@@ -22,8 +22,8 @@ int UI::Draw() {
 
 
 	#ifdef DEBUG
-	DrawFormatString(0, 300, GetColor(255, 255, 255), "num:%d", playerNumber, TRUE);
-	DrawFormatString(0, 320, GetColor(255, 255, 255), "num:%d", enemyNumber, TRUE);
+	//DrawFormatString(0, 300, GetColor(255, 255, 255), "num:%d", playerNumber, TRUE);
+	//DrawFormatString(0, 320, GetColor(255, 255, 255), "num:%d", enemyNumber, TRUE);
 	#endif
 
 	return 0;

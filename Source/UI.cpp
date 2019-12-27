@@ -71,7 +71,7 @@ int UI::DrawEnemyStatus(int _num) {
 	DrawFormatStringToHandle(10, 60, GetColor(255, 255, 255), DataFontHandle, "%s", role.c_str(), TRUE);
 	DrawFormatStringToHandle(15, 90, GetColor(255, 255, 255), StatusFontHandle, "EXP:%d", 00, TRUE);
 	DrawFormatStringToHandle(15, 120, GetColor(255, 255, 255), DataFontHandle, "Lv.%d", enemyStatus[_num]->GetLv(), TRUE);
-	DrawFormatStringToHandle(100, 120, GetColor(255, 255, 255), DataFontHandle, "HP:%d/%d", enemyStatus[_num]->GetMaxHp(), enemyStatus[_num]->GetHp(), TRUE);
+	DrawFormatStringToHandle(100, 120, GetColor(255, 255, 255), DataFontHandle, "HP:%d/%d", enemyStatus[_num]->GetHp(), enemyStatus[_num]->GetMaxHp(), TRUE);
 	DrawFormatStringToHandle(15, 150, GetColor(255, 255, 255), StatusFontHandle, "UŒ‚:%d", enemyStatus[_num]->GetStr(), TRUE);
 	DrawFormatStringToHandle(120, 150, GetColor(255, 255, 255), StatusFontHandle, "–hŒä:%d", enemyStatus[_num]->GetDef(), TRUE);
 	DrawFormatStringToHandle(15, 180, GetColor(255, 255, 255), StatusFontHandle, "–‚–@:%d", enemyStatus[_num]->GetInt(), TRUE);

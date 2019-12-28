@@ -1,5 +1,5 @@
 #include "GameMgr.h"
-
+#include"Keyboard.h"
 GameMgr::GameMgr() {
 	Initialize();
 }
@@ -25,6 +25,17 @@ int  GameMgr::Update() {
 	if (MIDDLECLICK != FALSE) {
 		//*INSTANCE + mMousePos;
 	}
+	//debug
+	//if (GET_KEY(KEY_INPUT_0) == true) {
+	//	for (int i = 0; i < INSTANCE->GetEnemyDataSize(); i++) {
+	//		INSTANCE->GetEnemyDate(i).SetOnActive(false);
+	//	}
+	//}
+	//else if(GET_KEY(KEY_INPUT_1) == true){
+	//	for (int i = 0; i < INSTANCE->GetCharaDataSize(); i++) {
+	//		INSTANCE->GetCharaDate(i).SetOnActive(false);
+	//	}
+	//}
 
 	mMousePos = GET_POSITION();
 
@@ -35,7 +46,7 @@ int  GameMgr::Update() {
 		if (mUnitNum != -1 && INSTANCE->GetCharaDate(mUnitNum).GetOnActive() == true) {
 			mUnitNum = INSTANCE->Update(mUnitNum);
 		}
-		return INSTANCE->GetStayFlg(eChara);
+
 	}
 	else {
 		if (INSTANCE->GetEnemyDataSize() > mActiveNum) {
@@ -43,29 +54,40 @@ int  GameMgr::Update() {
 			if ((INSTANCE->GetEnemyDate(mActiveNum).GetStayFlg() == true ||
 				INSTANCE->GetEnemyDate(mActiveNum).GetOnActive() == false)) mActiveNum++;
 		}
-		return INSTANCE->GetStayFlg(eEnemy);
-	}
 
+	}
+	return INSTANCE->GetStayFlg(eEnemy) + INSTANCE->GetStayFlg(eChara);
 }
 
 
 int  GameMgr::Update(int _turn) {
 	//player.update‚Æenemy.update‚Ì–ß‚è’l‚ðŽó‚¯Žæ‚é—\’è
 
-
+	static int count = 0;
 	if (_turn != 0) {
 		if (INSTANCE->CheckStay(mNowTurn) == 1) {
 			if (mNowTurn == PLAYER_TURN) {
+				if (INSTANCE->GetOnActive(eChara) == 1)return 1;
 				mNowTurn *= -1;
-
 				INSTANCE->InitCharaStayFlg();
-
+				INSTANCE->SetLastMouseButton(0);
+				INSTANCE->SetMouseButton(0);
+				Calculator::Instance()->Initialize();
 			}
 			else if (mNowTurn == ENEMY_TURN) {
-				mNowTurn *= -1;
+				if (INSTANCE->GetOnActive(eEnemy) == 1)return 2;
+				if (count > 30) {
+					mNowTurn *= -1;
+					INSTANCE->InitEnemyStayFlg();
+					INSTANCE->SetLastMouseButton(0);
+					count = 0;
+				}
 				mActiveNum = 0;
-				INSTANCE->InitEnemyStayFlg();
-
+				
+				INSTANCE->SetMouseButton(0);
+				Calculator::Instance()->Initialize();
+				count++;
+				//INSTANCE->Initialize();
 			}
 		}
 	}

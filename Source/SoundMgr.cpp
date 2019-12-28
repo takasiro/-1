@@ -2,7 +2,9 @@
 
 SoundMgr::SoundMgr() {
 	mSE["SE01"] = LoadSoundMem("../Resource/Sound/se_maoudamashii_battle01.mp3");
+	mBGM["bgm_maoudamashii_orchestra19"] = LoadSoundMem("../Resource/Sound/bgm_maoudamashii_orchestra19.mp3");
 	mBGM["bgm_maoudamashii_fantasy13"] = LoadSoundMem("../Resource/Sound/bgm_maoudamashii_fantasy13.mp3");
+	mBGM["bgm_maoudamashii_fantasy06"] = LoadSoundMem("../Resource/Sound/bgm_maoudamashii_fantasy06.mp3");
 }
 SoundMgr:: ~SoundMgr() {
 	InitSoundMem();

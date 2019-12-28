@@ -213,6 +213,7 @@ int Load::LoadChara(int _baseHandle, int _growthHandle) {
 		}
 	}
 	count = 0;
+
 	return 0;
 }
 
@@ -289,6 +290,7 @@ int Load::LoadEnemy(int _baseHandle, int _growthHandle) {
 		}
 	}
 	count = 0;
+
 	return 0;
 }
 
@@ -365,6 +367,8 @@ int Load::LoadWeapon(int _baseHandle, int _growthHandles) {
 			}
 		}
 	}
+	count = 0;
+
 	return 0;
 }
 
@@ -394,22 +398,22 @@ int Load::LoadEnemyData(const char* _FilePath) {
 			
 		}
 	}
-
+	FileRead_close(mBaseHandle);
 	return 0;
 }
 
 
 int Load::LoadEffect(const char* _FilePath, map<string,Effect>& _Effect) {
-	FILE *p;
-	p = fopen(_FilePath, "r");
-	if (p == NULL)return -1;//err
-	char str[256],Name[256],FileName[256];
-	int AllNum, XNum, YNum, XSize, YSize;
-	while (fgets(str,255,p) != NULL) {
-		if (sscanf(str, "%[^,],%d,%d,%d,%d,%d,%s", Name, &AllNum, &XNum, &YNum, &XSize, &YSize, FileName) == 7);
-		if (Name[0] == '/' && Name[1] == '/')continue;
-		_Effect[Name].SetAll(Name, AllNum, XNum, YNum, XSize, YSize, FileName);
-	}
-	fclose(p);
+	//FILE *p;
+	//p = fopen(_FilePath, "r");
+	//if (p == NULL)return -1;//err
+	//char str[256],Name[256],FileName[256];
+	//int AllNum, XNum, YNum, XSize, YSize;
+	//while (fgets(str,255,p) != NULL) {
+	//	if (sscanf(str, "%[^,],%d,%d,%d,%d,%d,%s", Name, &AllNum, &XNum, &YNum, &XSize, &YSize, FileName) == 7);
+	//	if (Name[0] == '/' && Name[1] == '/')continue;
+	//	_Effect[Name].SetAll(Name, AllNum, XNum, YNum, XSize, YSize, FileName);
+	//}
+	//fclose(p);
 	return 0;
 }

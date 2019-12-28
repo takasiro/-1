@@ -229,18 +229,18 @@ public:
 	int CheckStay(int _turn);
 	void InitCharaStayFlg() {
 		for (int i = 0; i < CharaDate.size(); i++) {
-			CharaDate[i]->SetStayFlg(false);
+			if(CharaDate[i]->GetOnActive()==true)CharaDate[i]->SetStayFlg(false);
 		}
 	}
 	void InitEnemyStayFlg() {
 		for (int i = 0; i < EnemyDate.size(); i++) {
-			EnemyDate[i]->SetStayFlg(false);
+			if (EnemyDate[i]->GetOnActive() == true)EnemyDate[i]->SetStayFlg(false);
 		}
 	}
 
 	void SetEnemyStayFlg() {
 		for (int i = 0; i < EnemyDate.size(); i++) {
-			EnemyDate[i]->SetStayFlg(true);
+			if (EnemyDate[i]->GetOnActive() == true)EnemyDate[i]->SetStayFlg(true);
 		}
 	}
 	/**************************************************************************
@@ -310,6 +310,7 @@ public:
 
 		return 1;
 	}
+
 
 	/*int MoveJudgeState(int);
 	int MoveState(int);

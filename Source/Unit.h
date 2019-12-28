@@ -175,7 +175,7 @@ public:
 	virtual int Damage(int _damage) {
 		SoundMgr::Instance()->PlaySE("SE01");
 		mHp -= _damage;
-		if (mHp < 0) {
+		if (mHp <= 0) {
 			mHp = 0;
 			return Dead();
 		}

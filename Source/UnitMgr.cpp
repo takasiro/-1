@@ -1,5 +1,6 @@
 #include "UnitMgr.h"
 #include"Calculator.h"
+#include"Keyboard.h"
 UnitMgr::UnitMgr() {
 	prevPos = { 0 };
 	mousePos = { 0 };
@@ -16,6 +17,9 @@ UnitMgr::UnitMgr() {
 }
 UnitMgr::~UnitMgr() {
 	Initialize();
+	CharaDate.clear();
+	EnemyDate.clear();
+	FairyDate.clear();
 	CharaDate.shrink_to_fit();
 	EnemyDate.shrink_to_fit();
 	FairyDate.shrink_to_fit();
@@ -29,7 +33,7 @@ int UnitMgr::Initialize() {
 	return 0;
 }
 int UnitMgr::Update() {
-
+	
 	for (int i = 0; i < CharaDate.size(); i++) {
 		if (CharaDate[i]->GetStayFlg() == true)continue;
 		CharaDate[i]->Update();
@@ -51,16 +55,14 @@ int UnitMgr::Update(int _a) {
 	};
 	mouseButton = GET_BUTTON();
 
-
-
+	
 	if (mState < 0) {
 		lastMouseButton = mouseButton;
 		//_a = -1;
 		Initialize();
 		return -1;
 	}
-	else {
-		;
+	else /* if(mouseButton!= lastMouseButton)*/{
 		hoge = CharaDate[_a]->Update(_a);// (this->*Fanctions[mState])(_a);
 		lastMouseButton = mouseButton;
 		return hoge;
@@ -84,6 +86,9 @@ int UnitMgr::Draw() {
 }
 int UnitMgr::Close() {
 	Initialize();
+	CharaDate.clear();
+	EnemyDate.clear();
+	FairyDate.clear();
 	CharaDate.shrink_to_fit();
 	EnemyDate.shrink_to_fit();
 	FairyDate.shrink_to_fit();

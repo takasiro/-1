@@ -127,7 +127,7 @@ int Chara::MoveJudgeState(int _a) {
 	if (mState < -1)return mState = -1;
 	//Initialize();
 	Calculator::Instance()->SetColor(0, 0, 255);
-	Calculator::Instance()->CulMoveRange(INSTANCE->SetPrevPosX(mPos.x / MASSSIZE), INSTANCE->SetPrevPosY(mPos.y / MASSSIZE), mMove);
+	Calculator::Instance()->CulMoveRange(INSTANCE->SetPrevPosX(mMapPos.x), INSTANCE->SetPrevPosY(mMapPos.y), mMove);
 	Calculator::Instance()->MoveJudg(INSTANCE->GetCharaDate(), INSTANCE->GetEnemyDate(), _a);
 	INSTANCE->SetColor(0, 0, 255);
 	mState++;
@@ -165,11 +165,11 @@ int Chara::MoveState(int _a) {
 
 int Chara::AttackJudgeState(int _a) {
 	Calculator::Instance()->SetColor(255, 0, 0);
-	if (mRole != eCaster) {
-		Calculator::Instance()->CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 2);
+	if (mRole == eCaster) {
+		Calculator::Instance()->CulMoveRange(mMapPos.x, mMapPos.y, 2);
 	}
 	else {
-		Calculator::Instance()->CulMoveRange(mPos.x / MASSSIZE, mPos.y / MASSSIZE, 1);
+		Calculator::Instance()->CulMoveRange(mMapPos.x, mMapPos.y, 1);
 	}
 	INSTANCE->SetColor(255, 0, 0);
 	if (RIGHTCLICK != FALSE && INSTANCE->GetMouseButton() != INSTANCE->GetLastMouseButton()) {

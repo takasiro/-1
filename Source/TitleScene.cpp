@@ -8,6 +8,7 @@ int TitleScene::ChangeScene(int _buttonNumber) {
 	switch (_buttonNumber) {
 	case 0:
 		//InGameScene移行
+		StopSoundMem(SoundMgr::Instance()->GetBGM("bgm_maoudamashii_fantasy06"));
 		mStaticISceneChanger->AddScene((BaseScene*)new InGameScene(mStaticISceneChanger));
 		break;
 	case 1:
@@ -56,7 +57,8 @@ TitleScene::TitleScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	button[2].GetGrHandles()[1] = LoadGraph("../Resource/Image/Button/QuitButton02.png");
 	button[2].GetGrHandles()[2] = LoadGraph("../Resource/Image/Button/QuitButton03.png");
 
-
+	SoundMgr::Instance()->PlayBGM("bgm_maoudamashii_fantasy06");
+	ChangeVolumeSoundMem(255 * 50 / 100, SoundMgr::Instance()->GetBGM("bgm_maoudamashii_fantasy06"));
 	mStaticISceneChanger = mISceneChanger;
 
 }
@@ -69,7 +71,7 @@ TitleScene::~TitleScene() {
 		}
 		delete[] button[i].GetGrHandles();
 	}
-
+	
 	DeleteGraph(mTitleGraphHandle);  //タイトル画像のメモリ解放
 }
 

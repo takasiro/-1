@@ -9,7 +9,15 @@ Calculator::Calculator() {
 		mRangeArray[i] = 99;
 	}
 }
+Calculator::~Calculator() {
+	mTmpMap.clear();
+	mRangeMap.clear();
+	mRootMap.clear();
+	mTmpMap.shrink_to_fit();
+	mRangeMap.shrink_to_fit();
+	mTmpMap.shrink_to_fit();
 
+}
 int Calculator::Initialize() {
 
 	mPos = { 0,0 };
@@ -23,8 +31,18 @@ int Calculator::Initialize() {
 	return 0;
 }
 
+int Calculator::Close() {
+	mTmpMap.clear();
+	mRangeMap.clear();
+	mRootMap.clear();
+	mTmpMap.shrink_to_fit();
+	mRangeMap.shrink_to_fit();
+	mTmpMap.shrink_to_fit();
+	return 0;
+}
+
 int Calculator::Update() { return 0; }
-int Calculator::Close() { return 0; }
+
 int Calculator::SetCost(int _terrain) {
 	int tmpCost = 0;
 	if (_terrain == 0)return tmpCost = 0;
@@ -74,10 +92,16 @@ int Calculator::CulMoveRange(int _x, int _y, int _moveRange) {
 			vx--;
 			break;
 		}
-		if (_x + vx < 20 && _x + vx>0 && _y + vy < 15 && _y + vy>0) {
+
+		if ((_x == 0 && vx == -1) || (_y == 0 && vy == -1) ||
+			(_x == mNowMapWidth - 1 && vx == 1) || (_y == mNowMapHeight - 1 && vy == 1)) {
+
+			continue;
+		}
+		else {
 			if (mCopyMap->at((_y + vy) * 20 + ((_x)+vx)).GetMoveCost() < 10) {
 				mTmpMap[(_y + vy) * 20 + ((_x)+vx)] = 1;
-				CulMoveRange(_x + vx, _y + vy, _moveRange - mCopyMap->at((_y - 1) * 20 + (_x - 1)).GetMoveCost());
+				CulMoveRange(_x + vx, _y + vy, _moveRange - mCopyMap->at((_y +vy) * 20 + (_x +vx)).GetMoveCost());
 			}
 		}
 	}
@@ -260,14 +284,14 @@ int Calculator::CulRange(int _x, int _y, int _range, int _index, int* _arg) {
 			mRangeMap[(_y + vy) * 20 + (_x + vx)] = _range;
 		}
 		else if (mRangeMap[(_y + vy) * 20 + (_x + vx)] == 99 ||
-			(mRangeMap[(_y + vy) * 20 + (_x + vx)] !=-1 &&mRangeMap[(_y + vy) * 20 + (_x + vx)] <=_range)) {
+			(mRangeMap[(_y + vy) * 20 + (_x + vx)] != -1 && mRangeMap[(_y + vy) * 20 + (_x + vx)] <= _range)) {
 			continue;
 		}
 		////V‚ÌŽž‚É‹N“®‚·‚éðŒ‚É
 		else if ((mCopyMap->at((_y + vy) * 20 + (_x + vx)).GetMoveCost() < 10 ||
 			mTmpMap[(_y + vy) * 20 + (_x + vx)] == GOAL) &&
 			(mRangeMap[(_y + vy) * 20 + (_x + vx)] == -1 ||
-				mRangeMap[(_y + vy) * 20 + (_x + vx)] >_range)) {
+				mRangeMap[(_y + vy) * 20 + (_x + vx)] > _range)) {
 			mRangeMap[(_y + vy) * 20 + (_x + vx)] = _range;
 			//mTmpMap[(_y + vy) * 20 + (_x + vx)] = 1;
 			CulRange(_x + vx, _y + vy, _range, _index, _arg);
@@ -450,19 +474,19 @@ int Calculator::Draw() {
 			}
 		}
 	}
-	/*DrawFormatString(0, 500, GetColor(255, 255, 255), "debugcount%d", debugcount);
+	//DrawFormatString(0, 500, GetColor(255, 255, 255), "debugcount%d", debugcount);
 
-	if (mRangeMap.size() != 0) {
-		for (int i = 0; i < mTmpMap.size(); i++) {
-			DrawFormatString(64 * (i % 20), 64 * (i / 20), GetColor(255, 255, 255), "T%d", mTmpMap[i]);
-		}
-		for (int i = 0; i < mRangeMap.size(); i++) {
-			DrawFormatString(64 * (i % 20), 64 * (i / 20) + 20, GetColor(0, 255, 0), "Ra%d", mRangeMap[i]);
-		}
-		for (int i = 0; i < mRootMap.size(); i++) {
-			DrawFormatString(64 * (i % 20), 64 * (i / 20) + 40, GetColor(255, 0, 0), "Ro%d", mRootMap[i]);
-		}
-	}*/
+	//if (mRangeMap.size() != 0) {
+	//	for (int i = 0; i < mTmpMap.size(); i++) {
+	//		DrawFormatString(64 * (i % 20), 64 * (i / 20), GetColor(255, 255, 255), "T%d", mTmpMap[i]);
+	//	}
+	//	for (int i = 0; i < mRangeMap.size(); i++) {
+	//		DrawFormatString(64 * (i % 20), 64 * (i / 20) + 20, GetColor(0, 255, 0), "Ra%d", mRangeMap[i]);
+	//	}
+	//	for (int i = 0; i < mRootMap.size(); i++) {
+	//		DrawFormatString(64 * (i % 20), 64 * (i / 20) + 40, GetColor(255, 0, 0), "Ro%d", mRootMap[i]);
+	//	}
+	//}
 	return 0;
 }
 

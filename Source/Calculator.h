@@ -43,6 +43,7 @@ public:
 	friend Singleton<Calculator>;
 
 	Calculator();
+	virtual	~Calculator();
 	virtual	int Initialize();
 	virtual	int Update();
 	virtual	int  Draw();

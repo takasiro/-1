@@ -1,6 +1,7 @@
 #include "InGameScene.h"
 #include"TitleScene.h"
 #include"ResultScene.h"
+#include"GameOverScene.h"
 #include<iostream>
 using namespace std;
 #include<vector>
@@ -28,7 +29,8 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 	INSTANCE->SetEnemyData(Enemy(5, 5));*/
 
 	Load load;
-	load.LoadData("../Resource/Status/FairyBaseStatus.csv", "../Resource/Status/FairyGrowthStatus.csv");
+	//ƒGƒ‰‚Á‚Ä‚é
+	//load.LoadData("../Resource/Status/FairyBaseStatus.csv", "../Resource/Status/FairyGrowthStatus.csv");
 	load.LoadData("../Resource/Status/DebugPlayerBaseStatus.csv", "../Resource/Status/PlayerGrowthStatus.csv");
 	load.LoadData("../Resource/Status/EnemyBaseStatus.csv", "../Resource/Status/EnemyGrowthStatus.csv");
 	load.LoadEnemyData("../Resource/Map/EnemyData1.csv");
@@ -41,7 +43,9 @@ InGameScene::InGameScene(ISceneChanger* _Changer) :BaseScene(_Changer) {
 }
 
 InGameScene::~InGameScene() {
-
+	INSTANCE->Close();
+	Calculator::Instance()->Close();
+	
 }
 
 int InGameScene::Initialize() {
@@ -51,15 +55,21 @@ int InGameScene::Initialize() {
 int InGameScene::Update() {
 	
 	ui.Update();
-	if (gameMgr.Update(gameMgr.Update()) == 1) {
+	if (gameMgr.Update(gameMgr.Update()) == 2) {
+		StopSoundMem(SoundMgr::Instance()->GetBGM("bgm_maoudamashii_fantasy13"));
 		mISceneChanger->AddScene((BaseScene*)new ResultScene(mISceneChanger));
 		return 0;
 	}
-	if (Keyboard::Instance()->Get(KEY_INPUT_R) == true) {
+	else if(gameMgr.Update(gameMgr.Update()) == 1) {
+		StopSoundMem(SoundMgr::Instance()->GetBGM("bgm_maoudamashii_fantasy13"));
+		mISceneChanger->AddScene((BaseScene*)new GameOverScene (mISceneChanger));
+		return 0;
+	}
+	/*if (Keyboard::Instance()->Get(KEY_INPUT_R) == true) {
 		INSTANCE->DataInit();
 		mISceneChanger->AddScene((BaseScene*)new InGameScene(mISceneChanger));
 		return 0;
-	}
+	}*/
 	if (MIDDLECLICK != FALSE) {
 	//	map = map + mMousePos;
 	}
